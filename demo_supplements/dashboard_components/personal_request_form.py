@@ -1,6 +1,6 @@
 import datetime
 
-from demo_api_pages.api_request_pages import custom_request
+from demo_api_pages.api_request_pages import live_response_page
 
 from heimdal.entities.address import Address
 from heimdal.entities.person import Person
@@ -129,7 +129,6 @@ def personal_request_form():
 
             submit_button = input_form.form_submit_button(label="Submit")
 
-            # TODO: show output on separate screen
             endpoint_mapper = {
                 "PFR": "PFR",
                 "Life Events": "LifeEvents",
@@ -137,4 +136,4 @@ def personal_request_form():
                 "Auto Insurance Prefill": "AutoPrefill",
             }
             if submit_button:
-                custom_request.app(api=endpoint_mapper.get(api_endpoint), body=body)
+                live_response_page.app(api=endpoint_mapper.get(api_endpoint), body=body)

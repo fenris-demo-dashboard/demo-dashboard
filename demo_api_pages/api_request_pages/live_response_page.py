@@ -1,7 +1,8 @@
 """Custom API request page."""
 from demo_supplements.io.request_handlers.live_requests import live_query
-
-import streamlit as st
+from demo_supplements.aesthetics.aesthetics import (
+    format_response_by_service
+)
 
 
 def app(api: str, body: object):
@@ -11,4 +12,4 @@ def app(api: str, body: object):
     except Exception:
         response = {"error": Exception}
 
-    st.write(response)
+    format_response_by_service(response=response, service_name=api)

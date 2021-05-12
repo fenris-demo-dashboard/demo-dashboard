@@ -2,11 +2,8 @@
 from demo_supplements.aesthetics.aesthetics import (
     camel_case_to_split_title,
     clean_raw_json,
-    format_auto_prefill_response,
-    format_life_events_response,
-    format_pfr_response,
+    format_response_by_service,
 )
-from demo_supplements.demo_text.api_field_descriptions import pfr_field_info
 from demo_supplements.io.request_handlers.mock_requests import mock_personal_query
 
 from heimdal.entities.person import Person
@@ -31,26 +28,14 @@ def app(person: Person, service_name: str):
         components_to_remove_from_response = [
             "requestId",
             "submissionId",
-            "message"
+            "message",
+            "score",
             "status",
             "modelVersion",
+            "sequenceId"
         ]
         cleaned_response = clean_raw_json(response, components_to_remove_from_response)
         st.write(cleaned_response)
     else:
-        if service_name == "LifeEvents":
-            format_life_events_response(response=response)
-        elif service_name == "PFR":
-            format_pfr_response(
-                response=response,
-                targets=[
-                    "trend",
-                    "creditLevel",
-                    "insuranceTier",
-                    "financeTier",
-                    "decile",
-                ],
-                field_info=pfr_field_info,
-            )
-        elif service_name == "AutoPrefill":
-            format_auto_prefill_response(response=response)
+        format_response_by_service(service_name=service_name, response=response)
+

@@ -5,6 +5,7 @@ from pathlib import Path
 
 from PIL import Image
 
+from demo_supplements.demo_text.api_field_descriptions import pfr_field_info
 from demo_supplements.visualizations.visualizations import (
     generate_highlight_barplot,
     indicator_distributions,
@@ -67,8 +68,11 @@ def divide_name(name: str):
 def format_life_events_response(response: dict):
     """Format life event json objects from mocked response."""
     life_events = response.get("events")
-    life_event_json = json.loads(life_events)
-    st.table(pd.DataFrame(life_event_json, index=range(len(life_event_json))))
+    try:
+        life_event_json = json.loads(life_events)
+        st.table(pd.DataFrame(life_event_json, index=range(len(life_event_json))))
+    except TypeError:
+        st.table(pd.DataFrame(life_events, index=range(len(life_events))))
 
 
 def clean_raw_json(response: dict, components_to_remove_from_response: list):
@@ -89,12 +93,15 @@ def clean_raw_json(response: dict, components_to_remove_from_response: list):
 
 
 def camel_case_to_split_title(string: str):
+    """Split a camel case string to one with title case."""
+    if string.isupper():
+        return string
+    else:
+        start_idx = [i for i, e in enumerate(string) if e.isupper()] + [len(string)]
 
-    start_idx = [i for i, e in enumerate(string) if e.isupper()] + [len(string)]
-
-    start_idx = [0] + start_idx
-    split_string = [string[x:y] for x, y in zip(start_idx, start_idx[1:])]
-    return " ".join(x.title() for x in split_string)
+        start_idx = [0] + start_idx
+        split_string = [string[x:y] for x, y in zip(start_idx, start_idx[1:])]
+        return " ".join(x.title() for x in split_string)
 
 
 def format_pfr_response(response: dict, targets: list, field_info: dict):
@@ -131,14 +138,18 @@ def format_auto_prefill_response(response: dict):
     """Format JSON API response according to target list"""
     targets = ["primary", "drivers", "vehicles", "vehiclesEnhanced"]
 
-    client_information_dict = {
-        k: ast.literal_eval(response.get(k, "Not Found")) for k in targets
-    }
+    try:
+        client_information_dict = {
+            k: ast.literal_eval(response.get(k, "Not Found")) for k in targets
+        }
+    except (SyntaxError, ValueError):
+        client_information_dict = {
+            k: response.get(k, "Not Found") for k in targets
+        }
 
     for idx, target in enumerate(targets):
 
         expander_title = camel_case_to_split_title(target)
-
         expander = st.beta_expander(f"{expander_title}")
 
         if isinstance(client_information_dict.get(target), dict):
@@ -150,9 +161,60 @@ def format_auto_prefill_response(response: dict):
         if info_dataframe.shape[0] == 1:
             info_dataframe = info_dataframe.transpose()
             info_dataframe.index = info_dataframe.index.map(camel_case_to_split_title)
+            info_dataframe.rename(columns={0: "Values"}, inplace=True)
         else:
             info_dataframe.columns = info_dataframe.columns.map(
                 camel_case_to_split_title
             )
 
         expander.dataframe(info_dataframe)
+
+
+def format_property_response(response: dict):
+    nested_response = denest_dict(response)
+    st.json(nested_response)
+    # response_table = pd.DataFrame.from_dict(nested_response, orient='index')
+    # response_table.rename(columns={0: "Data Values"}, inplace=True)
+    # st.table(response_table)
+
+
+def format_response_by_service(service_name: str, response:dict):
+    if service_name == "LifeEvents":
+        format_life_events_response(response=response)
+    elif service_name == "PFR":
+        format_pfr_response(
+            response=response,
+            targets=[
+                "trend",
+                "creditLevel",
+                "insuranceTier",
+                "financeTier",
+                "decile",
+            ],
+            field_info=pfr_field_info,
+        )
+    elif service_name == "AutoPrefill":
+        format_auto_prefill_response(response=response)
+    elif service_name == "PropertyDetails":
+        format_property_response(response=response)
+
+
+def denest_dict(dict1):
+    result = {}
+    for k, v in dict1.items():
+
+        # for each key call method split_rec which
+        # will split keys to form recursively nested dictionary
+        split_rec(k, v, result)
+    return result
+
+
+def split_rec(k, v, out):
+
+    # splitting keys in dict
+    # calling_recursively to break items on '_'
+    k, *rest = k.split('_', 1)
+    if rest:
+        split_rec(rest[0], v, out.setdefault(k, {}))
+    else:
+        out[k] = v
