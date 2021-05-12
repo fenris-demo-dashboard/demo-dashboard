@@ -4,7 +4,6 @@ from demo_supplements.aesthetics.aesthetics import (
     clean_raw_json,
     format_auto_prefill_response,
 )
-from demo_supplements.io.request_handlers.live_requests import live_query
 from demo_supplements.io.request_handlers.mock_requests import mock_personal_query
 
 from heimdal.entities.person import Person
@@ -12,15 +11,10 @@ from heimdal.entities.person import Person
 import streamlit as st
 
 
-def app(person: Person, should_use_mocks: bool):
+def app(person: Person):
     """Mock a request to the Auto Insurance Prefill API."""
     try:
-        if should_use_mocks:
-            response = mock_personal_query(person=person, service_name="AutoPrefill")
-        elif not should_use_mocks:
-            response = live_query(input_object=person, service_name="AutoPrefill")
-        else:
-            response = {"error": "no response found"}
+        response = mock_personal_query(person=person, service_name="AutoPrefill")
     except Exception:
         response = {"error": Exception}
 

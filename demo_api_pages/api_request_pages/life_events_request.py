@@ -1,9 +1,8 @@
 """Life events request page."""
 from demo_supplements.aesthetics.aesthetics import (
     clean_raw_json,
-    format_life_events_json,
+    format_life_events_response,
 )
-from demo_supplements.io.request_handlers.live_requests import live_query
 from demo_supplements.io.request_handlers.mock_requests import mock_personal_query
 
 from heimdal.entities.person import Person
@@ -11,15 +10,10 @@ from heimdal.entities.person import Person
 import streamlit as st
 
 
-def app(person: Person, should_use_mocks: bool):
+def app(person: Person):
 
     try:
-        if should_use_mocks:
-            response = mock_personal_query(person=person, service_name="LifeEvents")
-        elif not should_use_mocks:
-            response = live_query(input_object=person, service_name="LifeEvents")
-        else:
-            response = {"error": "no response found"}
+        response = mock_personal_query(person=person, service_name="LifeEvents")
     except Exception:
         response = {"error": Exception}
 
@@ -37,4 +31,4 @@ def app(person: Person, should_use_mocks: bool):
         cleaned_response = clean_raw_json(response, components_to_remove_from_response)
         st.write(cleaned_response)
     else:
-        format_life_events_json(response=response, should_use_mocks=should_use_mocks)
+        format_life_events_response(response=response)

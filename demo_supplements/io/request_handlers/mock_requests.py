@@ -1,12 +1,13 @@
 import json
 
+from demo_supplements.aesthetics.aesthetics import spinner_decorator_factory
 from demo_supplements.io.mock_responses import api_to_fake_response_df_mapper
 
 from heimdal.entities.address import Address
 from heimdal.entities.person import Person
 
 
-# TODO: testing/functionality
+@spinner_decorator_factory(spinner_text="Fetching API Response...")
 def mock_personal_query(
     person: Person,
     service_name: str,

@@ -5,9 +5,7 @@ from demo_supplements.io.deserializers.person import (
     load_person_from_first_and_last_name,
 )
 from demo_supplements.io.request_handlers.auth import initialize_demo_client
-from demo_supplements.io.request_handlers.custom_requests import (
-    query_auto_prefill_with_custom_person,
-)
+from demo_supplements.aesthetics.aesthetics import format_auto_prefill_response
 from demo_supplements.io.request_handlers.live_requests import (
     live_query,
 )
@@ -94,3 +92,14 @@ def test_live_query_for_auto_prefill(generate_fake_person):
 
     assert response is not None
     assert response.get("status") == "Success"
+
+
+def test_format_auto_prefill_response(generate_fake_person):
+    fake_person = generate_fake_person()
+
+    response = mock_personal_query(person=fake_person, service_name="AutoPrefill")
+
+    format_auto_prefill_response(response)
+
+    assert response.get("status") == "Success"
+    assert response is not None

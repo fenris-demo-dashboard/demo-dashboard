@@ -1,7 +1,7 @@
 """Life Events API page for Life Events Demo."""
 from copy import deepcopy
 
-from demo_api_pages.api_request_pages import life_events_request
+from demo_api_pages.api_request_pages import mock_response_page
 
 from demo_supplements.aesthetics.aesthetics import (
     divide_name,
@@ -17,7 +17,6 @@ from demo_supplements.io.deserializers.person import (
     load_person_from_first_and_last_name,
 )
 from demo_supplements.io.mock_responses import FAKE_LIFE_EVENT_RESPONSE_DF
-from demo_supplements.io.request_handlers.auth import use_mock_or_api_pull
 from demo_supplements.io.serializers.shared import generate_list_of_names_from_df
 
 import streamlit as st
@@ -39,7 +38,7 @@ def app():
     ]
 
     life_event = st.sidebar.selectbox(
-        "Select A Life Event Monitor",
+        "Select A Life Event",
         event_names_list,
     )
 
@@ -61,7 +60,6 @@ def app():
         )
 
         name_selection = generate_persona_selection(life_event_persona_names)
-        use_mocks = use_mock_or_api_pull()
 
         if name_selection == "---":
             st.subheader("Select a persona on the sidebar to query life events")
@@ -72,4 +70,4 @@ def app():
                 first_name=first_name,
                 last_name=last_name,
             )
-            life_events_request.app(person=person, should_use_mocks=use_mocks)
+            mock_response_page.app(person=person, service_name="LifeEvents")
