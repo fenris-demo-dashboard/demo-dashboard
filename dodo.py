@@ -13,7 +13,8 @@ DOIT_CONFIG = {
     "verbosity": 0,
 }
 
-python_directories = ["demo_api_pages", "demo_supplements", "demo_app.py"]
+python_directories = ["demo_api_pages", "demo_supplements"]
+python_files = ["demo_app.py"]
 
 
 def task_python_dependencies():
@@ -34,6 +35,13 @@ def task_black():
             "file_dep": list_files(directory),
             "task_dep": ["python_dependencies"],
         }
+    for file in python_files:
+        yield {
+            "name": file,
+            "actions": [f"black --check {file}"],
+            "file_dep": [file],
+            "task_dep": ["python_dependencies"],
+        }
 
 
 def task_flake8():
@@ -42,6 +50,13 @@ def task_flake8():
             "name": directory,
             "actions": [f"flake8 --max-line-length 100 {directory}"],
             "file_dep": list_files(directory),
+            "task_dep": ["python_dependencies"],
+        }
+    for file in python_files:
+        yield {
+            "name": file,
+            "actions": [f"flake8 --max-line-length 100 {file}"],
+            "file_dep": [file],
             "task_dep": ["python_dependencies"],
         }
 
@@ -55,6 +70,13 @@ def task_pydocstyle():
                 "file_dep": list_files(directory),
                 "task_dep": ["python_dependencies"],
             }
+    for file in python_files:
+        yield {
+            "name": file,
+            "actions": [f"pydocstyle --convention=numpy {file}"],
+            "file_dep": [file],
+            "task_dep": ["python_dependencies"],
+        }
 
 
 def task_pylint():
@@ -62,24 +84,43 @@ def task_pylint():
         if directory != "tests":
             yield {
                 "name": directory,
-                "actions": [f"pylint {directory}"],
-                "file_dep": list_files(directory),
+                "actions": [f"pylint --rcfile=setup.cfg {directory}"],
+                "file_dep": list_files(directory) + ["setup.cfg"],
                 "task_dep": ["python_dependencies"],
             }
+    for file in python_files:
+        yield {
+            "name": file,
+            "actions": [f"pylint --rcfile=setup.cfg {file}"],
+            "file_dep": [file] + ["setup.cfg"],
+            "task_dep": ["python_dependencies"],
+        }
 
 
 def task_mypy():
+
+    file_deps = []
+    for path in python_directories:
+        file_deps += list_files(path)
+    file_deps += python_files
+
     return {
-        "actions": ["mypy heimdal"],
-        "file_dep": list_files("heimdal") + ["setup.cfg"],
+        "actions": ["mypy ."],
+        "file_dep": file_deps + ["setup.cfg"],
         "task_dep": ["python_dependencies"],
     }
 
 
 def task_bandit():
+
+    file_deps = []
+    for path in python_directories:
+        file_deps += list_files(path)
+    file_deps += python_files
+
     return {
-        "actions": ["bandit heimdal"],
-        "file_dep": list_files("heimdal"),
+        "actions": ["bandit ."],
+        "file_dep": file_deps,
         "task_dep": ["python_dependencies"],
     }
 
@@ -88,10 +129,11 @@ def task_pytest():
     file_deps = []
     for path in python_directories:
         file_deps += list_files(path)
+    file_deps += python_files
 
     return {
         "actions": ["coverage run -m pytest tests"],
-        "file_dep": file_deps,
+        "file_dep": file_deps + ["setup.cfg"],
         "task_dep": ["python_dependencies"],
     }
 
@@ -103,7 +145,7 @@ def task_pytest_junit_report():
 
     return {
         "actions": [
-            "coverage run --source=heimdal --branch -m pytest -v --junitxml=report.xml",
+            "coverage run --branch -m pytest -v --junitxml=report.xml",
             "coverage report -m",
         ],
         "file_dep": file_deps,
