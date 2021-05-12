@@ -1,3 +1,4 @@
+import ast
 import json
 from copy import deepcopy
 from pathlib import Path
@@ -63,23 +64,28 @@ def divide_name(name: str):
     return first_name, last_name
 
 
-def format_life_events_json(response: str, should_use_mocks: bool):
+def format_life_events_response(response: dict):
     """Format life event json objects from mocked response."""
     life_events = response.get("events")
-    if should_use_mocks:
-        life_event_json = json.loads(life_events)
-        st.table(pd.DataFrame(life_event_json, index=range(len(life_event_json))))
-    else:
-        st.table(pd.DataFrame(life_events, index=range(len(life_events))))
+    life_event_json = json.loads(life_events)
+    st.table(pd.DataFrame(life_event_json, index=range(len(life_event_json))))
 
 
-def clean_raw_json(response: str, components_to_remove_from_response: list):
+def clean_raw_json(response: dict, components_to_remove_from_response: list):
     """Remove extraneous key value pairs from raw json before display."""
     response_copy = deepcopy(response)
     for item in components_to_remove_from_response:
         if response_copy.get(item):
             response_copy.pop(item)
-    return response_copy
+    response_copy_with_parsed_dicts = {}
+    for k, v in response_copy.items():
+        try:
+            parsed_literal = ast.literal_eval(v)
+            response_copy_with_parsed_dicts[k] = parsed_literal
+        except (SyntaxError, ValueError):
+            response_copy_with_parsed_dicts[k] = v
+
+    return response_copy_with_parsed_dicts
 
 
 def camel_case_to_split_title(string: str):
@@ -125,11 +131,15 @@ def format_auto_prefill_response(response: dict):
     """Format JSON API response according to target list"""
     targets = ["primary", "drivers", "vehicles", "vehiclesEnhanced"]
 
-    client_information_dict = {k: response.get(k, "Not Found") for k in targets}
+    client_information_dict = {
+        k: ast.literal_eval(response.get(k, "Not Found")) for k in targets
+    }
 
     for idx, target in enumerate(targets):
 
-        expander = st.beta_expander(f"{target.title()}")
+        expander_title = camel_case_to_split_title(target)
+
+        expander = st.beta_expander(f"{expander_title}")
 
         if isinstance(client_information_dict.get(target), dict):
             info_df = pd.json_normalize(client_information_dict.get(target))
