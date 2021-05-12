@@ -177,6 +177,7 @@ def format_property_response(response: dict):
 
 
 def format_response_by_service(service_name: str, response: dict):
+    """Format response object according to service categorization."""
     if service_name == "LifeEvents":
         format_life_events_response(response=response)
     elif service_name == "PFR":

@@ -12,7 +12,7 @@ import streamlit as st
 
 
 def app(person: Person, service_name: str):
-
+    """Display response for a mock personal query."""
     try:
         response = mock_personal_query(person=person, service_name=service_name)
     except Exception:
