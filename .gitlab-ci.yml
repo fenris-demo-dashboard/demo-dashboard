@@ -1,4 +1,6 @@
 image: "public.ecr.aws/bitnami/python:3.8"
+include:
+  - remote: "https://gitlab.com/fenrisdigital/analytics/heimdal.git/.gitlab-ci.yml"
 
 stages:
   - quality
@@ -25,7 +27,7 @@ pylint:
   - doit python_dependencies
   - mkdir -p public/badges public/lint target
   - echo undefined > public/badges/$CI_JOB_NAME.score
-  - pylint --exit-zero --output-format=text heimdal | tee target/pylint.txt
+  - pylint --exit-zero --output-format=text demo_dashboard | tee target/pylint.txt
   - sed -n 's/^Your code has been rated at \([-0-9.]*\)\/.*/\1/p' target/pylint.txt > public/badges/$CI_JOB_NAME.score
   - pylint --exit-zero --output-format=pylint_gitlab.GitlabCodeClimateReporter $(find -type f -name "*.py" ! -path "**/.venv/**") > codeclimate.json
   - pylint --exit-zero --output-format=pylint_gitlab.GitlabPagesHtmlReporter $(find -type f -name "*.py" ! -path "**/.venv/**") > public/lint/index.html
@@ -85,3 +87,4 @@ publish_registry:
     - TWINE_PASSWORD=${CI_JOB_TOKEN} TWINE_USERNAME=gitlab-ci-token python -m twine upload --verbose --repository-url https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/packages/pypi dist/*
   only:
     - master
+
