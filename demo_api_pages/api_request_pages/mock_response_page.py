@@ -20,8 +20,7 @@ def app(person: Person, service_name: str):
 
     page_title = camel_case_to_split_title(service_name)
     st.subheader(
-        f"{page_title} API Response for " 
-        f"{person.first_name} {person.last_name}"
+        f"{page_title} API Response for " f"{person.first_name} {person.last_name}"
     )
 
     if st.sidebar.checkbox(label="Raw JSON Data"):
@@ -32,10 +31,9 @@ def app(person: Person, service_name: str):
             "score",
             "status",
             "modelVersion",
-            "sequenceId"
+            "sequenceId",
         ]
         cleaned_response = clean_raw_json(response, components_to_remove_from_response)
         st.write(cleaned_response)
     else:
         format_response_by_service(service_name=service_name, response=response)
-

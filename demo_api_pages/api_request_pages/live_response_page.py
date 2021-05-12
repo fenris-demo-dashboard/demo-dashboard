@@ -1,8 +1,6 @@
 """Custom API request page."""
+from demo_supplements.aesthetics.aesthetics import format_response_by_service
 from demo_supplements.io.request_handlers.live_requests import live_query
-from demo_supplements.aesthetics.aesthetics import (
-    format_response_by_service
-)
 
 
 def app(api: str, body: object):

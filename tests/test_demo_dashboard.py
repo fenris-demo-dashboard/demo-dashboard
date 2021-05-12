@@ -1,11 +1,10 @@
 """Test functions used by the demo dashboard."""
 
-
+from demo_supplements.aesthetics.aesthetics import format_auto_prefill_response
 from demo_supplements.io.deserializers.person import (
     load_person_from_first_and_last_name,
 )
 from demo_supplements.io.request_handlers.auth import initialize_demo_client
-from demo_supplements.aesthetics.aesthetics import format_auto_prefill_response
 from demo_supplements.io.request_handlers.live_requests import (
     live_query,
 )

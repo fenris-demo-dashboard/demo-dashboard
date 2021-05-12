@@ -143,9 +143,7 @@ def format_auto_prefill_response(response: dict):
             k: ast.literal_eval(response.get(k, "Not Found")) for k in targets
         }
     except (SyntaxError, ValueError):
-        client_information_dict = {
-            k: response.get(k, "Not Found") for k in targets
-        }
+        client_information_dict = {k: response.get(k, "Not Found") for k in targets}
 
     for idx, target in enumerate(targets):
 
@@ -178,7 +176,7 @@ def format_property_response(response: dict):
     # st.table(response_table)
 
 
-def format_response_by_service(service_name: str, response:dict):
+def format_response_by_service(service_name: str, response: dict):
     if service_name == "LifeEvents":
         format_life_events_response(response=response)
     elif service_name == "PFR":
@@ -213,7 +211,7 @@ def split_rec(k, v, out):
 
     # splitting keys in dict
     # calling_recursively to break items on '_'
-    k, *rest = k.split('_', 1)
+    k, *rest = k.split("_", 1)
     if rest:
         split_rec(rest[0], v, out.setdefault(k, {}))
     else:
