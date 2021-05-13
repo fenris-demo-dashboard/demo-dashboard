@@ -1,12 +1,15 @@
-"""Text for various Demo app features."""
+"""Homepage text for demo app features."""
 
 api_descriptions = {
-    "Life Events API": """
+    "Recent Life Events API": """
         Recent Life Events checks your applicant
         or policyholder against our complete reference data on 255 million
         adults and 130 million households. In real-time, the API returns all of
         the recent life events detected, including new mover
         (and former address), household changes, financial changes, and more.""",
+    "Life Events Monitor": """
+        Leveraging our Recent Life Events API service, the life events monitor 
+        displays a list of policy holders who have experienced recent life events.""",
     "Auto Insurance Prefill API": """
         The Fenris Auto Insurance Prefill API fetches applicant data and pre-fills that
         information for the client to confirm, rather than require manual

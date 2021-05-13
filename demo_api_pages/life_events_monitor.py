@@ -22,9 +22,9 @@ from demo_supplements.io.serializers.shared import generate_list_of_names_from_d
 import streamlit as st
 
 
-def app():
+def app(title: str, service_name: str):
     """Display sample personas for Life Events API Demo."""
-    initialize_logo_and_title("Life Events")
+    initialize_logo_and_title("Life Events Monitor")
 
     event_names_list = deepcopy(event_names)
     event_names_list.insert(0, "---")
@@ -70,4 +70,4 @@ def app():
                 first_name=first_name,
                 last_name=last_name,
             )
-            mock_response_page.app(person=person, service_name="LifeEvents")
+            mock_response_page.app(person=person, service_name=service_name)

@@ -1,6 +1,10 @@
 """Fenris API Demo App dashboard home page."""
 
-from demo_api_pages import auto_prefill, custom, life_events, pfr
+from demo_api_pages import (
+    custom,
+    life_events_monitor,
+    personal_dashboard,
+)
 
 from demo_supplements.aesthetics.aesthetics import initialize_logo_and_title
 from demo_supplements.demo_text.demo_dashboard_text import api_descriptions
@@ -22,9 +26,21 @@ def get_demo_pages(pages):
 
 def sidebar_api_selection(api_selection, pages):
     """Generate sidebar dropdown sidebar API selection."""
+
+    endpoint_mapper = {
+        "PFR API": "PFR",
+        "Recent Life Events API": "LifeEvents",
+        "Life Events Monitor": "LifeEvents",
+        "Auto Insurance Prefill API": "AutoPrefill",
+        "Custom Request": "CustomRequest"
+    }
+
     if api_selection != "---":
         selected_page = pages[api_selection]
-        selected_page.app()
+        selected_page.app(
+            title=api_selection,
+            service_name=endpoint_mapper[api_selection],
+        )
     elif api_selection == "---":
         initialize_logo_and_title("Dashboard")
         st.subheader("API Information")
@@ -37,9 +53,10 @@ def sidebar_api_selection(api_selection, pages):
 def main():
     """Execute the main Demo App."""
     available_pages = {
-        "Life Events API": life_events,
-        "Auto Insurance Prefill API": auto_prefill,
-        "PFR API": pfr,
+        "Life Events Monitor": life_events_monitor,
+        "Recent Life Events API": personal_dashboard,
+        "Auto Insurance Prefill API": personal_dashboard,
+        "PFR API": personal_dashboard,
         "Custom Request": custom,
     }
 
