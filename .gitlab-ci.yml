@@ -2,7 +2,7 @@ image: "public.ecr.aws/bitnami/python:3.8"
 
 clone_heimdal:
   script:
-    - git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.instance/fenrisdigital/analytics/demo_dashboard.git
+    - git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.instance/fenrisdigital/analytics/heimdal.git
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
@@ -56,7 +56,8 @@ bandit:
 
 pytest:
   stage: test
-  needs: []
+  needs:
+    - clone_heimdal
   before_script:
     - *install_requirements
   script:
