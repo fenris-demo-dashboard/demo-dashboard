@@ -8,9 +8,6 @@ from demo_supplements.aesthetics.aesthetics import (
     divide_name,
     formatted_address_string_from_df_row,
 )
-from demo_supplements.demo_text.demo_dashboard_text import (
-    life_event_descriptions,
-)
 from demo_supplements.io.fake_request_data import FAKE_PEOPLE_DF
 
 import pandas as pd
@@ -95,18 +92,3 @@ def generate_df_from_life_event(
     df_return = df_return[show_cols]
     df_return.reset_index(inplace=True, drop=True)
     return df_return
-
-
-def load_life_event_descriptions():
-
-    col1, col2 = st.beta_columns(2)
-    move_trigger_expander = col1.beta_expander("Move Triggers", expanded=True)
-    life_trigger_expander = col2.beta_expander("Life Triggers", expanded=True)
-
-    for event, trigger_category in life_event_descriptions.items():
-        expander = (
-            move_trigger_expander
-            if trigger_category == "move"
-            else life_trigger_expander
-        )
-        expander.markdown(f"* {event}")

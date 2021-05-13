@@ -26,7 +26,7 @@ def app(title: str, service_name: str):
     name_selection = generate_persona_selection(sample_persona_names)
 
     if name_selection == "---":
-        st.subheader("Select a persona:")
+        st.subheader("Select a policy holder:")
         image_base_path = Path("./demo_supplements/assets/demo_persona_photos/")
 
         generate_image_dashboard(

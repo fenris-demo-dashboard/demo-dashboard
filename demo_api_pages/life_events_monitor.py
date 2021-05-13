@@ -10,7 +10,6 @@ from demo_supplements.aesthetics.aesthetics import (
 from demo_supplements.dashboard_components.dashboard_helper_functions import (
     generate_df_from_life_event,
     generate_persona_selection,
-    load_life_event_descriptions,
 )
 from demo_supplements.demo_text.demo_dashboard_text import event_names
 from demo_supplements.io.deserializers.person import (
@@ -24,7 +23,7 @@ import streamlit as st
 
 def app(title: str, service_name: str):
     """Display sample personas for Life Events API Demo."""
-    initialize_logo_and_title("Life Events Monitor")
+    initialize_logo_and_title(title)
 
     event_names_list = deepcopy(event_names)
     event_names_list.insert(0, "---")
@@ -43,12 +42,11 @@ def app(title: str, service_name: str):
     )
 
     if life_event == "---":
-        book_of_business_expander = st.beta_expander(
-            "Sample Book of Business", expanded=True
-        )
-        book_of_business_expander.dataframe(life_event_df[columns_to_display])
-        st.write("Types of Life Events:")
-        load_life_event_descriptions()
+        st.write("Every month, approximately 5% of your policy holders will "
+                 "experience a significant life event. We provide instant insight "
+                 "on nine key life events. Explore each one via the panel on the left.")
+        st.subheader("Sample Book of Business")
+        st.dataframe(life_event_df[columns_to_display])
 
     elif life_event != "---":
         event_monitor_df = generate_df_from_life_event(

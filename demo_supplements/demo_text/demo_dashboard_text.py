@@ -52,18 +52,6 @@ sample_persona_names = [
     "Fowler Schubert",
 ]
 
-
-life_event_descriptions = {
-    "Newly Engaged": "life",
-    "Newly Single": "life",
-    "New Baby": "life",
-    "Newly Married": "life",
-    "Prenatal": "life",
-    "Premover At Contract": "move",
-    "Premover At List": "move",
-    "New Mover": "move",
-}
-
 event_names = [
     "NEWLY ENGAGED",
     "NEWLY SINGLE",
