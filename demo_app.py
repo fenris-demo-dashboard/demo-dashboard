@@ -26,13 +26,12 @@ def get_demo_pages(pages):
 
 def sidebar_api_selection(api_selection, pages):
     """Generate sidebar dropdown sidebar API selection."""
-
     endpoint_mapper = {
         "PFR API": "PFR",
         "Recent Life Events API": "LifeEvents",
         "Life Events Monitor": "LifeEvents",
         "Auto Insurance Prefill API": "AutoPrefill",
-        "Custom Request": "CustomRequest"
+        "Custom Request": "CustomRequest",
     }
 
     if api_selection != "---":

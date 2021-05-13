@@ -42,9 +42,11 @@ def app(title: str, service_name: str):
     )
 
     if life_event == "---":
-        st.write("Every month, approximately 5% of your policy holders will "
-                 "experience a significant life event. We provide instant insight "
-                 "on nine key life events. Explore each one via the panel on the left.")
+        st.write(
+            "Every month, approximately 5% of your policy holders will "
+            "experience a significant life event. We provide instant insight "
+            "on nine key life events. Explore each one via the panel on the left."
+        )
         st.subheader("Sample Book of Business")
         st.dataframe(life_event_df[columns_to_display])
 

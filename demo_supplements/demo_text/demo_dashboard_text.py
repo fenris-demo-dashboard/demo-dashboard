@@ -8,7 +8,7 @@ api_descriptions = {
         the recent life events detected, including new mover
         (and former address), household changes, financial changes, and more.""",
     "Life Events Monitor": """
-        Leveraging our Recent Life Events API service, the life events monitor 
+        Leveraging our Recent Life Events API service, the life events monitor
         displays a list of policy holders who have experienced recent life events.""",
     "Auto Insurance Prefill API": """
         The Fenris Auto Insurance Prefill API fetches applicant data and pre-fills that
