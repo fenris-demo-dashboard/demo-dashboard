@@ -11,7 +11,6 @@ def initialize_demo_client(service_name) -> Client:
         client_id=client_id,
         client_secret=client_secret,
         service_name=service_name,
-        production_environment="uat"
+        production_environment="uat",
     )
     return client
-
