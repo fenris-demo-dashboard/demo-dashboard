@@ -15,7 +15,7 @@ finance_tier_indicator_distribution = {
 }
 
 insurance_tier_indicator_distribution = {
-    "Non-Standard": 40,
+    "Non-standard": 40,
     "Standard": 40,
     "Preferred": 20,
 }
