@@ -29,10 +29,10 @@ def initialize_logo_and_title(title: str):
 def formatted_address_string_from_df_row(row: pd.Series):
     """Return a formatted address string from a df row."""
     address = (
-        f"{row['address.addressLine1']}, "
-        f"{row['address.city']},"
-        f"{row['address.state']} "
-        f"{row['address.zipCode']}"
+        f"{row['address.addressLine1'].strip()}, "
+        f"{row['address.city'].strip()},"
+        f"{row['address.state'].strip()} "
+        f"{str(row['address.zipCode']).strip()}"
     )
 
     return address
@@ -41,7 +41,7 @@ def formatted_address_string_from_df_row(row: pd.Series):
 def clean_and_capitalize_string_input(string: str) -> str:
     """Capitalize string and strip of whitespace/extraneous characters."""
     input_string = string
-    input_string = input_string.strip().capitalize()
+    input_string = input_string.strip().title()
     return input_string
 
 
@@ -76,12 +76,13 @@ def format_life_events_response(response: dict):
 
 
 def clean_raw_json(response: dict, components_to_remove_from_response: list):
-    """Remove extraneous key value pairs from raw json before display."""
+    """Remove extraneous key value pairs from raw dict before display."""
     response_copy = deepcopy(response)
     for item in components_to_remove_from_response:
         if response_copy.get(item):
             response_copy.pop(item)
     response_copy_with_parsed_dicts = {}
+    # remove dicts and lists from string nesting (for mock data)
     for k, v in response_copy.items():
         try:
             parsed_literal = ast.literal_eval(v)

@@ -1,7 +1,6 @@
 """Pytest configuration file with centralized fixtures."""
 from copy import deepcopy
 
-import heimdal.constants as constants
 from heimdal.client import Client
 from heimdal.client_functions import (
     load_credentials,
@@ -43,14 +42,6 @@ def fake_people_person_address_input_map():
         return deepcopy(person_address_input_map)
 
     return return_deepcopy
-
-
-@pytest.fixture(scope="session")
-def generate_fake_submission_id():
-    fake_submission_id = (
-        f"{constants.TEST_JOB_ID}" f"-{str(constants.TEST_RECORD_NUMBER).zfill(6)}"
-    )
-    return fake_submission_id
 
 
 @pytest.fixture(scope="session")

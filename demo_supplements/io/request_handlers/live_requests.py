@@ -1,7 +1,7 @@
 from demo_supplements.aesthetics.aesthetics import spinner_decorator_factory
 from demo_supplements.io.request_handlers.auth import initialize_demo_client
 
-from heimdal.io.request_handlers.auto import get_auto_prefill_data
+from heimdal.io.request_handlers.auto_prefill import get_auto_prefill_data
 from heimdal.io.request_handlers.life_event import get_life_event_data
 from heimdal.io.request_handlers.pfr import get_pfr_data
 from heimdal.io.request_handlers.property import get_property_data

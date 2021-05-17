@@ -38,7 +38,6 @@ def generate_image_dashboard(
 
             persona_index = (row_num * 3) + col_num
             name = persona_names[persona_index]
-            # streamlit_cols[col_num].subheader(f"{name}")
             streamlit_cols[col_num].markdown(
                 f"<h4 style='text-align: center; color: #0C2E4F; "
                 f"family:Roboto;'>{name}</h4>",
