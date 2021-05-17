@@ -34,6 +34,8 @@ indicator_distributions = {
     "creditLevel": credit_level_distribution,
 }
 
+colors = {"fenris_green": "#8CC641", "fenris_teal": "#21ABAD"}
+
 
 def generate_highlight_barplot(
     indicator_value: str,
@@ -51,9 +53,9 @@ def generate_highlight_barplot(
     cmap = {}
     for i in indicator_distribution.keys():
         if i == indicator_value:
-            cmap[i] = "#8CC641"
+            cmap[i] = colors["fenris_green"]
         else:
-            cmap[i] = "#21ABAD"
+            cmap[i] = colors["fenris_teal"]
 
     sns.barplot(data=finance_df, palette=cmap)
     ax.set_xlabel(x_label)
