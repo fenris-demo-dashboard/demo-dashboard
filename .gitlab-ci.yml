@@ -4,16 +4,10 @@ variables:
   GIT_SUBMODULE_STRATEGY: recursive
 
 stages:
-  - imports
   - quality
   - test
   - build
   - deploy
-
-clone_heimdal:
-  stage: imports
-  script:
-    - git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/fenrisdigital/analytics/heimdal.git
 
 .install_requirements: &install_requirements
   - pip install doit
@@ -58,8 +52,7 @@ bandit:
 
 pytest:
   stage: test
-  needs:
-    - clone_heimdal
+  needs: []
   before_script:
     - *install_requirements
   script:
