@@ -4,13 +4,13 @@ from demo_supplements.io.request_handlers.auth import initialize_demo_client
 from heimdal.io.request_handlers.auto_prefill import get_auto_prefill_data
 from heimdal.io.request_handlers.life_event import get_life_event_data
 from heimdal.io.request_handlers.pfr import get_pfr_data
-from heimdal.io.request_handlers.property import get_property_data
+from heimdal.io.request_handlers.property import get_property_details_data
 
 fetch_methods = {
     "PFR": get_pfr_data,
     "LifeEvents": get_life_event_data,
     "AutoPrefill": get_auto_prefill_data,
-    "PropertyDetails": get_property_data,
+    "PropertyDetails": get_property_details_data,
 }
 
 
@@ -33,5 +33,4 @@ def live_query(input_object, service_name):
         record_number=1,
     ).result()
 
-    assert response_json is not None
     return response_json
