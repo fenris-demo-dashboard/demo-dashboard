@@ -1,0 +1,97 @@
+image: "public.ecr.aws/bitnami/python:3.8"
+
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+
+default:
+  tags:
+    - Demo Dashboard Runner
+  before_script:
+    - git submodule init
+    - git submodule update --recursive --remote
+
+stages:
+  - quality
+  - test
+  - build
+  - deploy
+
+.install_requirements: &install_requirements
+  - pip install doit
+
+flake8:
+  stage: quality
+  before_script:
+    - *install_requirements
+  script:
+    - doit --verbosity 2 flake8
+
+pylint:
+  stage: quality
+  before_script:
+    - *install_requirements
+  allow_failure: true
+  script:
+    - doit python_dependencies
+    - mkdir -p public/badges public/lint target
+    - echo undefined > public/badges/$CI_JOB_NAME.score
+    - pylint --exit-zero --output-format=text demo_dashboard | tee target/pylint.txt
+    - sed -n 's/^Your code has been rated at \([-0-9.]*\)\/.*/\1/p' target/pylint.txt > public/badges/$CI_JOB_NAME.score
+    - pylint --exit-zero --output-format=pylint_gitlab.GitlabCodeClimateReporter $(find -type f -name "*.py" ! -path "**/.venv/**") > codeclimate.json
+    - pylint --exit-zero --output-format=pylint_gitlab.GitlabPagesHtmlReporter $(find -type f -name "*.py" ! -path "**/.venv/**") > public/lint/index.html
+  after_script:
+    - anybadge --overwrite --label $CI_JOB_NAME --value=$(cat public/badges/$CI_JOB_NAME.score) --file=public/badges/$CI_JOB_NAME.svg 4=red 6=orange 8=yellow 10=green
+    - |
+      echo "Your score is: $(cat public/badges/$CI_JOB_NAME.score)"
+  artifacts:
+    paths:
+      - public
+    reports:
+      codequality: codeclimate.json
+    when: always
+
+bandit:
+  stage: quality
+  before_script:
+    - *install_requirements
+  script:
+    - doit --verbosity 2 bandit
+
+pytest:
+  stage: test
+  needs: []
+  before_script:
+    - *install_requirements
+  script:
+    - doit --verbosity 2 pytest_junit_report
+  artifacts:
+    when: always
+    reports:
+      junit: report.xml
+
+package:
+  stage: build
+  needs:
+    - pytest
+  before_script:
+    - *install_requirements
+    - doit python_dependencies
+  script:
+    - pip install wheel
+    - python setup.py sdist bdist_wheel
+  artifacts:
+    untracked: false
+    expire_in: 7 days
+    paths:
+      - dist
+
+publish_registry:
+  stage: deploy
+  needs:
+    - package
+  script:
+    - pip install twine
+    - echo ${CI_PROJECT_ID}
+    - TWINE_PASSWORD=${CI_JOB_TOKEN} TWINE_USERNAME=gitlab-ci-token python -m twine upload --verbose --repository-url https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/packages/pypi dist/*
+  only:
+    - master
