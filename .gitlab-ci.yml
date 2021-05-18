@@ -3,6 +3,13 @@ image: "public.ecr.aws/bitnami/python:3.8"
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
 
+default:
+  tags:
+    - Demo Dashboard Runner
+  before_script:
+    - git submodule init
+    - git submodule update --recursive --remote
+
 stages:
   - quality
   - test
