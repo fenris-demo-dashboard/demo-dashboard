@@ -12,7 +12,7 @@ fetch_methods = {
     "AutoPrefill": get_personal_data,
     "PropertyDetails": get_property_data,
     "PropertyRisks": get_property_data,
-    "PropertyReplacementCost": get_property_data,
+    "PropertyReplacement": get_property_data,
     "SMB": get_business_data,
 }
 

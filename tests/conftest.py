@@ -6,7 +6,9 @@ from heimdal.client_functions import (
     load_credentials,
 )
 from heimdal.io.deserializers.address import load_address_from_df_row
+from heimdal.io.deserializers.business import load_business_from_df_row
 from heimdal.io.deserializers.person import load_person_from_df_row
+from heimdal.io.mappers.business_input_maps import BusinessAddressInputMap
 from heimdal.io.mappers.personal_input_maps import PersonAddressInputMap
 from heimdal.io.mappers.property_input_maps import AddressInputMap
 
@@ -93,8 +95,23 @@ def fake_address_input_map():
 
 
 @pytest.fixture(scope="function")
+def fake_address_input_map():
+    address_map = AddressInputMap(
+        address_line1="address.addressLine1",
+        city="address.city",
+        state="address.state",
+        zip_code="address.zipCode",
+    )
+
+    def return_deepcopy():
+        return deepcopy(address_map)
+
+    return return_deepcopy
+
+
+@pytest.fixture(scope="function")
 def fake_address_df():
-    df = pd.read_csv("tests/assets/address_sample.csv")
+    df = pd.read_csv("tests/assets/postman_requests_data_file.csv", index_col=0)
 
     def return_df_copy():
         return df.copy()
@@ -103,7 +120,7 @@ def fake_address_df():
 
 
 @pytest.fixture(scope="function")
-def generate_fake_address_for_property(fake_address_df, fake_address_input_map):
+def generate_fake_address(fake_address_df, fake_address_input_map):
     fake_address_df = fake_address_df()
     fake_address_input_map = fake_address_input_map()
     fake_address = load_address_from_df_row(
@@ -112,5 +129,46 @@ def generate_fake_address_for_property(fake_address_df, fake_address_input_map):
 
     def return_deepcopy():
         return deepcopy(fake_address)
+
+    return return_deepcopy
+
+
+@pytest.fixture(scope="session")
+def fake_business_df():
+    df = pd.read_csv("tests/assets/smb_data.csv")
+    df["names"] = df["names"].apply(eval)
+
+    def return_df_copy():
+        return df.copy()
+
+    return return_df_copy
+
+
+@pytest.fixture(scope="session")
+def fake_business_address_input_map():
+    business_address_input_map = BusinessAddressInputMap(
+        names="names",
+        address_line1="address.addressLine1",
+        city="address.city",
+        state="address.state",
+        zip_code="address.zipCode",
+    )
+
+    def return_deepcopy():
+        return deepcopy(business_address_input_map)
+
+    return return_deepcopy
+
+
+@pytest.fixture(scope="function")
+def generate_fake_business(fake_business_df, fake_business_address_input_map):
+    fake_business_df = fake_business_df()
+    fake_business_address_input_map = fake_business_address_input_map()
+    fake_business = load_business_from_df_row(
+        fake_business_df.iloc[1], fake_business_address_input_map
+    )
+
+    def return_deepcopy():
+        return deepcopy(fake_business)
 
     return return_deepcopy
