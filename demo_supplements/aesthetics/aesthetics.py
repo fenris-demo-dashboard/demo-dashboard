@@ -197,6 +197,8 @@ def format_response_by_service(service_name: str, response: dict):
         format_auto_prefill_response(response=response)
     elif service_name == "PropertyDetails":
         format_property_response(response=response)
+    else:
+        st.write(response)
 
 
 def denest_dict(dict1):

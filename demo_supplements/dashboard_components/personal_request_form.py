@@ -2,7 +2,9 @@ import datetime
 
 from demo_api_pages.api_request_pages import live_response_page
 
+from heimdal.constants import service_names
 from heimdal.entities.address import Address
+from heimdal.entities.business import Business
 from heimdal.entities.person import Person
 
 import streamlit as st
@@ -61,6 +63,22 @@ states = [
     "WY",
 ]
 
+personal_apis = [
+    "PFR",
+    "Life Events",
+    "Auto Insurance Prefill",
+    "Life Prefill"
+]
+property_apis = [
+    "Property Details",
+    "Property Replacement Cost",
+    "Property Risks"
+]
+
+business_apis = [
+    "Small Business"
+]
+
 
 def person_input(form_name):
     first_name = form_name.text_input("First Name:", help="Enter client first name")
@@ -89,14 +107,17 @@ def address_input(form_name):
     return address, state, city, zip_code
 
 
+def business_input(form_name):
+    name = form_name.text_input("Business Name")
+
+
 def personal_request_form():
     api_endpoint = st.sidebar.selectbox(
         options=[
             "---",
-            "Life Events",
-            "PFR",
-            "Auto Insurance Prefill",
-            "Property Details",
+            *personal_apis,
+            *property_apis,
+            *business_apis,
         ],
         label="Select API",
     )
@@ -109,15 +130,14 @@ def personal_request_form():
 
             input_form = st.form(key="custom_request_form")
 
-            address, state, city, zip_code = address_input(form_name=input_form)
-            custom_address = Address(address, city, state, zip_code)
-
-            body = custom_address
-
-            if api_endpoint in ["Life Events", "PFR", "Auto Insurance Prefill"]:
+            if api_endpoint in personal_apis:
                 first_name, middle_name, last_name, date_of_birth = person_input(
                     form_name=input_form
                 )
+
+                address, state, city, zip_code = address_input(form_name=input_form)
+                custom_address = Address(address, city, state, zip_code)
+
                 custom_person = Person(
                     first_name=first_name,
                     middle_name=middle_name,
@@ -127,13 +147,34 @@ def personal_request_form():
                 )
                 body = custom_person
 
+            elif api_endpoint in property_apis:
+                address, state, city, zip_code = address_input(form_name=input_form)
+                custom_address = Address(address, city, state, zip_code)
+                body = custom_address
+
+            elif api_endpoint in business_apis:
+                business_names = input_form.text_input("Business Name (or names, separated by commas):")
+                address, state, city, zip_code = address_input(form_name=input_form)
+                custom_address = Address(address, city, state, zip_code)
+                business = Business(
+                    names=[name.strip() for name in business_names.split(',')],
+                    address=custom_address,
+                )
+                st.write(business)
+                body = business
+
+
             submit_button = input_form.form_submit_button(label="Submit")
 
             endpoint_mapper = {
-                "PFR": "PFR",
-                "Life Events": "LifeEvents",
-                "Property Details": "PropertyDetails",
-                "Auto Insurance Prefill": "AutoPrefill",
+                "PFR": service_names.pfr,
+                "Life Events": service_names.life_events,
+                "Auto Insurance Prefill": service_names.auto_prefill,
+                "Life Prefill": service_names.life_prefill,
+                "Property Details": service_names.property_details,
+                "Property Replacement Cost": service_names.property_replacement,
+                "Property Risks": service_names.property_risks,
+                "Small Business": service_names.smb,
             }
             if submit_button:
                 live_response_page.app(api=endpoint_mapper.get(api_endpoint), body=body)
