@@ -1,16 +1,19 @@
 from demo_supplements.aesthetics.aesthetics import spinner_decorator_factory
 from demo_supplements.io.request_handlers.auth import initialize_demo_client
 
-from heimdal.io.request_handlers.auto_prefill import get_auto_prefill_data
-from heimdal.io.request_handlers.life_event import get_life_event_data
-from heimdal.io.request_handlers.pfr import get_pfr_data
+from heimdal.io.request_handlers.personal import get_personal_data
 from heimdal.io.request_handlers.property import get_property_data
+from heimdal.io.request_handlers.business import get_business_data
 
 fetch_methods = {
-    "PFR": get_pfr_data,
-    "LifeEvents": get_life_event_data,
-    "AutoPrefill": get_auto_prefill_data,
+    "PFR": get_personal_data,
+    "LifeEvents": get_personal_data,
+    "LifePrefill": get_personal_data,
+    "AutoPrefill": get_personal_data,
     "PropertyDetails": get_property_data,
+    "PropertyRisks": get_property_data,
+    "PropertyReplacementCost": get_property_data,
+    "SMB": get_business_data,
 }
 
 
