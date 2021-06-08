@@ -25,7 +25,9 @@ pylint:
     - doit python_dependencies
     - mkdir -p public/badges public/lint target
     - echo undefined > public/badges/$CI_JOB_NAME.score
-    - pylint --exit-zero --output-format=text demo_dash | tee target/pylint.txt
+    - pylint --exit-zero --output-format=text --rcfile=setup.cfg demo_api_pages | tee target/pylint.txt
+    - pylint --exit-zero --output-format=text --rcfile=setup.cfg demo_supplements | tee target/pylint.txt
+    - pylint --exit-zero --output-format=text --rcfile=setup.cfg demo_app.py | tee target/pylint.txt
     - sed -n 's/^Your code has been rated at \([-0-9.]*\)\/.*/\1/p' target/pylint.txt > public/badges/$CI_JOB_NAME.score
     - pylint --exit-zero --output-format=pylint_gitlab.GitlabCodeClimateReporter $(find -type f -name "*.py" ! -path "**/.venv/**") > codeclimate.json
     - pylint --exit-zero --output-format=pylint_gitlab.GitlabPagesHtmlReporter $(find -type f -name "*.py" ! -path "**/.venv/**") > public/lint/index.html
