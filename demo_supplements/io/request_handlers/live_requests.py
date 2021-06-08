@@ -1,9 +1,9 @@
 from demo_supplements.aesthetics.aesthetics import spinner_decorator_factory
 from demo_supplements.io.request_handlers.auth import initialize_demo_client
 
+from heimdal.io.request_handlers.business import get_business_data
 from heimdal.io.request_handlers.personal import get_personal_data
 from heimdal.io.request_handlers.property import get_property_data
-from heimdal.io.request_handlers.business import get_business_data
 
 fetch_methods = {
     "PFR": get_personal_data,

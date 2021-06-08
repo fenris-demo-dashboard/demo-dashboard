@@ -7,6 +7,7 @@ from heimdal.constants import service_names
 
 import pytest
 
+
 @pytest.mark.parametrize(
     "client_service_string",
     [
@@ -18,8 +19,7 @@ import pytest
         service_names.property_risks,
         service_names.property_replacement,
         service_names.smb,
-    ]
-
+    ],
 )
 def test_st_client(client_service_string):
 
@@ -33,8 +33,8 @@ def test_st_client(client_service_string):
         service_names.pfr,
         service_names.life_events,
         service_names.auto_prefill,
-        service_names.life_prefill
-    ]
+        service_names.life_prefill,
+    ],
 )
 def test_live_personal_query(service_name, generate_fake_person):
     fake_person = generate_fake_person()
@@ -51,7 +51,7 @@ def test_live_personal_query(service_name, generate_fake_person):
         service_names.property_details,
         service_names.property_risks,
         service_names.property_replacement,
-    ]
+    ],
 )
 def test_live_property_query(service_name, generate_fake_address):
     fake_address = generate_fake_address()

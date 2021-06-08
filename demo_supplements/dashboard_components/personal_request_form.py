@@ -63,21 +63,10 @@ states = [
     "WY",
 ]
 
-personal_apis = [
-    "PFR",
-    "Life Events",
-    "Auto Insurance Prefill",
-    "Life Prefill"
-]
-property_apis = [
-    "Property Details",
-    "Property Replacement Cost",
-    "Property Risks"
-]
+personal_apis = ["PFR", "Life Events", "Auto Insurance Prefill", "Life Prefill"]
+property_apis = ["Property Details", "Property Replacement Cost", "Property Risks"]
 
-business_apis = [
-    "Small Business"
-]
+business_apis = ["Small Business"]
 
 
 def person_input(form_name):
@@ -105,10 +94,6 @@ def address_input(form_name):
         "Zip Code:", value=12345, min_value=1000, help="Enter client zipcode"
     )
     return address, state, city, zip_code
-
-
-def business_input(form_name):
-    name = form_name.text_input("Business Name")
 
 
 def personal_request_form():
@@ -153,16 +138,17 @@ def personal_request_form():
                 body = custom_address
 
             elif api_endpoint in business_apis:
-                business_names = input_form.text_input("Business Name (or names, separated by commas):")
+                business_names = input_form.text_input(
+                    "Business Name (or names, separated by commas):"
+                )
                 address, state, city, zip_code = address_input(form_name=input_form)
                 custom_address = Address(address, city, state, zip_code)
                 business = Business(
-                    names=[name.strip() for name in business_names.split(',')],
+                    names=[name.strip() for name in business_names.split(",")],
                     address=custom_address,
                 )
                 st.write(business)
                 body = business
-
 
             submit_button = input_form.form_submit_button(label="Submit")
 
