@@ -4,7 +4,6 @@ DOIT_CONFIG = {
         "flake8",
         "black",
         "pydocstyle",
-        "pylint",
         "bandit",
         "mypy",
         "pytest",
@@ -75,24 +74,6 @@ def task_pydocstyle():
             "name": file,
             "actions": [f"pydocstyle --convention=numpy {file}"],
             "file_dep": [file],
-            "task_dep": ["python_dependencies"],
-        }
-
-
-def task_pylint():
-    for directory in python_directories:
-        if directory != "tests":
-            yield {
-                "name": directory,
-                "actions": [f"pylint --rcfile=setup.cfg {directory}"],
-                "file_dep": list_files(directory) + ["setup.cfg"],
-                "task_dep": ["python_dependencies"],
-            }
-    for file in python_files:
-        yield {
-            "name": file,
-            "actions": [f"pylint --rcfile=setup.cfg {file}"],
-            "file_dep": [file] + ["setup.cfg"],
             "task_dep": ["python_dependencies"],
         }
 
