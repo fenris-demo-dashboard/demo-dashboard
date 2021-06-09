@@ -5,7 +5,7 @@ from demo_supplements.dashboard_components.personal_request_form import (
 )
 
 
-def app(title: str, service_name=None):
+def app(title: str, service_name: str) -> None:
     """Allow custom request to Fenris APIs."""
     initialize_logo_and_title(title)
     personal_request_form()

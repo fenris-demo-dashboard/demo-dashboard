@@ -43,7 +43,7 @@ def generate_highlight_barplot(
     expander: st.beta_expander,
     x_label: str,
     y_label: str = "Proportion of Population",
-):
+) -> None:
     sns.set_theme(font="sans serif", style="ticks", context="notebook")
     finance_df = pd.DataFrame.from_dict(
         indicator_distribution, orient="index", columns=["count"]

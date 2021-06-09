@@ -1,4 +1,5 @@
 import datetime
+from typing import Tuple
 
 from demo_api_pages.api_request_pages import live_response_page
 
@@ -69,7 +70,8 @@ property_apis = ["Property Details", "Property Replacement Cost", "Property Risk
 business_apis = ["Small Business"]
 
 
-def person_input(form_name):
+def person_input(form_name: st.form) -> Tuple[str, str, str, str]:
+    """Personal input form."""
     first_name = form_name.text_input("First Name:", help="Enter client first name")
     middle_name = form_name.text_input("Middle Name:", help="Enter client middle name")
     last_name = form_name.text_input("Last Name:", help="Enter client last name")
@@ -83,10 +85,11 @@ def person_input(form_name):
         ),
         "%m/%d/%Y",
     )
-    return first_name, middle_name, last_name, date_of_birth
+    return str(first_name), str(middle_name), str(last_name), date_of_birth
 
 
-def address_input(form_name):
+def address_input(form_name: st.form) -> Tuple[str, str, str, str]:
+    """Address input form."""
     address = form_name.text_input("Address Line 1:", help="Enter client address")
     state = form_name.selectbox(options=states, label="State")
     city = form_name.text_input("City:", help="Enter client's city of residence")
@@ -96,7 +99,7 @@ def address_input(form_name):
     return address, state, city, zip_code
 
 
-def personal_request_form():
+def personal_request_form() -> None:
     api_endpoint = st.sidebar.selectbox(
         options=[
             "---",

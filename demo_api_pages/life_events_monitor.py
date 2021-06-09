@@ -21,7 +21,7 @@ from demo_supplements.io.serializers.shared import generate_list_of_names_from_d
 import streamlit as st
 
 
-def app(title: str, service_name: str):
+def app(title: str, service_name: str) -> None:
     """Display sample personas for Life Events API Demo."""
     initialize_logo_and_title(title)
 

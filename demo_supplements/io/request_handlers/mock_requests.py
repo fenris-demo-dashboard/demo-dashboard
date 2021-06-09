@@ -1,4 +1,5 @@
 import json
+from typing import Any, Dict
 
 from demo_supplements.aesthetics.aesthetics import spinner_decorator_factory
 from demo_supplements.io.mock_responses import api_to_fake_response_df_mapper
@@ -11,7 +12,7 @@ from heimdal.entities.person import Person
 def mock_personal_query(
     person: Person,
     service_name: str,
-):
+) -> Dict[str, Any]:
     """
     Fetch data from mock response based on first, last, and service name.
     """
@@ -31,7 +32,7 @@ def mock_personal_query(
 def mock_property_query(
     address: Address,
     service_name: str,
-):
+) -> Dict[str, Any]:
     """
     Fetch data from mock response based on first, last, and service name.
     """

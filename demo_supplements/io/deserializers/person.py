@@ -6,6 +6,7 @@ from demo_supplements.io.fake_request_data import (
     FAKE_PERSON_ADDRESS_INPUT_MAP,
 )
 
+from heimdal.entities.person import Person
 from heimdal.io.deserializers.person import load_person_from_df_row
 from heimdal.io.mappers.personal_input_maps import PersonAddressInputMap
 
@@ -18,7 +19,7 @@ def load_person_from_first_and_last_name(
     last_name: str,
     df: pd.DataFrame = FAKE_PEOPLE_DF,
     input_map: PersonAddressInputMap = FAKE_PERSON_ADDRESS_INPUT_MAP,
-):
+) -> Person:
     """Create a Person object and Address object given a selected persona."""
     matched_row = match_name_to_row(
         name=" ".join([first_name, last_name]), sample_personas_df=df

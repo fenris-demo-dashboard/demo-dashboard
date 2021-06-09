@@ -2,6 +2,7 @@ import ast
 import json
 from copy import deepcopy
 from pathlib import Path
+from typing import Any, Callable, Dict, Tuple
 
 from PIL import Image
 
@@ -16,7 +17,7 @@ import pandas as pd
 import streamlit as st
 
 
-def initialize_logo_and_title(title: str):
+def initialize_logo_and_title(title: str) -> None:
     """Load demo page headers/logo."""
     logo_image_path = Path("./demo_supplements/assets/logos/fenris_logo.png")
     logo_image = Image.open(logo_image_path)
@@ -26,7 +27,7 @@ def initialize_logo_and_title(title: str):
     col2.title(title)
 
 
-def formatted_address_string_from_df_row(row: pd.Series):
+def formatted_address_string_from_df_row(row: pd.Series) -> str:
     """Return a formatted address string from a df row."""
     address = (
         f"{row['address.addressLine1'].strip()}, "
@@ -45,11 +46,11 @@ def clean_and_capitalize_string_input(string: str) -> str:
     return input_string
 
 
-def spinner_decorator_factory(spinner_text: str) -> callable:
+def spinner_decorator_factory(spinner_text: str) -> Callable:
     """Decorate time-consuming functions with a descriptive spinner."""
 
-    def spinner_decorator(func: callable):
-        def spinner_wrapper(*args, **kwargs):
+    def spinner_decorator(func: Callable) -> Callable:
+        def spinner_wrapper(*args: Any, **kwargs: Any) -> Any:
             with st.spinner(text=spinner_text):
                 result = func(*args, **kwargs)
             return result
@@ -59,15 +60,15 @@ def spinner_decorator_factory(spinner_text: str) -> callable:
     return spinner_decorator
 
 
-def divide_name(name: str):
+def divide_name(name: str) -> Tuple[str, str]:
     """Divide a name by first and last, splitting on a space."""
     first_name, last_name = name.split(" ")[0], name.split(" ")[1]
     return first_name, last_name
 
 
-def format_life_events_response(response: dict):
+def format_life_events_response(response: dict) -> None:
     """Format life event json objects from mocked response."""
-    life_events = response.get("events")
+    life_events = str(response.get("events"))
     try:
         life_event_json = json.loads(life_events)
         st.table(pd.DataFrame(life_event_json, index=range(len(life_event_json))))
@@ -75,7 +76,7 @@ def format_life_events_response(response: dict):
         st.table(pd.DataFrame(life_events, index=range(len(life_events))))
 
 
-def clean_raw_json(response: dict, components_to_remove_from_response: list):
+def clean_raw_json(response: dict, components_to_remove_from_response: list) -> dict:
     """Remove extraneous key value pairs from raw dict before display."""
     response_copy = deepcopy(response)
     for item in components_to_remove_from_response:
@@ -93,7 +94,7 @@ def clean_raw_json(response: dict, components_to_remove_from_response: list):
     return response_copy_with_parsed_dicts
 
 
-def camel_case_to_split_title(string: str):
+def camel_case_to_split_title(string: str) -> str:
     """Split a camel case string to one with title case."""
     if string.isupper():
         return string
@@ -105,7 +106,7 @@ def camel_case_to_split_title(string: str):
         return " ".join(x.title() for x in split_string)
 
 
-def format_pfr_response(response: dict, targets: list, field_info: dict):
+def format_pfr_response(response: dict, targets: list, field_info: dict) -> None:
     """Format PFR JSON API response according to target list"""
     client_information_dict = {k: response.get(k, "Not Found") for k in targets}
 
@@ -135,7 +136,7 @@ def format_pfr_response(response: dict, targets: list, field_info: dict):
             expander.markdown(caption)
 
 
-def format_auto_prefill_response(response: dict):
+def format_auto_prefill_response(response: dict) -> None:
     """Format JSON API response according to target list"""
     targets = ["primary", "drivers", "vehicles", "vehiclesEnhanced"]
 
@@ -169,7 +170,7 @@ def format_auto_prefill_response(response: dict):
         expander.dataframe(info_dataframe)
 
 
-def format_property_response(response: dict):
+def format_property_response(response: dict) -> None:
     nested_response = denest_dict(response)
     st.json(nested_response)
     # response_table = pd.DataFrame.from_dict(nested_response, orient='index')
@@ -177,7 +178,7 @@ def format_property_response(response: dict):
     # st.table(response_table)
 
 
-def format_response_by_service(service_name: str, response: dict):
+def format_response_by_service(service_name: str, response: dict) -> None:
     """Format response object according to service categorization."""
     if service_name == "LifeEvents":
         format_life_events_response(response=response)
@@ -201,8 +202,8 @@ def format_response_by_service(service_name: str, response: dict):
         st.write(response)
 
 
-def denest_dict(dict1):
-    result = {}
+def denest_dict(dict1: dict) -> Dict[str, Any]:
+    result: Dict[str, Any] = {}
     for k, v in dict1.items():
 
         # for each key call method split_rec which
@@ -211,7 +212,7 @@ def denest_dict(dict1):
     return result
 
 
-def split_rec(k, v, out):
+def split_rec(k: str, v: Any, out: dict) -> None:
 
     # splitting keys in dict
     # calling_recursively to break items on '_'

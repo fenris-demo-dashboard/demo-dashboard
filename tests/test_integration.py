@@ -1,3 +1,5 @@
+from typing import Callable
+
 from demo_supplements.io.request_handlers.auth import initialize_demo_client
 from demo_supplements.io.request_handlers.live_requests import (
     live_query,
@@ -21,7 +23,7 @@ import pytest
         service_names.smb,
     ],
 )
-def test_st_client(client_service_string):
+def test_st_client(client_service_string: str) -> None:
 
     client = initialize_demo_client(client_service_string)
     assert client is not None
@@ -36,7 +38,7 @@ def test_st_client(client_service_string):
         service_names.life_prefill,
     ],
 )
-def test_live_personal_query(service_name, generate_fake_person):
+def test_live_personal_query(service_name: str, generate_fake_person: Callable) -> None:
     fake_person = generate_fake_person()
 
     response = live_query(input_object=fake_person, service_name=service_name)
@@ -53,7 +55,9 @@ def test_live_personal_query(service_name, generate_fake_person):
         service_names.property_replacement,
     ],
 )
-def test_live_property_query(service_name, generate_fake_address):
+def test_live_property_query(
+    service_name: str, generate_fake_address: Callable
+) -> None:
     fake_address = generate_fake_address()
 
     response = live_query(input_object=fake_address, service_name=service_name)
@@ -62,10 +66,10 @@ def test_live_property_query(service_name, generate_fake_address):
     assert response.get("status").lower() == "success"
 
 
-def test_live_business_query(generate_fake_business):
-    fake_address = generate_fake_business()
+def test_live_business_query(generate_fake_business: Callable) -> None:
+    fake_business = generate_fake_business()
 
-    response = live_query(input_object=fake_address, service_name="SMB")
+    response = live_query(input_object=fake_business, service_name="SMB")
 
     assert response is not None
     assert response.get("status").lower() == "success"

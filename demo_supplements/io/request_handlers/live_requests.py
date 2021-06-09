@@ -1,3 +1,5 @@
+from typing import Any, Dict
+
 from demo_supplements.aesthetics.aesthetics import spinner_decorator_factory
 from demo_supplements.io.request_handlers.auth import initialize_demo_client
 
@@ -18,7 +20,7 @@ fetch_methods = {
 
 
 @spinner_decorator_factory(spinner_text="Querying Fenris APIs...")
-def live_query(input_object, service_name):
+def live_query(input_object: object, service_name: str) -> Dict[str, Any]:
     """
     Query the inputted API with input_object given service name.
     Returns response_json.

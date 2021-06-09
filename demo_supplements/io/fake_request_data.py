@@ -4,15 +4,7 @@ from heimdal.io.mappers.personal_input_maps import PersonAddressInputMap
 
 import pandas as pd
 
-import streamlit as st
 
-
-# streamlit icon and page config setup
-icon_link = "https://fenrisd.com/wp-content/uploads/2018/03/cropped-site-icon-32x32.png"
-st.set_page_config(page_title="Fenris API Demo App", page_icon=icon_link, layout="wide")
-
-
-@st.cache(show_spinner=False)
 def fake_people_df() -> pd.DataFrame:
     """Load the dataframe with fake persona information."""
     sample_csv_path = Path("./demo_supplements/assets/postman_requests_data_file.csv")
@@ -20,7 +12,6 @@ def fake_people_df() -> pd.DataFrame:
     return df
 
 
-@st.cache(show_spinner=False)
 def fake_person_address_input_map() -> PersonAddressInputMap:
     """Establish a PfrInputMap for the fake people dataframe."""
     person_address_input_map = PersonAddressInputMap(

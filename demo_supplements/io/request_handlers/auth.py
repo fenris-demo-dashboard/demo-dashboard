@@ -3,7 +3,7 @@ from heimdal.client import Client
 import streamlit as st
 
 
-def initialize_demo_client(service_name) -> Client:
+def initialize_demo_client(service_name: str) -> Client:
     """Load credentials and return a Client for Heimdal API access."""
     client_id = st.secrets["STREAMLIT_FENRIS_CLIENT_ID"]
     client_secret = st.secrets["STREAMLIT_FENRIS_CLIENT_SECRET"]
