@@ -26,7 +26,7 @@ def mock_personal_query(
     )
     persona_row_match = fake_data_df.loc[name_match_condition].iloc[0]
     response_json = json.loads(persona_row_match.to_json())
-    return response_json
+    return dict(response_json)
 
 
 def mock_property_query(
@@ -46,4 +46,4 @@ def mock_property_query(
     ) & (fake_data_df["zipCode"].str.strip() == zip_code)
     address_row_match = fake_data_df.loc[address_match_condition].iloc[0]
     response_json = json.loads(address_row_match.to_json())
-    return response_json
+    return dict(response_json)

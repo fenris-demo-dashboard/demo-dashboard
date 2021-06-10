@@ -166,4 +166,6 @@ def personal_request_form() -> None:
                 "Small Business": service_names.smb,
             }
             if submit_button:
-                live_response_page.app(api=endpoint_mapper.get(api_endpoint), body=body)
+                live_response_page.app(
+                    api=str(endpoint_mapper.get(api_endpoint)), body=body
+                )
