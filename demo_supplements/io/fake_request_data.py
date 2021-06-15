@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from heimdal.io.mappers.personal_input_maps import PersonAddressInputMap
+from demo_supplements.io.mappers.personal import PersonAddressInputMap
 
 import pandas as pd
 

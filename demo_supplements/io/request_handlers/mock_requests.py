@@ -7,6 +7,7 @@ from demo_supplements.io.mock_responses import api_to_fake_response_df_mapper
 from demo_supplements.entities.address import Address
 from demo_supplements.entities.person import Person
 
+import streamlit as st
 
 @spinner_decorator_factory(spinner_text="Fetching API Response...")
 def mock_personal_query(

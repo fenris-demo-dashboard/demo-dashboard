@@ -1,7 +1,6 @@
 """Helper functions for the Fenris Demo App."""
 from copy import deepcopy
 from pathlib import Path
-from typing import List
 
 from PIL import Image
 

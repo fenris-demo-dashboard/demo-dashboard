@@ -31,7 +31,7 @@ def formatted_address_string_from_df_row(row: pd.Series) -> str:
     """Return a formatted address string from a df row."""
     address = (
         f"{row['address.addressLine1'].strip()}, "
-        f"{row['address.city'].strip()},"
+        f"{row['address.city'].strip()}, "
         f"{row['address.state'].strip()} "
         f"{str(row['address.zipCode']).strip()}"
     )
@@ -91,7 +91,7 @@ def clean_raw_json(response: dict, components_to_remove_from_response: list) -> 
         except (SyntaxError, ValueError):
             response_copy_with_parsed_dicts[k] = v
 
-    return response_copy_with_parsed_dicts
+    return denest_dict(dict1=response_copy_with_parsed_dicts, key='.')
 
 
 def camel_case_to_split_title(string: str) -> str:
@@ -197,22 +197,22 @@ def format_response_by_service(service_name: str, response: dict) -> None:
         st.write(response)
 
 
-def denest_dict(dict1: dict) -> Dict[str, Any]:
+def denest_dict(dict1: dict, key:str='_') -> Dict[str, Any]:
     result: Dict[str, Any] = {}
     for k, v in dict1.items():
 
         # for each key call method split_rec which
         # will split keys to form recursively nested dictionary
-        split_rec(k, v, result)
+        split_rec(k, v, result, key)
     return result
 
 
-def split_rec(k: str, v: Any, out: dict) -> None:
+def split_rec(k: str, v: Any, out: dict, key: str = '_') -> None:
 
     # splitting keys in dict
     # calling_recursively to break items on '_'
-    k, *rest = k.split("_", 1)
+    k, *rest = k.split(key, 1)
     if rest:
-        split_rec(rest[0], v, out.setdefault(k, {}))
+        split_rec(rest[0], v, out.setdefault(k, {}), key)
     else:
         out[k] = v
