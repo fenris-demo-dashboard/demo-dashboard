@@ -118,12 +118,12 @@ def format_pfr_response(response: dict, targets: list, field_info: dict) -> None
     client_information_dict = {k: response.get(k, "Not Found") for k in targets}
 
     for target_title in targets:
-        title = camel_case_to_split_title(string=target_title)
+        title = camel_case_to_split_title(target_title)
         expander = st.beta_expander(
             f"{title}: {client_information_dict.get(target_title)}", expanded=True
         )
 
-        target = pfr_field_info.get(target_title)
+        target = field_info.get(target_title)
 
         if target:
             expander.write(target.explanation)
