@@ -16,14 +16,16 @@ import pandas as pd
 import streamlit as st
 
 
-def generate_persona_selection(persona_name_list: list) -> List[str]:
-    """Load st.selectbox for list of personas."""
-    persona_selections = deepcopy(persona_name_list)
-    persona_selections.insert(0, "---")
-    persona_selections = st.sidebar.selectbox(
-        "Which personality would you like to explore?", persona_selections
+def generate_selection(input_list: list, service_category: str) -> st.selectbox:
+    """Load st.selectbox for an input list."""
+
+    selections = deepcopy(input_list)
+    selections.insert(0, "---")
+    streamlit_selections = st.sidebar.selectbox(
+        f"Which {service_category} query would you like to explore?",
+        selections
     )
-    return persona_selections
+    return streamlit_selections
 
 
 def generate_image_dashboard(

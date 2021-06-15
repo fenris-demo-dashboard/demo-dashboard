@@ -106,17 +106,24 @@ def camel_case_to_split_title(string: str) -> str:
         return " ".join(x.title() for x in split_string)
 
 
-def format_pfr_response(response: dict, targets: list, field_info: dict) -> None:
+def format_pfr_response(response: dict) -> None:
     """Format PFR JSON API response according to target list"""
+    targets = [
+      "trend",
+      "creditLevel",
+      "insuranceTier",
+      "financeTier",
+      "decile",
+    ]
     client_information_dict = {k: response.get(k, "Not Found") for k in targets}
 
     for target_title in targets:
-        title = camel_case_to_split_title(target_title)
+        title = camel_case_to_split_title(string=target_title)
         expander = st.beta_expander(
             f"{title}: {client_information_dict.get(target_title)}", expanded=True
         )
 
-        target = field_info.get(target_title)
+        target = pfr_field_info.get(target_title)
 
         if target:
             expander.write(target.explanation)
@@ -181,17 +188,7 @@ def format_response_by_service(service_name: str, response: dict) -> None:
     if service_name == "LifeEvents":
         format_life_events_response(response=response)
     elif service_name == "PFR":
-        format_pfr_response(
-            response=response,
-            targets=[
-                "trend",
-                "creditLevel",
-                "insuranceTier",
-                "financeTier",
-                "decile",
-            ],
-            field_info=pfr_field_info,
-        )
+        format_pfr_response(response=response)
     elif service_name == "AutoPrefill":
         format_auto_prefill_response(response=response)
     elif service_name == "PropertyDetails":

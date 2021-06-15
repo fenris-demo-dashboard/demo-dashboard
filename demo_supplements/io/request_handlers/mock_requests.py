@@ -4,8 +4,8 @@ from typing import Any, Dict
 from demo_supplements.aesthetics.aesthetics import spinner_decorator_factory
 from demo_supplements.io.mock_responses import api_to_fake_response_df_mapper
 
-from heimdal.entities.address import Address
-from heimdal.entities.person import Person
+from demo_supplements.entities.address import Address
+from demo_supplements.entities.person import Person
 
 
 @spinner_decorator_factory(spinner_text="Fetching API Response...")
@@ -21,8 +21,8 @@ def mock_personal_query(
     first_name = person.first_name.strip()
     last_name = person.last_name.strip()
 
-    name_match_condition = (fake_data_df["first_name"].str.strip() == first_name) & (
-        fake_data_df["last_name"].str.strip() == last_name
+    name_match_condition = (fake_data_df["requestBody.person.firstName"].str.strip() == first_name) & (
+        fake_data_df["requestBody.person.lastName"].str.strip() == last_name
     )
     persona_row_match = fake_data_df.loc[name_match_condition].iloc[0]
     response_json = json.loads(persona_row_match.to_json())
@@ -42,8 +42,8 @@ def mock_property_query(
     zip_code = address.zip_code.strip()
 
     address_match_condition = (
-        fake_data_df["addressLine1"].str.strip() == address_line1
-    ) & (fake_data_df["zipCode"].str.strip() == zip_code)
+        fake_data_df["requestBody.address.addressLine1"].str.strip() == address_line1
+    ) & (fake_data_df["requestBody.address.zipCode"].str.strip() == zip_code)
     address_row_match = fake_data_df.loc[address_match_condition].iloc[0]
     response_json = json.loads(address_row_match.to_json())
     return dict(response_json)

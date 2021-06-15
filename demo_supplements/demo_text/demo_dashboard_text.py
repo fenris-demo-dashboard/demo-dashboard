@@ -52,6 +52,9 @@ sample_persona_names = [
     "Fowler Schubert",
 ]
 
+sample_business_names = []
+sample_property_names = []
+
 event_names = [
     "NEWLY ENGAGED",
     "NEWLY SINGLE",
