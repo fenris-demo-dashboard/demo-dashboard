@@ -44,12 +44,12 @@ api_descriptions = {
 }
 
 sample_persona_names = [
-    "Carissa Sharma",
-    "Hugo Danner",
-    "Guy Kleinert",
-    "Carlita Hovenden",
-    "Freida Marcinkus",
-    "Fowler Schubert",
+    "Kira Johnson",
+    "Kyle Murdock",
+    "Randall Pearson",
+    "Ellen Maddow",
+    "Alia Gabriel",
+    "Bob Simpson",
 ]
 
 sample_business_names = []

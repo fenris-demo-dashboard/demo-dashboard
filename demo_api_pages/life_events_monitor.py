@@ -28,12 +28,21 @@ def app(title: str, service_name: str) -> None:
     event_names_list = deepcopy(event_names)
     event_names_list.insert(0, "---")
     life_event_df = FAKE_LIFE_EVENT_RESPONSE_DF
+    cleaned_display_df = life_event_df.rename(
+        columns={
+            "requestBody.person.firstName": "First Name",
+            "requestBody.person.lastName": "Last Name",
+            "requestBody.person.dateOfBirth": "Date of Birth",
+            "requestBody.address.zipCode": "Zip Code",
+            "requestBody.address.state": "State"
+        }
+    )
     columns_to_display = [
-        "requestBody.person.firstName",
-        "requestBody.person.lastName",
-        "requestBody.person.dateOfBirth",
-        "requestBody.address.zipCode",
-        "requestBody.address.state",
+        "First Name",
+        "Last Name",
+        "Date of Birth",
+        "Zip Code",
+        "State",
     ]
 
     life_event = st.sidebar.selectbox(
@@ -48,15 +57,15 @@ def app(title: str, service_name: str) -> None:
             "on nine key life events. Explore each one via the panel on the left."
         )
         st.subheader("Sample Book of Business")
-        st.dataframe(life_event_df[columns_to_display])
+        st.dataframe(cleaned_display_df[columns_to_display])
 
     elif life_event != "---":
         event_monitor_df = generate_df_from_life_event(
-            df=life_event_df, life_event_name=life_event, show_cols=columns_to_display
+            df=cleaned_display_df, life_event_name=life_event, show_cols=columns_to_display
         )
 
         life_event_persona_names = generate_list_of_names_from_df(
-            df=event_monitor_df, fname_col="requestBody.person.firstName", lname_col="requestBody.person.lastName"
+            df=event_monitor_df, fname_col="First Name", lname_col="Last Name"
         )
 
         name_selection = generate_selection(

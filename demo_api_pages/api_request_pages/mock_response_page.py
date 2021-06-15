@@ -6,7 +6,7 @@ from demo_supplements.aesthetics.aesthetics import (
 )
 from demo_supplements.io.request_handlers.mock_requests import mock_personal_query
 
-from heimdal.entities.person import Person
+from demo_supplements.entities.person import Person
 
 import streamlit as st
 
