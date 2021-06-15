@@ -9,7 +9,7 @@ from demo_supplements.aesthetics.aesthetics import (
 )
 from demo_supplements.dashboard_components.dashboard_helper_functions import (
     generate_df_from_life_event,
-    generate_persona_selection,
+    generate_selection,
 )
 from demo_supplements.demo_text.demo_dashboard_text import event_names
 from demo_supplements.io.deserializers.person import (
@@ -29,11 +29,11 @@ def app(title: str, service_name: str) -> None:
     event_names_list.insert(0, "---")
     life_event_df = FAKE_LIFE_EVENT_RESPONSE_DF
     columns_to_display = [
-        "first_name",
-        "last_name",
-        "date_of_birth",
-        "zip_code",
-        "state",
+        "requestBody.person.firstName",
+        "requestBody.person.lastName",
+        "requestBody.person.dateOfBirth",
+        "requestBody.address.zipCode",
+        "requestBody.address.state",
     ]
 
     life_event = st.sidebar.selectbox(
@@ -56,10 +56,13 @@ def app(title: str, service_name: str) -> None:
         )
 
         life_event_persona_names = generate_list_of_names_from_df(
-            df=event_monitor_df, fname_col="first_name", lname_col="last_name"
+            df=event_monitor_df, fname_col="requestBody.person.firstName", lname_col="requestBody.person.lastName"
         )
 
-        name_selection = generate_persona_selection(life_event_persona_names)
+        name_selection = generate_selection(
+            input_list=life_event_persona_names,
+            service_category='property'
+        )
 
         if name_selection == "---":
             st.subheader("Select a persona on the sidebar to query life events")
