@@ -155,7 +155,6 @@ deploy_test/*.out
 
 # secrets file
 .config
-.streamlit
 
 # Pycharm
 .idea
