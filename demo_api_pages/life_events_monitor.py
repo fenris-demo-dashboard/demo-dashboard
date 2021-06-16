@@ -34,7 +34,7 @@ def app(title: str, service_name: str) -> None:
             "requestBody.person.lastName": "Last Name",
             "requestBody.person.dateOfBirth": "Date of Birth",
             "requestBody.address.zipCode": "Zip Code",
-            "requestBody.address.state": "State"
+            "requestBody.address.state": "State",
         }
     )
     columns_to_display = [
@@ -61,7 +61,9 @@ def app(title: str, service_name: str) -> None:
 
     elif life_event != "---":
         event_monitor_df = generate_df_from_life_event(
-            df=cleaned_display_df, life_event_name=life_event, show_cols=columns_to_display
+            df=cleaned_display_df,
+            life_event_name=life_event,
+            show_cols=columns_to_display,
         )
 
         life_event_persona_names = generate_list_of_names_from_df(
@@ -69,8 +71,7 @@ def app(title: str, service_name: str) -> None:
         )
 
         name_selection = generate_selection(
-            input_list=life_event_persona_names,
-            service_category='property'
+            input_list=life_event_persona_names, service_category="property"
         )
 
         if name_selection == "---":

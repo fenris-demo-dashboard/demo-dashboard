@@ -91,7 +91,7 @@ def clean_raw_json(response: dict, components_to_remove_from_response: list) -> 
         except (SyntaxError, ValueError):
             response_copy_with_parsed_dicts[k] = v
 
-    return denest_dict(dict1=response_copy_with_parsed_dicts, key='.')
+    return denest_dict(dict1=response_copy_with_parsed_dicts, key=".")
 
 
 def camel_case_to_split_title(string: str) -> str:
@@ -109,11 +109,11 @@ def camel_case_to_split_title(string: str) -> str:
 def format_pfr_response(response: dict) -> None:
     """Format PFR JSON API response according to target list"""
     targets = [
-      "trend",
-      "creditLevel",
-      "insuranceTier",
-      "financeTier",
-      "decile",
+        "trend",
+        "creditLevel",
+        "insuranceTier",
+        "financeTier",
+        "decile",
     ]
     client_information_dict = {k: response.get(k, "Not Found") for k in targets}
 
@@ -217,7 +217,7 @@ def format_response_by_service(service_name: str, response: dict) -> None:
         st.write(response)
 
 
-def denest_dict(dict1: dict, key:str='_') -> Dict[str, Any]:
+def denest_dict(dict1: dict, key: str = "_") -> Dict[str, Any]:
     result: Dict[str, Any] = {}
     for k, v in dict1.items():
 
@@ -227,7 +227,7 @@ def denest_dict(dict1: dict, key:str='_') -> Dict[str, Any]:
     return result
 
 
-def split_rec(k: str, v: Any, out: dict, key: str = '_') -> None:
+def split_rec(k: str, v: Any, out: dict, key: str = "_") -> None:
 
     # splitting keys in dict
     # calling_recursively to break items on '_'

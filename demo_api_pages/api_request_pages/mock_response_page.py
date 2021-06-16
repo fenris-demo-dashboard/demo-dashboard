@@ -4,9 +4,8 @@ from demo_supplements.aesthetics.aesthetics import (
     clean_raw_json,
     format_response_by_service,
 )
-from demo_supplements.io.request_handlers.mock_requests import mock_personal_query
-
 from demo_supplements.entities.person import Person
+from demo_supplements.io.request_handlers.mock_requests import mock_personal_query
 
 import streamlit as st
 

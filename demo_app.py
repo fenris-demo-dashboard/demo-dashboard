@@ -10,12 +10,8 @@ from demo_supplements.demo_text.demo_dashboard_text import api_descriptions
 
 import streamlit as st
 
-icon_link = (
-    "https://fenrisd.com/wp-content/uploads/2018/03/cropped-site-icon-32x32.png"
-)
-st.set_page_config(
-    page_title="Fenris API Demo App", page_icon=icon_link, layout="wide"
-)
+icon_link = "https://fenrisd.com/wp-content/uploads/2018/03/cropped-site-icon-32x32.png"
+st.set_page_config(page_title="Fenris API Demo App", page_icon=icon_link, layout="wide")
 
 
 def get_demo_pages(pages: dict) -> str:
@@ -37,7 +33,7 @@ def sidebar_api_selection(api_selection: str, pages: dict) -> None:
         "Recent Life Events API": "LifeEvents",
         "Life Events Monitor": "LifeEvents",
         "Auto Insurance Prefill API": "AutoPrefill",
-        "Life Prefill API": "LifePrefill"
+        "Life Prefill API": "LifePrefill",
     }
 
     if api_selection != "---":
@@ -57,7 +53,6 @@ def sidebar_api_selection(api_selection: str, pages: dict) -> None:
 
 def main() -> None:
     """Execute the main Demo App."""
-
     available_pages = {
         "Life Events Monitor": life_events_monitor,
         "Recent Life Events API": personal_dashboard,
