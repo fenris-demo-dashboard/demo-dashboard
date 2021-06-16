@@ -7,6 +7,7 @@ from typing import Any, Callable, Dict, Tuple
 from PIL import Image
 
 from dashboard_supplements.demo_text.api_field_descriptions import pfr_field_info
+from dashboard_supplements.demo_text.demo_dashboard_text import event_names
 from dashboard_supplements.entities.services import service_names
 from dashboard_supplements.visualizations.visualizations import (
     generate_highlight_barplot,
@@ -49,7 +50,6 @@ def clean_and_capitalize_string_input(string: str) -> str:
 
 def spinner_decorator_factory(spinner_text: str) -> Callable:
     """Decorate time-consuming functions with a descriptive spinner."""
-
     def spinner_decorator(func: Callable) -> Callable:
         def spinner_wrapper(*args: Any, **kwargs: Any) -> Any:
             with st.spinner(text=spinner_text):
@@ -77,14 +77,11 @@ def format_life_events_response(response: dict) -> None:
         st.table(pd.DataFrame(life_events, index=range(len(life_events))))
 
 
-def clean_raw_json(response: dict, components_to_remove_from_response: list) -> dict:
+def clean_raw_json(response: dict) -> dict:
     """Remove extraneous key value pairs from raw dict before display."""
-    response_copy = deepcopy(response)
-    for item in components_to_remove_from_response:
-        if response_copy.get(item):
-            response_copy.pop(item)
-    response_copy_with_parsed_dicts = {}
     # remove dicts and lists from string nesting (for mock data)
+    response_copy_with_parsed_dicts = {}
+    response_copy = deepcopy(response)
     for k, v in response_copy.items():
         try:
             parsed_literal = ast.literal_eval(v)
@@ -92,7 +89,28 @@ def clean_raw_json(response: dict, components_to_remove_from_response: list) -> 
         except (SyntaxError, ValueError):
             response_copy_with_parsed_dicts[k] = v
 
-    return denest_dict(dict1=response_copy_with_parsed_dicts, key=".")
+    denested_response = denest_dict(
+        dict1=response_copy_with_parsed_dicts,
+        key="."
+    )
+    components_to_remove_from_response = [
+        "requestId",
+        "submissionId",
+        "modelVersion",
+        "sequenceId",
+        "message",
+        "score",
+        "requestBody",
+        "Unnamed: 0",
+        "fenrisId",
+        *event_names
+    ]
+    denested_response_copy = deepcopy(denested_response)
+    for item in components_to_remove_from_response:
+        if item in denested_response_copy.keys():
+            denested_response_copy.pop(item)
+
+    return denested_response_copy
 
 
 def camel_case_to_split_title(string: str) -> str:
@@ -145,13 +163,7 @@ def format_pfr_response(response: dict) -> None:
 def format_auto_prefill_response(response: dict) -> None:
     """Format JSON API response according to target list"""
     targets = ["primary", "drivers", "vehicles", "vehiclesEnhanced"]
-    components_to_remove_from_response = [
-        "requestId",
-        "submissionId",
-        "modelVersion",
-        "sequenceId",
-    ]
-    response = clean_raw_json(response, components_to_remove_from_response)
+    response = clean_raw_json(response)
 
     try:
         client_information_dict = {
@@ -184,13 +196,7 @@ def format_auto_prefill_response(response: dict) -> None:
 
 
 def format_life_prefill_response(response: dict) -> None:
-    components_to_remove_from_response = [
-        "requestId",
-        "submissionId",
-        "modelVersion",
-        "sequenceId",
-    ]
-    clean_json = clean_raw_json(response, components_to_remove_from_response)
+    clean_json = clean_raw_json(response)
     st.write(clean_json)
 
 
