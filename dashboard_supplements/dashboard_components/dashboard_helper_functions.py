@@ -8,6 +8,7 @@ from dashboard_supplements.aesthetics.aesthetics import (
     divide_name,
     formatted_address_string_from_df_row,
 )
+from dashboard_supplements.entities.services import ServiceCategory
 from dashboard_supplements.io.fake_request_data import FAKE_PEOPLE_DF
 
 import pandas as pd
@@ -15,13 +16,13 @@ import pandas as pd
 import streamlit as st
 
 
-def generate_selection(input_list: list, service_category: str) -> st.selectbox:
+def generate_selection(input_list: list, service_category: ServiceCategory) -> st.selectbox:
     """Load st.selectbox for an input list."""
 
     selections = deepcopy(input_list)
     selections.insert(0, "---")
     streamlit_selections = st.sidebar.selectbox(
-        f"Which {service_category} query would you like to explore?", selections
+        f"Which {service_category.prompt} would you like to explore?", selections
     )
     return streamlit_selections
 

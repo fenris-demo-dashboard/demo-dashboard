@@ -7,6 +7,7 @@ from dasboard_pages import (
 
 from dashboard_supplements.aesthetics.aesthetics import initialize_logo_and_title
 from dashboard_supplements.demo_text.demo_dashboard_text import api_descriptions
+from dashboard_supplements.entities.services import service_names
 
 import streamlit as st
 
@@ -29,11 +30,11 @@ def get_demo_pages(pages: dict) -> str:
 def sidebar_api_selection(api_selection: str, pages: dict) -> None:
     """Generate sidebar dropdown sidebar API selection."""
     endpoint_mapper = {
-        "PFR API": "PFR",
-        "Recent Life Events API": "LifeEvents",
-        "Life Events Monitor": "LifeEvents",
-        "Auto Insurance Prefill API": "AutoPrefill",
-        "Life Prefill API": "LifePrefill",
+        "PFR API": service_names.pfr,
+        "Recent Life Events API": service_names.life_events,
+        "Life Events Monitor": service_names.life_events,
+        "Auto Insurance Prefill API": service_names.auto_prefill,
+        "Life Prefill API": service_names.life_prefill,
     }
 
     if api_selection != "---":
