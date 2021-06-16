@@ -50,6 +50,7 @@ def clean_and_capitalize_string_input(string: str) -> str:
 
 def spinner_decorator_factory(spinner_text: str) -> Callable:
     """Decorate time-consuming functions with a descriptive spinner."""
+
     def spinner_decorator(func: Callable) -> Callable:
         def spinner_wrapper(*args: Any, **kwargs: Any) -> Any:
             with st.spinner(text=spinner_text):
@@ -89,10 +90,7 @@ def clean_raw_json(response: dict) -> dict:
         except (SyntaxError, ValueError):
             response_copy_with_parsed_dicts[k] = v
 
-    denested_response = denest_dict(
-        dict1=response_copy_with_parsed_dicts,
-        key="."
-    )
+    denested_response = denest_dict(dict1=response_copy_with_parsed_dicts, key=".")
     components_to_remove_from_response = [
         "requestId",
         "submissionId",
@@ -103,7 +101,7 @@ def clean_raw_json(response: dict) -> dict:
         "requestBody",
         "Unnamed: 0",
         "fenrisId",
-        *event_names
+        *event_names,
     ]
     denested_response_copy = deepcopy(denested_response)
     for item in components_to_remove_from_response:

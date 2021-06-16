@@ -1,4 +1,6 @@
-from dashboard_supplements.aesthetics.aesthetics import clean_and_capitalize_string_input
+from dashboard_supplements.aesthetics.aesthetics import (
+    clean_and_capitalize_string_input,
+)
 
 import pandas as pd
 

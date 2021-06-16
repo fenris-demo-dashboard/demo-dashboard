@@ -6,9 +6,16 @@ from dashboard_supplements.demo_text.demo_dashboard_text import (
     sample_property_names,
 )
 
+import pandas as pd
+
 
 class ServiceCategory:
-    def __init__(self, sample_information, select_prompt_specification, image_path):
+    def __init__(
+        self,
+        sample_information: pd.DataFrame,
+        select_prompt_specification: str,
+        image_path: str,
+    ) -> None:
         self.sample_information = sample_information
         self.prompt = select_prompt_specification
         self.image_path = image_path
@@ -17,19 +24,19 @@ class ServiceCategory:
 personal_service_category = ServiceCategory(
     sample_information=sample_persona_names,
     select_prompt_specification="policy holder",
-    image_path="demo_persona_photos"
+    image_path="demo_persona_photos",
 )
 
 property_service_category = ServiceCategory(
     sample_information=sample_property_names,
     select_prompt_specification="property",
-    image_path="demo_property_photos"
+    image_path="demo_property_photos",
 )
 
 business_service_category = ServiceCategory(
     sample_information=sample_business_names,
     select_prompt_specification="business",
-    image_path="demo_business_photos"
+    image_path="demo_business_photos",
 )
 
 service_names = SimpleNamespace(
@@ -53,6 +60,3 @@ service_category_mapper = {
     service_names.property_risks: property_service_category,
     service_names.property_replacement: property_service_category,
 }
-
-
-

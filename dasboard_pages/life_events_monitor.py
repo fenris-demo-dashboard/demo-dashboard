@@ -73,7 +73,7 @@ def app(title: str, service_name: str) -> None:
 
         name_selection = generate_selection(
             input_list=life_event_persona_names,
-            service_category=service_category_mapper.get(service_name)
+            service_category=service_category_mapper.get(service_name),
         )
 
         if name_selection == "---":

@@ -81,8 +81,7 @@ def test_generate_persona_selection() -> None:
     expected_response = "---"
 
     persona_selection = generate_selection(
-        input_list=persona_name_list,
-        service_category='personal'
+        input_list=persona_name_list, service_category="personal"
     )
     assert persona_selection == expected_response
 

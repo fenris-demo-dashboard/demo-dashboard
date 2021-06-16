@@ -7,7 +7,9 @@ import pandas as pd
 
 def fake_people_df() -> pd.DataFrame:
     """Load the dataframe with fake persona information."""
-    sample_csv_path = Path("./dashboard_supplements/assets/postman_requests_data_file.csv")
+    sample_csv_path = Path(
+        "./dashboard_supplements/assets/postman_requests_data_file.csv"
+    )
     df = pd.read_csv(sample_csv_path)
     return df
 
