@@ -12,6 +12,7 @@ from dashboard_supplements.dashboard_components.dashboard_helper_functions impor
     generate_selection,
 )
 from dashboard_supplements.demo_text.demo_dashboard_text import event_names
+from dashboard_supplements.entities.services import service_category_mapper
 from dashboard_supplements.io.deserializers.person import (
     load_person_from_first_and_last_name,
 )
@@ -71,7 +72,8 @@ def app(title: str, service_name: str) -> None:
         )
 
         name_selection = generate_selection(
-            input_list=life_event_persona_names, service_category="property"
+            input_list=life_event_persona_names,
+            service_category=service_category_mapper.get(service_name)
         )
 
         if name_selection == "---":

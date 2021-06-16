@@ -7,6 +7,7 @@ from typing import Any, Callable, Dict, Tuple
 from PIL import Image
 
 from dashboard_supplements.demo_text.api_field_descriptions import pfr_field_info
+from dashboard_supplements.entities.services import service_names
 from dashboard_supplements.visualizations.visualizations import (
     generate_highlight_barplot,
     indicator_distributions,
@@ -202,17 +203,19 @@ def format_property_response(response: dict) -> None:
 
 
 def format_response_by_service(service_name: str, response: dict) -> None:
+    format_response_dispatch_mapper = {
+        service_names.pfr: format_pfr_response,
+        service_names.life_events: format_life_events_response,
+        service_names.life_prefill: format_life_prefill_response,
+        service_names.auto_prefill: format_auto_prefill_response,
+        service_names.property_details: format_property_response,
+        service_names.property_risks: format_property_response,
+        service_names.property_replacement: format_property_response,
+    }
     """Format response object according to service categorization."""
-    if service_name == "LifeEvents":
-        format_life_events_response(response=response)
-    elif service_name == "PFR":
-        format_pfr_response(response=response)
-    elif service_name == "AutoPrefill":
-        format_auto_prefill_response(response=response)
-    elif service_name == "PropertyDetails":
-        format_property_response(response=response)
-    elif service_name == "LifePrefill":
-        format_life_prefill_response(response=response)
+    response_format_func = format_response_dispatch_mapper.get(service_name)
+    if response_format_func:
+        response_format_func(response)
     else:
         st.write(response)
 
