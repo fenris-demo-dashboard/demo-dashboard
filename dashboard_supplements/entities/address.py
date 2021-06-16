@@ -3,7 +3,7 @@
 from dataclasses import dataclass
 from typing import Optional
 
-from demo_supplements.entities.shared_schemas import CamelCaseSchema
+from dashboard_supplements.entities.shared_schemas import CamelCaseSchema
 
 import marshmallow_dataclass
 

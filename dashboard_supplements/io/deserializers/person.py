@@ -1,13 +1,13 @@
-from demo_supplements.dashboard_components.dashboard_helper_functions import (
+from dashboard_supplements.dashboard_components.dashboard_helper_functions import (
     match_name_to_row,
 )
-from demo_supplements.entities.address import AddressSchema
-from demo_supplements.entities.person import Person, PersonSchema
-from demo_supplements.io.fake_request_data import (
+from dashboard_supplements.entities.address import AddressSchema
+from dashboard_supplements.entities.person import Person, PersonSchema
+from dashboard_supplements.io.fake_request_data import (
     FAKE_PEOPLE_DF,
     FAKE_PERSON_ADDRESS_INPUT_MAP,
 )
-from demo_supplements.io.mappers.personal import PersonAddressInputMap
+from dashboard_supplements.io.mappers.personal import PersonAddressInputMap
 
 import pandas as pd
 

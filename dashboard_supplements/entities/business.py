@@ -3,8 +3,8 @@
 from dataclasses import dataclass, field
 from typing import List, Optional
 
-from demo_supplements.entities.address import Address
-from demo_supplements.entities.shared_schemas import CamelCaseSchema
+from dashboard_supplements.entities.address import Address
+from dashboard_supplements.entities.shared_schemas import CamelCaseSchema
 
 import marshmallow_dataclass
 

@@ -1,22 +1,22 @@
 """Life Events API page for Life Events Demo."""
 from copy import deepcopy
 
-from demo_api_pages.api_request_pages import mock_response_page
+from dasboard_pages.api_request_pages import mock_response_page
 
-from demo_supplements.aesthetics.aesthetics import (
+from dashboard_supplements.aesthetics.aesthetics import (
     divide_name,
     initialize_logo_and_title,
 )
-from demo_supplements.dashboard_components.dashboard_helper_functions import (
+from dashboard_supplements.dashboard_components.dashboard_helper_functions import (
     generate_df_from_life_event,
     generate_selection,
 )
-from demo_supplements.demo_text.demo_dashboard_text import event_names
-from demo_supplements.io.deserializers.person import (
+from dashboard_supplements.demo_text.demo_dashboard_text import event_names
+from dashboard_supplements.io.deserializers.person import (
     load_person_from_first_and_last_name,
 )
-from demo_supplements.io.mock_responses import FAKE_LIFE_EVENT_RESPONSE_DF
-from demo_supplements.io.serializers.shared import generate_list_of_names_from_df
+from dashboard_supplements.io.mock_responses import FAKE_LIFE_EVENT_RESPONSE_DF
+from dashboard_supplements.io.serializers.shared import generate_list_of_names_from_df
 
 import streamlit as st
 

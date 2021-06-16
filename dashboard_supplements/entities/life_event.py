@@ -3,7 +3,7 @@
 from dataclasses import dataclass
 from typing import Optional
 
-from demo_supplements.entities.address import Address
+from dashboard_supplements.entities.address import Address
 
 import marshmallow_dataclass
 

@@ -6,8 +6,8 @@ from typing import Any, Callable, Dict, Tuple
 
 from PIL import Image
 
-from demo_supplements.demo_text.api_field_descriptions import pfr_field_info
-from demo_supplements.visualizations.visualizations import (
+from dashboard_supplements.demo_text.api_field_descriptions import pfr_field_info
+from dashboard_supplements.visualizations.visualizations import (
     generate_highlight_barplot,
     indicator_distributions,
 )
@@ -19,7 +19,7 @@ import streamlit as st
 
 def initialize_logo_and_title(title: str) -> None:
     """Load demo page headers/logo."""
-    logo_image_path = Path("./demo_supplements/assets/logos/fenris_logo.png")
+    logo_image_path = Path("./dashboard_supplements/assets/logos/fenris_logo.png")
     logo_image = Image.open(logo_image_path)
 
     col1, col2 = st.beta_columns([1, 2])

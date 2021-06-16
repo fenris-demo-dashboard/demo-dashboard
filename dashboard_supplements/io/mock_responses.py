@@ -8,16 +8,16 @@ def load_fake_response_df(path: str) -> pd.DataFrame:
 
 
 FAKE_PFR_RESPONSE_DF = load_fake_response_df(
-    path="./demo_supplements/assets/sample_results/sample_pfr_results.csv"
+    path="./dashboard_supplements/assets/sample_results/sample_pfr_results.csv"
 )
 FAKE_LIFE_EVENT_RESPONSE_DF = load_fake_response_df(
-    path="./demo_supplements/assets/sample_results/sample_life_events_results.csv"
+    path="./dashboard_supplements/assets/sample_results/sample_life_events_results.csv"
 )
 FAKE_AUTO_PREFILL_RESPONSE_DF = load_fake_response_df(
-    path="./demo_supplements/assets/sample_results/sample_auto_prefill_results.csv"
+    path="./dashboard_supplements/assets/sample_results/sample_auto_prefill_results.csv"
 )
 FAKE_LIFE_PREFILL_RESPONSE_DF = load_fake_response_df(
-    path="./demo_supplements/assets/sample_results/sample_life_prefill_results.csv"
+    path="./dashboard_supplements/assets/sample_results/sample_life_prefill_results.csv"
 )
 
 api_to_fake_response_df_mapper = {

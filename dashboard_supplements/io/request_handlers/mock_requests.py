@@ -1,10 +1,10 @@
 import json
 from typing import Any, Dict
 
-from demo_supplements.aesthetics.aesthetics import spinner_decorator_factory
-from demo_supplements.entities.address import Address
-from demo_supplements.entities.person import Person
-from demo_supplements.io.mock_responses import api_to_fake_response_df_mapper
+from dashboard_supplements.aesthetics.aesthetics import spinner_decorator_factory
+from dashboard_supplements.entities.address import Address
+from dashboard_supplements.entities.person import Person
+from dashboard_supplements.io.mock_responses import api_to_fake_response_df_mapper
 
 
 @spinner_decorator_factory(spinner_text="Fetching API Response...")

@@ -1,11 +1,11 @@
 """Life events request page."""
-from demo_supplements.aesthetics.aesthetics import (
+from dashboard_supplements.aesthetics.aesthetics import (
     camel_case_to_split_title,
     clean_raw_json,
     format_response_by_service,
 )
-from demo_supplements.entities.person import Person
-from demo_supplements.io.request_handlers.mock_requests import mock_personal_query
+from dashboard_supplements.entities.person import Person
+from dashboard_supplements.io.request_handlers.mock_requests import mock_personal_query
 
 import streamlit as st
 
