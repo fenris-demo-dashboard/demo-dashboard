@@ -150,7 +150,6 @@ def personal_request_form() -> None:
                     names=[name.strip() for name in business_names.split(",")],
                     address=custom_address,
                 )
-                st.write(business)
                 body = business
 
             submit_button = input_form.form_submit_button(label="Submit")

@@ -108,30 +108,36 @@ def camel_case_to_split_title(string: str) -> str:
 
 def format_pfr_response(response: dict, targets: list, field_info: dict) -> None:
     """Format PFR JSON API response according to target list"""
+    targets = [
+        "trend",
+        "creditLevel",
+        "insuranceTier",
+        "financeTier",
+        "decile",
+    ]
     client_information_dict = {k: response.get(k, "Not Found") for k in targets}
 
-    for target in targets:
-        title = camel_case_to_split_title(target)
+    for target_title in targets:
+        title = camel_case_to_split_title(string=target_title)
         expander = st.beta_expander(
-            f"{title}: {client_information_dict.get(target)}", expanded=True
+            f"{title}: {client_information_dict.get(target_title)}", expanded=True
         )
 
-        target = field_info.get(target)
+        target = pfr_field_info.get(target_title)
 
         if target:
             expander.write(target.explanation)
 
-            if indicator_distributions.get(target):
-                target_indicator = client_information_dict.get(target)
+            if target_title in indicator_distributions.keys():
+                target_indicator = client_information_dict.get(target_title)
 
                 generate_highlight_barplot(
                     indicator_value=target_indicator,
-                    indicator_distribution=indicator_distributions.get(target),
+                    indicator_distribution=indicator_distributions.get(target_title),
                     expander=expander,
                     x_label=title,
                 )
 
-        if target:
             expander.markdown(target.caption)
 
 
