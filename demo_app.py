@@ -17,6 +17,7 @@ st.set_page_config(
     page_title="Fenris API Demo App", page_icon=icon_link, layout="wide"
 )
 
+
 def get_demo_pages(pages: dict) -> str:
     """Display demo pages in a sidebar streamlit select box.
 
@@ -36,6 +37,7 @@ def sidebar_api_selection(api_selection: str, pages: dict) -> None:
         "Recent Life Events API": "LifeEvents",
         "Life Events Monitor": "LifeEvents",
         "Auto Insurance Prefill API": "AutoPrefill",
+        "Life Prefill API": "LifePrefill"
     }
 
     if api_selection != "---":
@@ -61,6 +63,7 @@ def main() -> None:
         "Recent Life Events API": personal_dashboard,
         "Auto Insurance Prefill API": personal_dashboard,
         "PFR API": personal_dashboard,
+        "Life Prefill API": personal_dashboard,
     }
 
     user_selected_page = get_demo_pages(pages=available_pages)
