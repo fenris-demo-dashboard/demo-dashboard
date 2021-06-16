@@ -1,6 +1,6 @@
 from typing import Callable
 
-from demo_supplements.aesthetics.aesthetics import (
+from dashboard_supplements.aesthetics.aesthetics import (
     camel_case_to_split_title,
     clean_and_capitalize_string_input,
     clean_raw_json,
@@ -8,15 +8,15 @@ from demo_supplements.aesthetics.aesthetics import (
     divide_name,
     formatted_address_string_from_df_row,
 )
-from demo_supplements.dashboard_components.dashboard_helper_functions import (
+from dashboard_supplements.dashboard_components.dashboard_helper_functions import (
     generate_selection,
     match_name_to_row,
 )
-from demo_supplements.io.deserializers.person import (
+from dashboard_supplements.io.deserializers.person import (
     load_person_from_first_and_last_name,
 )
-from demo_supplements.io.mock_responses import load_fake_response_df
-from demo_supplements.io.request_handlers.mock_requests import mock_personal_query
+from dashboard_supplements.io.mock_responses import load_fake_response_df
+from dashboard_supplements.io.request_handlers.mock_requests import mock_personal_query
 
 
 def test_load_person_from_first_and_last_name(
@@ -97,7 +97,7 @@ def test_formatted_address_string_from_df_row(fake_people_df: Callable) -> None:
 
 def test_load_fake_response_df() -> None:
 
-    path = "./demo_supplements/assets/sample_results/sample_pfr_results.csv"
+    path = "./dashboard_supplements/assets/sample_results/sample_pfr_results.csv"
 
     fake_response_df = load_fake_response_df(path=path)
 

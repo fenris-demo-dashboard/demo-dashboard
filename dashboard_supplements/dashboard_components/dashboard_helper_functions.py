@@ -4,11 +4,11 @@ from pathlib import Path
 
 from PIL import Image
 
-from demo_supplements.aesthetics.aesthetics import (
+from dashboard_supplements.aesthetics.aesthetics import (
     divide_name,
     formatted_address_string_from_df_row,
 )
-from demo_supplements.io.fake_request_data import FAKE_PEOPLE_DF
+from dashboard_supplements.io.fake_request_data import FAKE_PEOPLE_DF
 
 import pandas as pd
 

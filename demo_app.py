@@ -1,12 +1,12 @@
 """Fenris API Demo App dashboard home page."""
 
-from demo_api_pages import (
+from dasboard_pages import (
     life_events_monitor,
     personal_dashboard,
 )
 
-from demo_supplements.aesthetics.aesthetics import initialize_logo_and_title
-from demo_supplements.demo_text.demo_dashboard_text import api_descriptions
+from dashboard_supplements.aesthetics.aesthetics import initialize_logo_and_title
+from dashboard_supplements.demo_text.demo_dashboard_text import api_descriptions
 
 import streamlit as st
 

@@ -1,22 +1,22 @@
 """Personal API page for Streamlit Demo App."""
 from pathlib import Path
 
-from demo_api_pages.api_request_pages import mock_response_page
+from dasboard_pages.api_request_pages import mock_response_page
 
-from demo_supplements.aesthetics.aesthetics import (
+from dashboard_supplements.aesthetics.aesthetics import (
     divide_name,
     initialize_logo_and_title,
 )
-from demo_supplements.dashboard_components.dashboard_helper_functions import (
+from dashboard_supplements.dashboard_components.dashboard_helper_functions import (
     generate_image_dashboard,
     generate_selection,
 )
-from demo_supplements.demo_text.demo_dashboard_text import (
+from dashboard_supplements.demo_text.demo_dashboard_text import (
     sample_business_names,
     sample_persona_names,
     sample_property_names,
 )
-from demo_supplements.io.deserializers.person import (
+from dashboard_supplements.io.deserializers.person import (
     load_person_from_first_and_last_name,
 )
 
@@ -66,7 +66,7 @@ def app(title: str, service_name: str) -> None:
 
     if query_selection == "---":
         st.subheader(service_prompt_mapper.get(service_category))
-        image_base_path = Path("./demo_supplements/assets/")
+        image_base_path = Path("./dashboard_supplements/assets/")
 
         generate_image_dashboard(
             rows=2,
