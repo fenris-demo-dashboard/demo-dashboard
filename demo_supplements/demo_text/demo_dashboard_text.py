@@ -39,9 +39,15 @@ api_descriptions = {
         agents and brokers who are in the high-stakes quote/close policy
         phase. SMB also has access to micro-business data, allowing users
         to monitor the fast-growing gig economy.""",
-    "Custom Request": """
-    Query one of the following APIs with custom input:
-    Auto Insurance Prefill, Life Events, Scoring, or Property Details.""",
+    "Life Prefill API": """
+    The Fenris Pre-Fill API fetches applicant data and pre-fills that
+    information for the client to confirm, rather than require manual entry.
+    Errors and application drop-off are eliminated, leading to more completed
+    applications and a cleaner book of business at bind.
+    The Fenris Pre-Fill API provides the data and scores needed to
+    inform decisions, evaluate risk, and improve the experience of
+    applying for, rating, and servicing commercial insurance.
+    """
 }
 
 sample_persona_names: List[str] = [
