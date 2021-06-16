@@ -21,8 +21,7 @@ def generate_selection(input_list: list, service_category: str) -> st.selectbox:
     selections = deepcopy(input_list)
     selections.insert(0, "---")
     streamlit_selections = st.sidebar.selectbox(
-        f"Which {service_category} query would you like to explore?",
-        selections
+        f"Which {service_category} query would you like to explore?", selections
     )
     return streamlit_selections
 

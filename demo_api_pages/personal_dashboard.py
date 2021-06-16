@@ -12,8 +12,8 @@ from demo_supplements.dashboard_components.dashboard_helper_functions import (
     generate_selection,
 )
 from demo_supplements.demo_text.demo_dashboard_text import (
-    sample_persona_names,
     sample_business_names,
+    sample_persona_names,
     sample_property_names,
 )
 from demo_supplements.io.deserializers.person import (
@@ -23,38 +23,37 @@ from demo_supplements.io.deserializers.person import (
 import streamlit as st
 
 service_category_mapper = {
-    'PFR': "personal",
-    'LifeEvents': 'personal',
-    'AutoPrefill': 'personal',
-    'LifePrefill': 'personal',
-    'SMB': 'small business',
-    'PropertyRisks': 'property',
-    'PropertyDetails': 'property',
-    'PropertyReplacementCost': 'property',
+    "PFR": "personal",
+    "LifeEvents": "personal",
+    "AutoPrefill": "personal",
+    "LifePrefill": "personal",
+    "SMB": "small business",
+    "PropertyRisks": "property",
+    "PropertyDetails": "property",
+    "PropertyReplacementCost": "property",
 }
 
 service_sample_information = {
-    'property': sample_property_names,
-    'small business': sample_business_names,
-    'personal': sample_persona_names
+    "property": sample_property_names,
+    "small business": sample_business_names,
+    "personal": sample_persona_names,
 }
 
 service_prompt_mapper = {
-    'property': 'Select a property:',
-    'personal': 'Select a policy holder:',
-    'small business': 'Select a business:'
+    "property": "Select a property:",
+    "personal": "Select a policy holder:",
+    "small business": "Select a business:",
 }
 
 service_image_paths = {
-    'property': 'demo_property_photos',
-    'personal': 'demo_persona_photos',
-    'small business': 'demo_business_photos'
+    "property": "demo_property_photos",
+    "personal": "demo_persona_photos",
+    "small business": "demo_business_photos",
 }
 
 
 def app(title: str, service_name: str) -> None:
     """Display sample personas for PFR API Demo."""
-
     initialize_logo_and_title(title)
 
     service_category = service_category_mapper.get(service_name)

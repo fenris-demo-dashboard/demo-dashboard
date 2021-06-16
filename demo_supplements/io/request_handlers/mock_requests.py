@@ -2,12 +2,10 @@ import json
 from typing import Any, Dict
 
 from demo_supplements.aesthetics.aesthetics import spinner_decorator_factory
-from demo_supplements.io.mock_responses import api_to_fake_response_df_mapper
-
 from demo_supplements.entities.address import Address
 from demo_supplements.entities.person import Person
+from demo_supplements.io.mock_responses import api_to_fake_response_df_mapper
 
-import streamlit as st
 
 @spinner_decorator_factory(spinner_text="Fetching API Response...")
 def mock_personal_query(
@@ -22,9 +20,9 @@ def mock_personal_query(
     first_name = person.first_name.strip()
     last_name = person.last_name.strip()
 
-    name_match_condition = (fake_data_df["requestBody.person.firstName"].str.strip() == first_name) & (
-        fake_data_df["requestBody.person.lastName"].str.strip() == last_name
-    )
+    name_match_condition = (
+        fake_data_df["requestBody.person.firstName"].str.strip() == first_name
+    ) & (fake_data_df["requestBody.person.lastName"].str.strip() == last_name)
     persona_row_match = fake_data_df.loc[name_match_condition].iloc[0]
     response_json = json.loads(persona_row_match.to_json())
     return dict(response_json)

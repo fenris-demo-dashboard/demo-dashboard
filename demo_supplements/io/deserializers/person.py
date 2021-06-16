@@ -7,10 +7,9 @@ from demo_supplements.io.fake_request_data import (
     FAKE_PEOPLE_DF,
     FAKE_PERSON_ADDRESS_INPUT_MAP,
 )
+from demo_supplements.io.mappers.personal import PersonAddressInputMap
 
 import pandas as pd
-
-from demo_supplements.io.mappers.personal import PersonAddressInputMap
 
 
 def load_person_from_df_row(row: pd.Series, input_map: PersonAddressInputMap) -> Person:

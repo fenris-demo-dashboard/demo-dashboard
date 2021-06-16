@@ -1,4 +1,5 @@
 """Homepage text for demo app features."""
+from typing import List
 
 api_descriptions = {
     "Recent Life Events API": """
@@ -43,7 +44,7 @@ api_descriptions = {
     Auto Insurance Prefill, Life Events, Scoring, or Property Details.""",
 }
 
-sample_persona_names = [
+sample_persona_names: List[str] = [
     "Kira Johnson",
     "Kyle Murdock",
     "Randall Pearson",
@@ -52,10 +53,10 @@ sample_persona_names = [
     "Bob Simpson",
 ]
 
-sample_business_names = []
-sample_property_names = []
+sample_business_names: List[str] = []
+sample_property_names: List[str] = []
 
-event_names = [
+event_names: List[str] = [
     "NEWLY ENGAGED",
     "NEWLY SINGLE",
     "NEW BABY",
