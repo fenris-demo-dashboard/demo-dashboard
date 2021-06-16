@@ -23,16 +23,7 @@ def app(person: Person, service_name: str) -> None:
     )
 
     if st.sidebar.checkbox(label="Raw JSON Data"):
-        components_to_remove_from_response = [
-            "requestId",
-            "submissionId",
-            "message",
-            "score",
-            "status",
-            "modelVersion",
-            "sequenceId",
-        ]
-        cleaned_response = clean_raw_json(response, components_to_remove_from_response)
+        cleaned_response = clean_raw_json(response)
         st.write(cleaned_response)
     else:
         format_response_by_service(service_name=service_name, response=response)
