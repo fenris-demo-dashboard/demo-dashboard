@@ -144,6 +144,13 @@ def format_pfr_response(response: dict) -> None:
 def format_auto_prefill_response(response: dict) -> None:
     """Format JSON API response according to target list"""
     targets = ["primary", "drivers", "vehicles", "vehiclesEnhanced"]
+    components_to_remove_from_response = [
+        "requestId",
+        "submissionId",
+        "modelVersion",
+        "sequenceId",
+    ]
+    response = clean_raw_json(response, components_to_remove_from_response)
 
     try:
         client_information_dict = {
@@ -175,6 +182,17 @@ def format_auto_prefill_response(response: dict) -> None:
         expander.dataframe(info_dataframe)
 
 
+def format_life_prefill_response(response: dict) -> None:
+    components_to_remove_from_response = [
+        "requestId",
+        "submissionId",
+        "modelVersion",
+        "sequenceId",
+    ]
+    clean_json = clean_raw_json(response, components_to_remove_from_response)
+    st.write(clean_json)
+
+
 def format_property_response(response: dict) -> None:
     nested_response = denest_dict(response)
     st.json(nested_response)
@@ -193,6 +211,8 @@ def format_response_by_service(service_name: str, response: dict) -> None:
         format_auto_prefill_response(response=response)
     elif service_name == "PropertyDetails":
         format_property_response(response=response)
+    elif service_name == "LifePrefill":
+        format_life_prefill_response(response=response)
     else:
         st.write(response)
 

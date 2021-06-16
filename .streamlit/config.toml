@@ -1,3 +1,5 @@
+[logger]
+level='info'
 [theme]
 font = "sans serif"
 primaryColor="#8CC641"
