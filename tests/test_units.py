@@ -9,7 +9,7 @@ from demo_supplements.aesthetics.aesthetics import (
     formatted_address_string_from_df_row,
 )
 from demo_supplements.dashboard_components.dashboard_helper_functions import (
-    generate_persona_selection,
+    generate_selection,
     match_name_to_row,
 )
 from demo_supplements.io.deserializers.person import (
@@ -80,13 +80,16 @@ def test_generate_persona_selection() -> None:
     persona_name_list = ["Jane Doe", "John Doe", "Jack Donovan", "Julie Dunham"]
     expected_response = "---"
 
-    persona_selection = generate_persona_selection(persona_name_list=persona_name_list)
+    persona_selection = generate_selection(
+        input_list=persona_name_list,
+        service_category='personal'
+    )
     assert persona_selection == expected_response
 
 
 def test_formatted_address_string_from_df_row(fake_people_df: Callable) -> None:
     df_row = fake_people_df().iloc[0]
-    expected_output = "63724 Ramsey Way, Dallas,TX 75246"
+    expected_output = "63724 Ramsey Way, Dallas, TX 75246"
 
     formatted_string = formatted_address_string_from_df_row(row=df_row)
     assert formatted_string == expected_output
