@@ -1,6 +1,7 @@
 """Reusable base schemas for utilization by the various entity schemas."""
 
 import marshmallow
+from typing import Any
 
 
 class CamelCaseSchema(marshmallow.Schema):
