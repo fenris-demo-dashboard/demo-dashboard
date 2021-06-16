@@ -16,7 +16,9 @@ import pandas as pd
 import streamlit as st
 
 
-def generate_selection(input_list: list, service_category: ServiceCategory) -> st.selectbox:
+def generate_selection(
+    input_list: list, service_category: ServiceCategory
+) -> st.selectbox:
     """Load st.selectbox for an input list."""
 
     selections = deepcopy(input_list)

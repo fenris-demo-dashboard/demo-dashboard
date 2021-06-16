@@ -11,9 +11,7 @@ from dashboard_supplements.dashboard_components.dashboard_helper_functions impor
     generate_image_dashboard,
     generate_selection,
 )
-from dashboard_supplements.entities.services import (
-    service_category_mapper
-)
+from dashboard_supplements.entities.services import service_category_mapper
 from dashboard_supplements.io.deserializers.person import (
     load_person_from_first_and_last_name,
 )
@@ -25,7 +23,7 @@ def app(title: str, service_name: str) -> None:
     """Display sample personas for PFR API Demo."""
     initialize_logo_and_title(title)
 
-    service_category = service_category_mapper.get(service_name)
+    service_category = service_category_mapper[service_name]
     sample_information = service_category.sample_information
 
     query_selection = generate_selection(
