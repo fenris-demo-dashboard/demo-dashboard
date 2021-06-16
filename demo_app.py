@@ -1,4 +1,13 @@
 """Fenris API Demo App dashboard home page."""
+import streamlit as st
+
+# streamlit icon and page config setup
+icon_link = (
+    "https://fenrisd.com/wp-content/uploads/2018/03/cropped-site-icon-32x32.png"
+)
+st.set_page_config(
+    page_title="Fenris API Demo App", page_icon=icon_link, layout="wide"
+)
 
 from demo_api_pages import (
     custom,
@@ -51,13 +60,6 @@ def sidebar_api_selection(api_selection: str, pages: dict) -> None:
 
 def main() -> None:
     """Execute the main Demo App."""
-    # streamlit icon and page config setup
-    icon_link = (
-        "https://fenrisd.com/wp-content/uploads/2018/03/cropped-site-icon-32x32.png"
-    )
-    st.set_page_config(
-        page_title="Fenris API Demo App", page_icon=icon_link, layout="wide"
-    )
 
     available_pages = {
         "Life Events Monitor": life_events_monitor,
@@ -72,5 +74,4 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    """Main app Run."""
     main()

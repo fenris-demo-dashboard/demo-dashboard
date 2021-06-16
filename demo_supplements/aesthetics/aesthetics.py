@@ -116,10 +116,10 @@ def format_pfr_response(response: dict, targets: list, field_info: dict) -> None
             f"{title}: {client_information_dict.get(target)}", expanded=True
         )
 
-        explanation = field_info.get(target).explanation
+        target = field_info.get(target)
 
-        if explanation:
-            expander.write(explanation)
+        if target:
+            expander.write(target.explanation)
 
             if indicator_distributions.get(target):
                 target_indicator = client_information_dict.get(target)
@@ -131,9 +131,8 @@ def format_pfr_response(response: dict, targets: list, field_info: dict) -> None
                     x_label=title,
                 )
 
-        caption = field_info.get(target).caption
-        if caption:
-            expander.markdown(caption)
+        if target:
+            expander.markdown(target.caption)
 
 
 def format_auto_prefill_response(response: dict) -> None:

@@ -54,7 +54,7 @@ def fake_people_person_address_input_map() -> Callable[..., PersonAddressInputMa
 def authentication_credentials() -> Dict[str, str]:
     try:
         credentials = load_credentials()
-        return credentials
+        return dict(credentials)
     except RuntimeError as error:
         raise error
 
