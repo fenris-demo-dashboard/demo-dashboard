@@ -30,7 +30,12 @@ def generate_selection(
 
 
 def generate_image_dashboard(
-    rows: int, columns: int, persona_names: list, img_path: Path, caption: str
+    rows: int,
+    columns: int,
+    persona_names: list,
+    img_path: Path,
+    caption: str,
+    display_name_mapper: dict,
 ) -> None:
     """Generate dashboard of persona images from list of persona names + dimensions."""
     postman_sample_df = FAKE_PEOPLE_DF
@@ -42,9 +47,10 @@ def generate_image_dashboard(
 
             persona_index = (row_num * 3) + col_num
             name = persona_names[persona_index]
+            label_text = display_name_mapper[name]
             streamlit_cols[col_num].markdown(
                 f"<h4 style='text-align: center; color: #0C2E4F; "
-                f"family:Roboto;'>{name}</h4>",
+                f"family:Roboto;'>{label_text}</h4>",
                 unsafe_allow_html=True,
             )
 

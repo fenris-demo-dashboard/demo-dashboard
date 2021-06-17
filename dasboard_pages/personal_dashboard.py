@@ -25,6 +25,7 @@ def app(title: str, service_name: str) -> None:
 
     service_category = service_category_mapper[service_name]
     sample_information = service_category.sample_information
+    label_information = service_category.display_label_mapper
 
     query_selection = generate_selection(
         input_list=sample_information,
@@ -41,6 +42,7 @@ def app(title: str, service_name: str) -> None:
             persona_names=sample_information,
             img_path=image_base_path / service_category.image_path,
             caption="address",
+            display_name_mapper=label_information,
         )
 
     elif query_selection != "---":

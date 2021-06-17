@@ -1,42 +1,48 @@
 from types import SimpleNamespace
 
 from dashboard_supplements.demo_text.demo_dashboard_text import (
+    business_label_mapper,
+    persona_names_label_mapper,
+    property_label_mapper,
     sample_business_names,
     sample_persona_names,
     sample_property_names,
 )
 
-import pandas as pd
-
 
 class ServiceCategory:
     def __init__(
         self,
-        sample_information: pd.DataFrame,
+        sample_information: list,
         select_prompt_specification: str,
         image_path: str,
+        display_label_mapper: dict,
     ) -> None:
         self.sample_information = sample_information
         self.prompt = select_prompt_specification
         self.image_path = image_path
+        self.display_label_mapper = display_label_mapper
 
 
 personal_service_category = ServiceCategory(
     sample_information=sample_persona_names,
     select_prompt_specification="policy holder",
     image_path="demo_persona_photos",
+    display_label_mapper=persona_names_label_mapper,
 )
 
 property_service_category = ServiceCategory(
     sample_information=sample_property_names,
     select_prompt_specification="property",
     image_path="demo_property_photos",
+    display_label_mapper=property_label_mapper,
 )
 
 business_service_category = ServiceCategory(
     sample_information=sample_business_names,
     select_prompt_specification="business",
     image_path="demo_business_photos",
+    display_label_mapper=business_label_mapper,
 )
 
 service_names = SimpleNamespace(
