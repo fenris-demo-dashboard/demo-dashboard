@@ -1,5 +1,6 @@
 from typing import Callable
 
+from dashboard_supplements.entities.services import personal_service_category
 from dashboard_supplements.aesthetics.aesthetics import (
     camel_case_to_split_title,
     clean_and_capitalize_string_input,
@@ -81,7 +82,7 @@ def test_generate_persona_selection() -> None:
     expected_response = "---"
 
     persona_selection = generate_selection(
-        input_list=persona_name_list, service_category="personal"
+        input_list=persona_name_list, service_category=personal_service_category
     )
     assert persona_selection == expected_response
 
