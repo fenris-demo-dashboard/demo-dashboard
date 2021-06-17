@@ -1,13 +1,13 @@
 """Reusable base schemas for utilization by the various entity schemas."""
+from typing import Any
 
 import marshmallow
-from typing import Any
 
 
 class CamelCaseSchema(marshmallow.Schema):
     """A Schema that marshals data with camelcased keys."""
 
-    def on_bind_field(self, field_name: str, field_obj: Any)-> None:
+    def on_bind_field(self, field_name: str, field_obj: Any) -> None:
         """Camelize field keys."""
         field_obj.data_key = self.camelize(field_obj.data_key or field_name)
 

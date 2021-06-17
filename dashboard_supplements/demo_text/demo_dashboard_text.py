@@ -51,12 +51,12 @@ api_descriptions = {
 }
 
 sample_persona_names: List[str] = [
-    "Kira Johnson",
-    "Kyle Murdock",
-    "Randall Pearson",
-    "Ellen Maddow",
-    "Alia Gabriel",
-    "Bob Simpson",
+    "Amy Nye",
+    "Arvinder Singh",
+    "Betty Simpson",
+    "Lauren Daniels",
+    "Ramon Martinez",
+    "Randall Pearson"
 ]
 
 sample_business_names: List[str] = []
