@@ -53,14 +53,26 @@ api_descriptions = {
 sample_persona_names: List[str] = [
     "Amy Nye",
     "Arvinder Singh",
-    "Betty Simpson",
+    "Allison Hull",
     "Lauren Daniels",
     "Ramon Martinez",
-    "Randall Pearson"
+    "Randall Pearson",
 ]
 
 sample_business_names: List[str] = []
 sample_property_names: List[str] = []
+
+persona_names_label_mapper = {
+    "Amy Nye": "Amy Nye",
+    "Arvinder Singh": "Arvinder Singh",
+    "Allison Hull": "Hull Family",
+    "Lauren Daniels": "Lauren Daniels",
+    "Ramon Martinez": "Martinez Family",
+    "Randall Pearson": "Randall Pearson",
+}
+
+business_label_mapper: dict = {}
+property_label_mapper: dict = {}
 
 event_names: List[str] = [
     "NEWLY ENGAGED",
