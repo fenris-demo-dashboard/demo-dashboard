@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from dashboard_supplements.io.mappers.personal import PersonAddressInputMap
+from dashboard_supplements.io.mappers import PersonAddressInputMap
 
 import pandas as pd
 

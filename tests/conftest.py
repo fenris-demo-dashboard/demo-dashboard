@@ -2,19 +2,15 @@
 from copy import deepcopy
 from typing import Callable, Dict
 
-from heimdal.client import Client
-from heimdal.client_functions import (
-    load_credentials,
-)
-from heimdal.entities.address import Address
-from heimdal.entities.business import Business
-from heimdal.entities.person import Person
-from heimdal.io.deserializers.address import load_address_from_df_row
-from heimdal.io.deserializers.business import load_business_from_df_row
-from heimdal.io.deserializers.person import load_person_from_df_row
-from heimdal.io.mappers.business_input_maps import BusinessAddressInputMap
-from heimdal.io.mappers.personal_input_maps import PersonAddressInputMap
-from heimdal.io.mappers.property_input_maps import AddressInputMap
+from dashboard_supplements.entities.address import Address
+from dashboard_supplements.entities.business import Business
+from dashboard_supplements.entities.person import Person
+from dashboard_supplements.io.deserializers.address import load_address_from_df_row
+from dashboard_supplements.io.deserializers.business import load_business_from_df_row
+from dashboard_supplements.io.deserializers.person import load_person_from_df_row
+from dashboard_supplements.io.mappers import BusinessAddressInputMap
+from dashboard_supplements.io.mappers import PersonAddressInputMap
+from dashboard_supplements.io.mappers import AddressInputMap
 
 import pandas as pd
 
@@ -48,28 +44,6 @@ def fake_people_person_address_input_map() -> Callable[..., PersonAddressInputMa
         return deepcopy(person_address_input_map)
 
     return return_deepcopy
-
-
-@pytest.fixture(scope="session")
-def authentication_credentials() -> Dict[str, str]:
-    try:
-        credentials = load_credentials()
-        return dict(credentials)
-    except RuntimeError as error:
-        raise error
-
-
-@pytest.fixture(scope="function")
-def test_client(authentication_credentials: dict) -> Callable[[str], Client]:
-    client_id = authentication_credentials.get("client_id")
-    client_secret = authentication_credentials.get("client_secret")
-
-    def generate_test_client(service_name: str) -> Client:
-        return Client(
-            client_id=client_id, client_secret=client_secret, service_name=service_name
-        )
-
-    return generate_test_client
 
 
 @pytest.fixture(scope="function")
