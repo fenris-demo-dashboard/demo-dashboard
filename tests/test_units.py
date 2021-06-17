@@ -1,3 +1,5 @@
+from typing import Callable
+
 from demo_supplements.aesthetics.aesthetics import (
     camel_case_to_split_title,
     clean_and_capitalize_string_input,
@@ -18,24 +20,26 @@ from demo_supplements.io.request_handlers.mock_requests import mock_personal_que
 
 
 def test_load_person_from_first_and_last_name(
-    fake_people_df, fake_people_person_address_input_map
-):
-    fake_people_df = fake_people_df()
-    fake_people_person_address_input_map = fake_people_person_address_input_map()
+    fake_people_df: Callable, fake_people_person_address_input_map: Callable
+) -> None:
+    fake_people_df_instance = fake_people_df()
+    fake_people_person_address_input_map_instance = (
+        fake_people_person_address_input_map()
+    )
 
     first_name = "Carissa"
     last_name = "Sharma"
 
     person = load_person_from_first_and_last_name(
-        df=fake_people_df,
-        input_map=fake_people_person_address_input_map,
+        df=fake_people_df_instance,
+        input_map=fake_people_person_address_input_map_instance,
         first_name=first_name,
         last_name=last_name,
     )
     assert person is not None
 
 
-def test_mock_personal_query_for_pfr(generate_fake_person):
+def test_mock_personal_query_for_pfr(generate_fake_person: Callable) -> None:
     fake_person = generate_fake_person()
 
     response = mock_personal_query(person=fake_person, service_name="PFR")
@@ -44,7 +48,7 @@ def test_mock_personal_query_for_pfr(generate_fake_person):
     assert response is not None
 
 
-def test_mock_personal_query_for_life_events(generate_fake_person):
+def test_mock_personal_query_for_life_events(generate_fake_person: Callable) -> None:
     fake_person = generate_fake_person()
 
     response = mock_personal_query(person=fake_person, service_name="LifeEvents")
@@ -53,7 +57,7 @@ def test_mock_personal_query_for_life_events(generate_fake_person):
     assert response is not None
 
 
-def test_mock_personal_query_for_auto_prefill(generate_fake_person):
+def test_mock_personal_query_for_auto_prefill(generate_fake_person: Callable) -> None:
     fake_person = generate_fake_person()
 
     response = mock_personal_query(person=fake_person, service_name="AutoPrefill")
@@ -62,7 +66,7 @@ def test_mock_personal_query_for_auto_prefill(generate_fake_person):
     assert response is not None
 
 
-def test_match_name_to_row(fake_people_df):
+def test_match_name_to_row(fake_people_df: Callable) -> None:
     sample_df = fake_people_df()
     name_to_match = "Jenny Everywhere"
     expected_row = sample_df.iloc[0]
@@ -72,7 +76,7 @@ def test_match_name_to_row(fake_people_df):
     assert target_row.equals(expected_row)
 
 
-def test_generate_persona_selection():
+def test_generate_persona_selection() -> None:
     persona_name_list = ["Jane Doe", "John Doe", "Jack Donovan", "Julie Dunham"]
     expected_response = "---"
 
@@ -80,7 +84,7 @@ def test_generate_persona_selection():
     assert persona_selection == expected_response
 
 
-def test_formatted_address_string_from_df_row(fake_people_df):
+def test_formatted_address_string_from_df_row(fake_people_df: Callable) -> None:
     df_row = fake_people_df().iloc[0]
     expected_output = "63724 Ramsey Way, Dallas,TX 75246"
 
@@ -88,7 +92,7 @@ def test_formatted_address_string_from_df_row(fake_people_df):
     assert formatted_string == expected_output
 
 
-def test_load_fake_response_df():
+def test_load_fake_response_df() -> None:
 
     path = "./demo_supplements/assets/sample_results/sample_pfr_results.csv"
 
@@ -98,7 +102,7 @@ def test_load_fake_response_df():
     assert fake_response_df is not None
 
 
-def test_camel_case_to_split_title():
+def test_camel_case_to_split_title() -> None:
     input_strings = ["dirtyInput", "messyString", "fixMePlease intoANewString"]
 
     expected_output = ["Dirty Input", "Messy String", "Fix Me Please Into A New String"]
@@ -108,7 +112,7 @@ def test_camel_case_to_split_title():
         assert output_string == result
 
 
-def test_clean_and_capitalize_string_input():
+def test_clean_and_capitalize_string_input() -> None:
     input_strings = [" jenny \n", "everywhere  ", "1011 somewhere way \n "]
 
     expected_output = ["Jenny", "Everywhere", "1011 Somewhere Way"]
@@ -118,7 +122,7 @@ def test_clean_and_capitalize_string_input():
         assert output_string == result
 
 
-def test_divide_name():
+def test_divide_name() -> None:
     name = "Jenny Everywhere"
     expected_response = ("Jenny", "Everywhere")
 
@@ -126,7 +130,7 @@ def test_divide_name():
     assert expected_response == result
 
 
-def test_denest_dict():
+def test_denest_dict() -> None:
     nested_dict = {
         "dict": "value",
         "dictA_key1": "value_1",
@@ -143,5 +147,5 @@ def test_denest_dict():
     assert expected_result == result
 
 
-def test_clean_raw_json():
+def test_clean_raw_json() -> None:
     pass

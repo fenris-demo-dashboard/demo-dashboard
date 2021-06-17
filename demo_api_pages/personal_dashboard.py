@@ -19,7 +19,7 @@ from demo_supplements.io.deserializers.person import (
 import streamlit as st
 
 
-def app(title: str, service_name: str):
+def app(title: str, service_name: str) -> None:
     """Display sample personas for PFR API Demo."""
     initialize_logo_and_title(title)
 

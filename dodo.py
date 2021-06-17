@@ -1,10 +1,12 @@
+import os
+from typing import Any, Generator
+
 DOIT_CONFIG = {
     "default_tasks": [
         "python_dependencies",
         "flake8",
         "black",
         "pydocstyle",
-        "pylint",
         "bandit",
         "mypy",
         "pytest",
@@ -17,7 +19,8 @@ python_directories = ["demo_api_pages", "demo_supplements"]
 python_files = ["demo_app.py"]
 
 
-def task_python_dependencies():
+def task_python_dependencies() -> dict:
+    """Python dependencies task configuration."""
     log_file = ".doit.pip.log"
     return {
         "actions": [f"pip install -r requirements-dev.txt --log {log_file}"],
@@ -27,7 +30,8 @@ def task_python_dependencies():
     }
 
 
-def task_black():
+def task_black() -> Generator:
+    """Black task configuration."""
     for directory in python_directories:
         yield {
             "name": directory,
@@ -44,7 +48,8 @@ def task_black():
         }
 
 
-def task_flake8():
+def task_flake8() -> Generator:
+    """Flake8 task configuration."""
     for directory in python_directories:
         yield {
             "name": directory,
@@ -61,7 +66,8 @@ def task_flake8():
         }
 
 
-def task_pydocstyle():
+def task_pydocstyle() -> Generator:
+    """Pydocstyle task configuration."""
     for directory in python_directories:
         if directory != "tests":
             yield {
@@ -79,26 +85,8 @@ def task_pydocstyle():
         }
 
 
-def task_pylint():
-    for directory in python_directories:
-        if directory != "tests":
-            yield {
-                "name": directory,
-                "actions": [f"pylint --rcfile=setup.cfg {directory}"],
-                "file_dep": list_files(directory) + ["setup.cfg"],
-                "task_dep": ["python_dependencies"],
-            }
-    for file in python_files:
-        yield {
-            "name": file,
-            "actions": [f"pylint --rcfile=setup.cfg {file}"],
-            "file_dep": [file] + ["setup.cfg"],
-            "task_dep": ["python_dependencies"],
-        }
-
-
-def task_mypy():
-
+def task_mypy() -> dict:
+    """Mypy task configuration."""
     file_deps = []
     for path in python_directories:
         file_deps += list_files(path)
@@ -111,8 +99,8 @@ def task_mypy():
     }
 
 
-def task_bandit():
-
+def task_bandit() -> dict:
+    """Bandit task configuration."""
     file_deps = []
     for path in python_directories:
         file_deps += list_files(path)
@@ -125,7 +113,8 @@ def task_bandit():
     }
 
 
-def task_pytest():
+def task_pytest() -> dict:
+    """Pytest task configuration."""
     file_deps = []
     for path in python_directories:
         file_deps += list_files(path)
@@ -138,7 +127,8 @@ def task_pytest():
     }
 
 
-def task_pytest_junit_report():
+def task_pytest_junit_report() -> dict:
+    """Pytest junit report task configuration."""
     file_deps = []
     for path in python_directories:
         file_deps += list_files(path)
@@ -153,9 +143,8 @@ def task_pytest_junit_report():
     }
 
 
-def list_files(directory, ignore_extensions=None):
-    import os
-
+def list_files(directory: str, ignore_extensions: Any = None) -> list:
+    """List files in a certain directory."""
     if ignore_extensions is None:
         ignore_extensions = []
 

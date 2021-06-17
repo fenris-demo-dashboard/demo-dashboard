@@ -1,10 +1,7 @@
 import pandas as pd
 
-import streamlit as st
 
-
-@st.cache(show_spinner=False)
-def load_fake_response_df(path) -> pd.DataFrame:
+def load_fake_response_df(path: str) -> pd.DataFrame:
     """Load sample response dataframe for the given path"""
     df = pd.read_csv(path, index_col="Unnamed: 0")
     return df

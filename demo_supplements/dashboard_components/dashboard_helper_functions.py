@@ -1,6 +1,7 @@
 """Helper functions for the Fenris Demo App."""
 from copy import deepcopy
 from pathlib import Path
+from typing import List
 
 from PIL import Image
 
@@ -15,7 +16,7 @@ import pandas as pd
 import streamlit as st
 
 
-def generate_persona_selection(persona_name_list):
+def generate_persona_selection(persona_name_list: list) -> List[str]:
     """Load st.selectbox for list of personas."""
     persona_selections = deepcopy(persona_name_list)
     persona_selections.insert(0, "---")
@@ -27,7 +28,7 @@ def generate_persona_selection(persona_name_list):
 
 def generate_image_dashboard(
     rows: int, columns: int, persona_names: list, img_path: Path, caption: str
-):
+) -> None:
     """Generate dashboard of persona images from list of persona names + dimensions."""
     postman_sample_df = FAKE_PEOPLE_DF
 
@@ -64,7 +65,7 @@ def generate_image_dashboard(
             )
 
 
-def match_name_to_row(name: str, sample_personas_df: pd.DataFrame):
+def match_name_to_row(name: str, sample_personas_df: pd.DataFrame) -> pd.Series:
     """Return a series (dataframe row) with address and demographic info."""
     first_name, last_name = divide_name(name)
     name_match_condition = (
@@ -76,7 +77,7 @@ def match_name_to_row(name: str, sample_personas_df: pd.DataFrame):
 
 def load_image_from_name(
     img_path: Path, name: str, caption: str, cols_object: st.beta_columns, col: int
-):
+) -> None:
     """Load image from base path with name and address label."""
     image = Image.open(img_path / f"{'_'.join(name.split(' '))}.png")
     cols_object[col].image(image, caption=f"{caption}")
