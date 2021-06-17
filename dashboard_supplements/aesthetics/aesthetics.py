@@ -101,6 +101,7 @@ def clean_raw_json(response: dict) -> dict:
         "requestBody",
         "Unnamed: 0",
         "fenrisId",
+        "event_names",
         *event_names,
     ]
     denested_response_copy = deepcopy(denested_response)
