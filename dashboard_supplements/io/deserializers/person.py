@@ -7,7 +7,7 @@ from dashboard_supplements.io.fake_request_data import (
     FAKE_PEOPLE_DF,
     FAKE_PERSON_ADDRESS_INPUT_MAP,
 )
-from dashboard_supplements.io.mappers.personal import PersonAddressInputMap
+from dashboard_supplements.io.mappers import PersonAddressInputMap
 
 import pandas as pd
 
