@@ -38,13 +38,7 @@ def app(title: str, service_name: str) -> None:
             "requestBody.address.state": "State",
         }
     )
-    cleaned_display_df.drop_duplicates(
-        subset=[
-            "First Name",
-            "Last Name"
-        ],
-        inplace=True
-    )
+    cleaned_display_df.drop_duplicates(subset=["First Name", "Last Name"], inplace=True)
     columns_to_display = [
         "First Name",
         "Last Name",
