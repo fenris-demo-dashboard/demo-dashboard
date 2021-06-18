@@ -2,7 +2,7 @@
 
 from dasboard_pages import (
     life_events_monitor,
-    personal_dashboard,
+    standard_dashboard
 )
 
 from dashboard_supplements.aesthetics.aesthetics import initialize_logo_and_title
@@ -56,10 +56,10 @@ def main() -> None:
     """Execute the main Demo App."""
     available_pages = {
         "Life Events Monitor": life_events_monitor,
-        "Recent Life Events API": personal_dashboard,
-        "Auto Insurance Prefill API": personal_dashboard,
-        "PFR API": personal_dashboard,
-        "Life Prefill API": personal_dashboard,
+        "Recent Life Events API": standard_dashboard,
+        "Auto Insurance Prefill API": standard_dashboard,
+        "PFR API": standard_dashboard,
+        "Life Prefill API": standard_dashboard,
     }
 
     user_selected_page = get_demo_pages(pages=available_pages)

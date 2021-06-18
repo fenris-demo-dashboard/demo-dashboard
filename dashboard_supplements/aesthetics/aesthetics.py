@@ -2,7 +2,7 @@ import ast
 import json
 from copy import deepcopy
 from pathlib import Path
-from typing import Any, Callable, Dict, Tuple
+from typing import Any, Dict
 
 from PIL import Image
 

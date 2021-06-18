@@ -5,18 +5,16 @@ from pathlib import Path
 from PIL import Image
 
 from dashboard_supplements.aesthetics.aesthetics import (
-    divide_name,
     formatted_address_string_from_df_row,
 )
 from dashboard_supplements.entities.services import ServiceCategory
-from dashboard_supplements.io.fake_request_data import FAKE_PEOPLE_DF
 
 import pandas as pd
 
 import streamlit as st
 
 
-def generate_selection(
+def generate_sidebar_selection(
     input_list: list, service_category: ServiceCategory
 ) -> st.selectbox:
     """Load st.selectbox for an input list."""
@@ -31,64 +29,52 @@ def generate_selection(
 
 def generate_image_dashboard(
     rows: int,
-    columns: int,
-    persona_names: list,
+    info_for_display: list,
     img_path: Path,
-    caption: str,
     display_name_mapper: dict,
+    service_category: ServiceCategory,
 ) -> None:
-    """Generate dashboard of persona images from list of persona names + dimensions."""
-    postman_sample_df = FAKE_PEOPLE_DF
+    """Generate dashboard of images from list of identifying characteristics."""
 
     for row_num in range(rows):
-        streamlit_cols = st.beta_columns(columns)
+        streamlit_cols = st.beta_columns(3)
 
-        for col_num in range(columns):
+        for col_num in range(3):
 
-            persona_index = (row_num * 3) + col_num
-            name = persona_names[persona_index]
-            label_text = display_name_mapper[name]
+            image_index = (row_num * 3) + col_num
+            query_information = info_for_display[image_index]
+            label_text = display_name_mapper[query_information]
             streamlit_cols[col_num].markdown(
                 f"<h4 style='text-align: center; color: #0C2E4F; "
                 f"family:Roboto;'>{label_text}</h4>",
                 unsafe_allow_html=True,
             )
 
-            persona_row_match = match_name_to_row(
-                name=name, sample_personas_df=postman_sample_df
+            row_match = match_title_to_row(
+                input_obj=query_information,
+                service_category=service_category
             )
 
-            if caption == "address":
-                caption_text = formatted_address_string_from_df_row(
-                    row=persona_row_match
-                )
-            else:
-                caption_text = ""
-
-            load_image_from_name(
+            load_image_from_title(
                 img_path=img_path,
-                name=name,
-                caption=caption_text,
+                title=query_information,
+                caption=formatted_address_string_from_df_row(row=row_match),
                 cols_object=streamlit_cols,
                 col=col_num,
             )
 
 
-def match_name_to_row(name: str, sample_personas_df: pd.DataFrame) -> pd.Series:
-    """Return a series (dataframe row) with address and demographic info."""
-    first_name, last_name = divide_name(name)
-    name_match_condition = (
-        sample_personas_df["person.firstName"].str.strip() == first_name
-    ) & (sample_personas_df["person.lastName"].str.strip() == last_name)
-    persona_row_match = sample_personas_df.loc[name_match_condition].iloc[0]
-    return persona_row_match
+def match_title_to_row(input_obj: str, service_category: ServiceCategory):
+    row_selection_func = service_category.select_row_from_user_query_func
+    row_match = row_selection_func(input_obj, service_category.sample_information_df)
+    return row_match
 
 
-def load_image_from_name(
-    img_path: Path, name: str, caption: str, cols_object: st.beta_columns, col: int
+def load_image_from_title(
+    img_path: Path, title: str, caption: str, cols_object: st.beta_columns, col: int
 ) -> None:
     """Load image from base path with name and address label."""
-    image = Image.open(img_path / f"{'_'.join(name.split(' '))}.png")
+    image = Image.open(img_path / f"{'_'.join(title.split(' '))}.png")
     cols_object[col].image(image, caption=f"{caption}")
 
 
