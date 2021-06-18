@@ -4,15 +4,14 @@ from dashboard_supplements.entities.services import personal_service_category
 from dashboard_supplements.aesthetics.aesthetics import (
     camel_case_to_split_title,
     clean_and_capitalize_string_input,
-    clean_raw_json,
     denest_dict,
     divide_name,
     formatted_address_string_from_df_row,
 )
 from dashboard_supplements.dashboard_components.dashboard_helper_functions import (
-    generate_selection,
-    match_name_to_row,
+    generate_sidebar_selection,
 )
+from dashboard_supplements.io.input_to_row_matchers import match_name_to_row
 from dashboard_supplements.io.deserializers.person import (
     load_person_from_first_and_last_name,
 )
@@ -81,7 +80,7 @@ def test_generate_persona_selection() -> None:
     persona_name_list = ["Jane Doe", "John Doe", "Jack Donovan", "Julie Dunham"]
     expected_response = "---"
 
-    persona_selection = generate_selection(
+    persona_selection = generate_sidebar_selection(
         input_list=persona_name_list, service_category=personal_service_category
     )
     assert persona_selection == expected_response
