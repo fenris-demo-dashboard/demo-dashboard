@@ -48,26 +48,6 @@ def clean_and_capitalize_string_input(string: str) -> str:
     return input_string
 
 
-def spinner_decorator_factory(spinner_text: str) -> Callable:
-    """Decorate time-consuming functions with a descriptive spinner."""
-
-    def spinner_decorator(func: Callable) -> Callable:
-        def spinner_wrapper(*args: Any, **kwargs: Any) -> Any:
-            with st.spinner(text=spinner_text):
-                result = func(*args, **kwargs)
-            return result
-
-        return spinner_wrapper
-
-    return spinner_decorator
-
-
-def divide_name(name: str) -> Tuple[str, str]:
-    """Divide a name by first and last, splitting on a space."""
-    first_name, last_name = name.split(" ")[0], name.split(" ")[1]
-    return first_name, last_name
-
-
 def format_life_events_response(response: dict) -> None:
     """Format life event json objects from mocked response."""
     life_events = str(response.get("events"))
