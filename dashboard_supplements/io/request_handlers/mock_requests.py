@@ -1,13 +1,11 @@
 import json
 from typing import Any, Dict
 
-from dashboard_supplements.aesthetics.aesthetics import spinner_decorator_factory
 from dashboard_supplements.entities.address import Address
 from dashboard_supplements.entities.person import Person
 from dashboard_supplements.io.mock_responses import api_to_fake_response_df_mapper
 
 
-@spinner_decorator_factory(spinner_text="Fetching API Response...")
 def mock_personal_query(
     person: Person,
     service_name: str,
@@ -46,3 +44,7 @@ def mock_property_query(
     address_row_match = fake_data_df.loc[address_match_condition].iloc[0]
     response_json = json.loads(address_row_match.to_json())
     return dict(response_json)
+
+
+def mock_business_query():
+    pass
