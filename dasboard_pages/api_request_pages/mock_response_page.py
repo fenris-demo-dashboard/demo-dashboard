@@ -4,22 +4,20 @@ from dashboard_supplements.aesthetics.aesthetics import (
     clean_raw_json,
     format_response_by_service,
 )
-from dashboard_supplements.entities.person import Person
-from dashboard_supplements.io.request_handlers.mock_requests import mock_personal_query
+from dashboard_supplements.entities.services import ServiceCategory
 
 import streamlit as st
 
 
-def app(person: Person, service_name: str) -> None:
+def app(query_entity: object, service_name: str, service_category: ServiceCategory) -> None:
     """Display response for a mock personal query."""
     try:
-        response = mock_personal_query(person=person, service_name=service_name)
+        response = service_category.mock_query_func(query_entity, service_name)
     except Exception:
         response = {"error": Exception}
 
-    page_title = camel_case_to_split_title(service_name)
     st.subheader(
-        f"{page_title} API Response for " f"{person.first_name} {person.last_name}"
+        f"{camel_case_to_split_title(service_name)} API Response"
     )
 
     if st.sidebar.checkbox(label="Raw JSON Data"):
