@@ -4,17 +4,16 @@ from copy import deepcopy
 from dasboard_pages.api_request_pages import mock_response_page
 
 from dashboard_supplements.aesthetics.aesthetics import (
-    divide_name,
     initialize_logo_and_title,
 )
 from dashboard_supplements.dashboard_components.dashboard_helper_functions import (
     generate_df_from_life_event,
-    generate_selection,
+    generate_sidebar_selection,
 )
 from dashboard_supplements.demo_text.demo_dashboard_text import event_names
 from dashboard_supplements.entities.services import service_category_mapper
 from dashboard_supplements.io.deserializers.person import (
-    load_person_from_first_and_last_name,
+    load_person_from_name,
 )
 from dashboard_supplements.io.mock_responses import FAKE_LIFE_EVENT_RESPONSE_DF
 from dashboard_supplements.io.serializers.shared import generate_list_of_names_from_df
@@ -72,7 +71,7 @@ def app(title: str, service_name: str) -> None:
             df=event_monitor_df, fname_col="First Name", lname_col="Last Name"
         )
 
-        name_selection = generate_selection(
+        name_selection = generate_sidebar_selection(
             input_list=life_event_persona_names,
             service_category=service_category_mapper.get(service_name),
         )
@@ -81,9 +80,7 @@ def app(title: str, service_name: str) -> None:
             st.subheader("Select a persona on the sidebar to query life events")
             st.table(event_monitor_df)
         elif name_selection != "---":
-            first_name, last_name = divide_name(name_selection)
-            person = load_person_from_first_and_last_name(
-                first_name=first_name,
-                last_name=last_name,
+            person = load_person_from_name(
+                name=name_selection,
             )
             mock_response_page.app(person=person, service_name=service_name)

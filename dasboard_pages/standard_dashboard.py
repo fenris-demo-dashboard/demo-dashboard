@@ -1,20 +1,16 @@
-"""Personal API page for Streamlit Demo App."""
+"""Standard API Dashboard page for Streamlit Demo App."""
 from pathlib import Path
 
 from dasboard_pages.api_request_pages import mock_response_page
 
 from dashboard_supplements.aesthetics.aesthetics import (
-    divide_name,
     initialize_logo_and_title,
 )
 from dashboard_supplements.dashboard_components.dashboard_helper_functions import (
     generate_image_dashboard,
-    generate_selection,
+    generate_sidebar_selection,
 )
 from dashboard_supplements.entities.services import service_category_mapper
-from dashboard_supplements.io.deserializers.person import (
-    load_person_from_first_and_last_name,
-)
 
 import streamlit as st
 
@@ -24,11 +20,11 @@ def app(title: str, service_name: str) -> None:
     initialize_logo_and_title(title)
 
     service_category = service_category_mapper[service_name]
-    sample_information = service_category.sample_information
+    sample_information_list = service_category.sample_information
     label_information = service_category.display_label_mapper
 
-    query_selection = generate_selection(
-        input_list=sample_information,
+    query_selection = generate_sidebar_selection(
+        input_list=sample_information_list,
         service_category=service_category,
     )
 
@@ -37,18 +33,17 @@ def app(title: str, service_name: str) -> None:
         image_base_path = Path("./dashboard_supplements/assets/")
 
         generate_image_dashboard(
-            rows=2,
-            columns=3,
-            persona_names=sample_information,
+            rows=int(len(sample_information_list)/3),
+            info_for_display=sample_information_list,
             img_path=image_base_path / service_category.image_path,
-            caption="address",
             display_name_mapper=label_information,
+            service_category=service_category,
         )
 
     elif query_selection != "---":
-        first_name, last_name = divide_name(query_selection)
-        person = load_person_from_first_and_last_name(
-            first_name=first_name,
-            last_name=last_name,
+        query_input = service_category.deserialization_process_func(query_selection)
+        mock_response_page.app(
+            query_entity=query_input,
+            service_name=service_name,
+            service_category=service_category
         )
-        mock_response_page.app(person=person, service_name=service_name)
