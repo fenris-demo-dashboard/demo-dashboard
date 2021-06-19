@@ -1,20 +1,12 @@
 from pathlib import Path
 
 from dashboard_supplements.entities.mappers import (
+    AddressInputMap,
     BusinessAddressInputMap,
     PersonAddressInputMap,
 )
 
 import pandas as pd
-
-
-def fake_people_df() -> pd.DataFrame:
-    """Load the dataframe with fake persona information."""
-    sample_csv_path = Path(
-        "./dashboard_supplements/assets/postman_requests_data_file.csv"
-    )
-    df = pd.read_csv(sample_csv_path)
-    return df
 
 
 def fake_person_address_input_map() -> PersonAddressInputMap:
@@ -32,16 +24,7 @@ def fake_person_address_input_map() -> PersonAddressInputMap:
     return person_address_input_map
 
 
-def fake_business_df() -> pd.DataFrame:
-    """Load the dataframe with fake business information."""
-    sample_csv_path = Path(
-        "./dashboard_supplements/assets/smb_requests_data_file.csv"
-    )
-    df = pd.read_csv(sample_csv_path)
-    return df
-
-
-def fake_business_address_input_map():
+def fake_business_address_input_map() -> BusinessAddressInputMap:
     business_address_input_map = BusinessAddressInputMap(
         names="names",
         address_line1="address.addressLine1",
@@ -52,8 +35,32 @@ def fake_business_address_input_map():
     return business_address_input_map
 
 
-FAKE_PEOPLE_DF = fake_people_df()
+def fake_address_input_map() -> AddressInputMap:
+    address_input_map = AddressInputMap(
+        address_line1="address.addressLine1",
+        city="address.city",
+        state="address.state",
+        zip_code="address.zipCode",
+    )
+    return address_input_map
+
+
+def fake_df(sample_csv_path) -> pd.DataFrame:
+    df = pd.read_csv(sample_csv_path)
+    return df
+
+
+FAKE_BUSINESS_DF = fake_df(
+    sample_csv_path="./dashboard_supplements/assets/smb_requests_data_file.csv"
+)
+FAKE_PEOPLE_DF = fake_df(
+    sample_csv_path="./dashboard_supplements/assets/personal_requests_data_file.csv"
+)
+FAKE_ADDRESS_DF = fake_df(
+    sample_csv_path="./dashboard_supplements/assets/property_requests_data_file.csv"
+)
+
 FAKE_PERSON_ADDRESS_INPUT_MAP = fake_person_address_input_map()
-FAKE_BUSINESS_DF = fake_business_df()
 FAKE_BUSINESS_ADDRESS_INPUT_MAP = fake_business_address_input_map()
+FAKE_ADDRESS_INPUT_MAP = fake_address_input_map()
 
