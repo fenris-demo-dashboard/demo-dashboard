@@ -4,7 +4,7 @@ from pathlib import Path
 
 from PIL import Image
 
-from dashboard_supplements.aesthetics.aesthetics import (
+from dashboard_supplements.aesthetics.formatting import (
     formatted_address_string_from_df_row,
 )
 from dashboard_supplements.entities.services import ServiceCategory

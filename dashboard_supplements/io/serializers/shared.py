@@ -1,4 +1,4 @@
-from dashboard_supplements.aesthetics.aesthetics import (
+from dashboard_supplements.aesthetics.formatting import (
     clean_and_capitalize_string_input,
 )
 

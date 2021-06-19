@@ -1,5 +1,5 @@
 """Life events request page."""
-from dashboard_supplements.aesthetics.aesthetics import (
+from dashboard_supplements.aesthetics.formatting import (
     camel_case_to_split_title,
     clean_raw_json,
     format_response_by_service,

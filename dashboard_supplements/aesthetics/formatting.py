@@ -9,7 +9,7 @@ from PIL import Image
 from dashboard_supplements.demo_text.api_field_descriptions import pfr_field_info
 from dashboard_supplements.demo_text.demo_dashboard_text import event_names
 from dashboard_supplements.entities.services import service_names
-from dashboard_supplements.visualizations.visualizations import (
+from dashboard_supplements.visualizations.pfr_visualizations import (
     generate_highlight_barplot,
     indicator_distributions,
 )
