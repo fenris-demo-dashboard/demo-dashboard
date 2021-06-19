@@ -35,6 +35,7 @@ def sidebar_api_selection(api_selection: str, pages: dict) -> None:
         "Life Events Monitor": service_names.life_events,
         "Auto Insurance Prefill API": service_names.auto_prefill,
         "Life Prefill API": service_names.life_prefill,
+        "Small Business API": service_names.smb,
     }
 
     if api_selection != "---":
@@ -60,6 +61,7 @@ def main() -> None:
         "Auto Insurance Prefill API": standard_dashboard,
         "PFR API": standard_dashboard,
         "Life Prefill API": standard_dashboard,
+        "Small Business API": standard_dashboard,
     }
 
     user_selected_page = get_demo_pages(pages=available_pages)

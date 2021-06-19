@@ -59,7 +59,18 @@ sample_persona_names: List[str] = [
     "Randall Pearson",
 ]
 
-sample_business_names: List[str] = []
+sample_business_names: List[str] = [
+    'Super Smart Software',
+    'Main Street Cafe',
+    'Smith Bros Moving Co',
+    'Small Town Gazette',
+    'NY Deli Bagels',
+    'Little Shop of Flowers',
+    'Wobbly Wheel Tire and Alignment',
+    'Cherry on Top Cupcake',
+    'Uptown Accountants LLC'
+]
+
 sample_property_names: List[str] = []
 
 persona_names_label_mapper = {
@@ -71,7 +82,19 @@ persona_names_label_mapper = {
     "Randall Pearson": "Randall Pearson",
 }
 
-business_label_mapper: dict = {}
+business_label_mapper: dict = {
+    'Super Smart Software': 'Super Smart Software',
+    'Main Street Cafe': 'Main Street Cafe',
+    'Smith Bros Moving Co': 'Smith Bros Moving Co',
+    'Small Town Gazette': 'Small Town Gazette',
+    'NY Deli Bagels': 'NY Deli Bagels',
+    'Little Shop of Flowers': 'Little Shop of Flowers',
+    'Wobbly Wheel Tire and Alignment': 'Wobbly Wheel Tire and Alignment',
+    'Spot and Mittens Veterinary Clinic': 'Spot and Mittens Veterinary Clinic',
+    'Cherry on Top Cupcake': 'Cherry on Top Cupcake',
+    'Uptown Accountants LLC': 'Uptown Accountants, PLLC',
+    'Stratford Inn Bed & Breakfast': 'Stratford Inn Bed & Breakfast',
+}
 property_label_mapper: dict = {}
 
 event_names: List[str] = [
