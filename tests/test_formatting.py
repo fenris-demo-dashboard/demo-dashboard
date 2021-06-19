@@ -72,17 +72,14 @@ def test_clean_raw_json() -> None:
         "item1": "shall remain unnested",
         "nest1.layer1": "shall be nested",
         "nest1.layer2.part1": "shall be nested deeper",
-        "nest1.layer2.part2": "part 2"
+        "nest1.layer2.part2": "part 2",
     }
     expected_clean_json = {
         "item1": "shall remain unnested",
         "nest1": {
             "layer1": "shall be nested",
-            "layer2": {
-                "part1": "shall be nested deeper",
-                "part2": "part 2"
-            }
-        }
+            "layer2": {"part1": "shall be nested deeper", "part2": "part 2"},
+        },
     }
     real_clean_json = clean_raw_json(unclean_json)
 

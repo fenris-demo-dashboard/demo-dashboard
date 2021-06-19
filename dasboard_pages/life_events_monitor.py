@@ -71,9 +71,11 @@ def app(title: str, service_name: str) -> None:
             df=event_monitor_df, fname_col="First Name", lname_col="Last Name"
         )
 
+        service_category = service_category_mapper[service_name]
+
         name_selection = generate_sidebar_selection(
             input_list=life_event_persona_names,
-            service_category=service_category_mapper.get(service_name),
+            service_category=service_category,
         )
 
         if name_selection == "---":
@@ -83,4 +85,8 @@ def app(title: str, service_name: str) -> None:
             person = load_person_from_name(
                 name=name_selection,
             )
-            mock_response_page.app(person=person, service_name=service_name)
+            mock_response_page.app(
+                query_entity=person,
+                service_name=service_name,
+                service_category=service_category,
+            )

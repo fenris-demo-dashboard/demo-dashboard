@@ -5,20 +5,20 @@ from dashboard_supplements.entities.business import Business
 from dashboard_supplements.entities.person import Person
 from dashboard_supplements.io.deserializers.address import (
     load_address_from_df_row,
-    load_address_from_string
+    load_address_from_string,
 )
 from dashboard_supplements.io.deserializers.business import (
     load_business_from_df_row,
-    load_business_from_name
+    load_business_from_name,
 )
 from dashboard_supplements.io.deserializers.person import (
     load_person_from_df_row,
-    load_person_from_name
+    load_person_from_name,
 )
 from dashboard_supplements.io.input_to_row_matchers import (
     match_business_to_row,
     match_person_to_row,
-    match_property_to_row
+    match_property_to_row,
 )
 from dashboard_supplements.io.mock_responses import load_fake_response_df
 
@@ -34,17 +34,19 @@ def test_load_person_from_name(
     person = load_person_from_name(
         df=fake_people_df_instance,
         input_map=fake_people_person_address_input_map_instance,
-        name="Carissa Sharma"
+        name="Carissa Sharma",
     )
     assert person is not None
     assert isinstance(person, Person)
 
 
 def test_deserialize_person_with_address_from_df_row(
-        fake_people_df: Callable, fake_people_person_address_input_map: Callable
+    fake_people_df: Callable, fake_people_person_address_input_map: Callable
 ) -> None:
     fake_people_df_instance = fake_people_df()
-    fake_people_person_address_input_map_instance = fake_people_person_address_input_map()
+    fake_people_person_address_input_map_instance = (
+        fake_people_person_address_input_map()
+    )
     row = fake_people_df_instance.iloc[0]
 
     person = load_person_from_df_row(row, fake_people_person_address_input_map_instance)
@@ -63,7 +65,7 @@ def test_match_person_to_row(fake_people_df: Callable) -> None:
 
 
 def test_load_address_from_string(
-        fake_address_df: Callable, fake_address_input_map: Callable
+    fake_address_df: Callable, fake_address_input_map: Callable
 ) -> None:
     fake_address_df_instance = fake_address_df()
     fake_address_input_map_instance = fake_address_input_map()
@@ -72,7 +74,7 @@ def test_load_address_from_string(
     address = load_address_from_string(
         df=fake_address_df_instance,
         input_map=fake_address_input_map_instance,
-        address=fake_address
+        address=fake_address,
     )
 
     assert address is not None
@@ -80,7 +82,7 @@ def test_load_address_from_string(
 
 
 def test_deserialize_address_from_df_row(
-        fake_address_df: Callable, fake_address_input_map: Callable
+    fake_address_df: Callable, fake_address_input_map: Callable
 ) -> None:
     fake_address_df_instance = fake_address_df()
     fake_address_input_map_instance = fake_address_input_map()
@@ -98,15 +100,14 @@ def test_match_property_to_row(fake_address_df: Callable) -> None:
     expected_row = sample_df.iloc[0]
 
     target_row = match_property_to_row(
-        address=address_to_match,
-        sample_address_df=sample_df
+        address=address_to_match, sample_address_df=sample_df
     )
 
     assert target_row.equals(expected_row)
 
 
 def test_load_business_from_name(
-        fake_business_df: Callable, fake_business_address_input_map: Callable
+    fake_business_df: Callable, fake_business_address_input_map: Callable
 ) -> None:
     fake_business_df_instance = fake_business_df()
     fake_business_input_map_instance = fake_business_address_input_map()
@@ -116,7 +117,7 @@ def test_load_business_from_name(
     business = load_business_from_name(
         df=fake_business_df_instance,
         input_map=fake_business_input_map_instance,
-        name=fake_business_name
+        name=fake_business_name,
     )
 
     assert business is not None
@@ -142,8 +143,7 @@ def test_match_business_to_row(fake_business_df: Callable) -> None:
     expected_row = sample_df.iloc[0]
 
     target_row = match_business_to_row(
-        business=business_to_match,
-        sample_business_df=sample_df
+        business=business_to_match, sample_business_df=sample_df
     )
 
     assert target_row.equals(expected_row)

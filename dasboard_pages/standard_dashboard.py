@@ -33,7 +33,7 @@ def app(title: str, service_name: str) -> None:
         image_base_path = Path("./dashboard_supplements/assets/")
 
         generate_image_dashboard(
-            rows=int(len(sample_information_list)/3),
+            rows=int(len(sample_information_list) / 3),
             info_for_display=sample_information_list,
             img_path=image_base_path / service_category.image_path,
             display_name_mapper=label_information,
@@ -45,5 +45,5 @@ def app(title: str, service_name: str) -> None:
         mock_response_page.app(
             query_entity=query_input,
             service_name=service_name,
-            service_category=service_category
+            service_category=service_category,
         )

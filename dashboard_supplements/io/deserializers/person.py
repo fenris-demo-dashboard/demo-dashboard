@@ -1,11 +1,11 @@
-from dashboard_supplements.io.input_to_row_matchers import match_person_to_row
 from dashboard_supplements.entities.address import AddressSchema
+from dashboard_supplements.entities.mappers import PersonAddressInputMap
 from dashboard_supplements.entities.person import Person, PersonSchema
+from dashboard_supplements.io.input_to_row_matchers import match_person_to_row
 from dashboard_supplements.io.request_handlers.fake_request_data import (
     FAKE_PEOPLE_DF,
     FAKE_PERSON_ADDRESS_INPUT_MAP,
 )
-from dashboard_supplements.entities.mappers import PersonAddressInputMap
 
 import pandas as pd
 
@@ -43,9 +43,7 @@ def load_person_from_name(
     input_map: PersonAddressInputMap = FAKE_PERSON_ADDRESS_INPUT_MAP,
 ) -> Person:
     """Create a Person object and Address object given a selected persona."""
-    matched_row = match_person_to_row(
-        name=name, sample_personas_df=df
-    )
+    matched_row = match_person_to_row(name=name, sample_personas_df=df)
     person = load_person_from_df_row(matched_row, input_map)
 
     return person
