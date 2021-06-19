@@ -1,6 +1,5 @@
 from types import SimpleNamespace
-
-import pandas as pd
+from typing import Callable
 
 from dashboard_supplements.demo_text.demo_dashboard_text import (
     business_label_mapper,
@@ -10,6 +9,9 @@ from dashboard_supplements.demo_text.demo_dashboard_text import (
     sample_persona_names,
     sample_property_names,
 )
+from dashboard_supplements.io.deserializers.address import load_address_from_string
+from dashboard_supplements.io.deserializers.business import load_business_from_name
+from dashboard_supplements.io.deserializers.person import load_person_from_name
 from dashboard_supplements.io.input_to_row_matchers import (
     match_business_to_row,
     match_person_to_row,
@@ -23,11 +25,11 @@ from dashboard_supplements.io.request_handlers.fake_request_data import (
 from dashboard_supplements.io.request_handlers.mock_requests import (
     mock_business_query,
     mock_personal_query,
-    mock_property_query
+    mock_property_query,
 )
-from dashboard_supplements.io.deserializers.address import load_address_from_string
-from dashboard_supplements.io.deserializers.business import load_business_from_name
-from dashboard_supplements.io.deserializers.person import load_person_from_name
+
+import pandas as pd
+
 
 class ServiceCategory:
     def __init__(
@@ -36,10 +38,10 @@ class ServiceCategory:
         select_prompt_specification: str,
         image_path: str,
         display_label_mapper: dict,
-        select_row_from_user_query_func: callable,
-        mock_query_func: callable,
+        select_row_from_user_query_func: Callable,
+        mock_query_func: Callable,
         sample_information_df: pd.DataFrame,
-        deserialization_process_func: callable,
+        deserialization_process_func: Callable,
     ) -> None:
         self.sample_information = sample_information
         self.prompt = select_prompt_specification
@@ -70,7 +72,7 @@ property_service_category = ServiceCategory(
     select_row_from_user_query_func=match_property_to_row,
     mock_query_func=mock_property_query,
     sample_information_df=FAKE_ADDRESS_DF,
-    deserialization_process_func=load_address_from_string
+    deserialization_process_func=load_address_from_string,
 )
 
 business_service_category = ServiceCategory(

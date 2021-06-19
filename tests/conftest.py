@@ -4,13 +4,13 @@ from typing import Callable
 
 from dashboard_supplements.entities.address import Address
 from dashboard_supplements.entities.business import Business
+from dashboard_supplements.entities.mappers import AddressInputMap
+from dashboard_supplements.entities.mappers import BusinessAddressInputMap
+from dashboard_supplements.entities.mappers import PersonAddressInputMap
 from dashboard_supplements.entities.person import Person
 from dashboard_supplements.io.deserializers.address import load_address_from_df_row
 from dashboard_supplements.io.deserializers.business import load_business_from_df_row
 from dashboard_supplements.io.deserializers.person import load_person_from_df_row
-from dashboard_supplements.entities.mappers import BusinessAddressInputMap
-from dashboard_supplements.entities.mappers import PersonAddressInputMap
-from dashboard_supplements.entities.mappers import AddressInputMap
 
 import pandas as pd
 
@@ -20,8 +20,7 @@ import pytest
 @pytest.fixture(scope="session")
 def fake_people_df() -> Callable[..., pd.DataFrame]:
     df = pd.read_csv(
-        "./dashboard_supplements/assets/personal_requests_data_file.csv",
-        index_col=0
+        "./dashboard_supplements/assets/personal_requests_data_file.csv", index_col=0
     )
 
     def return_df_copy() -> pd.DataFrame:
@@ -86,8 +85,7 @@ def fake_address_input_map() -> Callable[..., AddressInputMap]:
 @pytest.fixture(scope="function")
 def fake_address_df() -> Callable[..., pd.DataFrame]:
     df = pd.read_csv(
-        "dashboard_supplements/assets/property_requests_data_file.csv",
-        index_col=0
+        "dashboard_supplements/assets/property_requests_data_file.csv", index_col=0
     )
 
     def return_df_copy() -> pd.DataFrame:
@@ -115,8 +113,7 @@ def generate_fake_address(
 @pytest.fixture(scope="session")
 def fake_business_df() -> Callable[..., pd.DataFrame]:
     df = pd.read_csv(
-        "dashboard_supplements/assets/smb_requests_data_file.csv",
-        index_col=0
+        "dashboard_supplements/assets/smb_requests_data_file.csv", index_col=0
     )
     # df["names"] = df["names"].apply(eval)
 

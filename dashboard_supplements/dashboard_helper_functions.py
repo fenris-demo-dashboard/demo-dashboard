@@ -18,7 +18,6 @@ def generate_sidebar_selection(
     input_list: list, service_category: ServiceCategory
 ) -> st.selectbox:
     """Load st.selectbox for an input list."""
-
     selections = deepcopy(input_list)
     selections.insert(0, "---")
     streamlit_selections = st.sidebar.selectbox(
@@ -35,7 +34,6 @@ def generate_image_dashboard(
     service_category: ServiceCategory,
 ) -> None:
     """Generate dashboard of images from list of identifying characteristics."""
-
     for row_num in range(rows):
         streamlit_cols = st.beta_columns(3)
 
@@ -51,8 +49,7 @@ def generate_image_dashboard(
             )
 
             row_match = match_title_to_row(
-                input_obj=query_information,
-                service_category=service_category
+                input_obj=query_information, service_category=service_category
             )
 
             load_image_from_title(
@@ -64,7 +61,8 @@ def generate_image_dashboard(
             )
 
 
-def match_title_to_row(input_obj: str, service_category: ServiceCategory):
+def match_title_to_row(input_obj: str, service_category: ServiceCategory) -> pd.Series:
+    """Match user's query selection to a sample request df row."""
     row_selection_func = service_category.select_row_from_user_query_func
     row_match = row_selection_func(input_obj, service_category.sample_information_df)
     return row_match

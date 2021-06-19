@@ -9,8 +9,7 @@ import pytest
 
 
 @pytest.mark.parametrize(
-    "service_name",
-    ["PFR", "LifeEvents", "LifePrefill", "AutoPrefill"]
+    "service_name", ["PFR", "LifeEvents", "LifePrefill", "AutoPrefill"]
 )
 def test_mock_personal_query(service_name: str, generate_fake_person: Callable) -> None:
     fake_person = generate_fake_person()
@@ -25,5 +24,3 @@ def test_mock_business_query(generate_fake_business: Callable) -> None:
     fake_business = generate_fake_business()
     response = mock_business_query(business=fake_business, service_name="SMB")
     assert response.get("status").lower() == "success"
-
-

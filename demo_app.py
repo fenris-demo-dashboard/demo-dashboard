@@ -1,9 +1,6 @@
 """Fenris API Demo App dashboard home page."""
 
-from dasboard_pages import (
-    life_events_monitor,
-    standard_dashboard
-)
+from dasboard_pages import life_events_monitor, standard_dashboard
 
 from dashboard_supplements.aesthetics.formatting import initialize_logo_and_title
 from dashboard_supplements.demo_text.demo_dashboard_text import api_descriptions

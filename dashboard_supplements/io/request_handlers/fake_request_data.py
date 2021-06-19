@@ -45,7 +45,7 @@ def fake_address_input_map() -> AddressInputMap:
     return address_input_map
 
 
-def fake_df(sample_csv_path) -> pd.DataFrame:
+def fake_df(sample_csv_path: str) -> pd.DataFrame:
     df = pd.read_csv(sample_csv_path)
     return df
 
@@ -63,4 +63,3 @@ FAKE_ADDRESS_DF = fake_df(
 FAKE_PERSON_ADDRESS_INPUT_MAP = fake_person_address_input_map()
 FAKE_BUSINESS_ADDRESS_INPUT_MAP = fake_business_address_input_map()
 FAKE_ADDRESS_INPUT_MAP = fake_address_input_map()
-
