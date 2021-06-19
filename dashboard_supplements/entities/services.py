@@ -15,7 +15,7 @@ from dashboard_supplements.io.input_to_row_matchers import (
     match_person_to_row,
     match_property_to_row,
 )
-from dashboard_supplements.io.fake_request_data import (
+from dashboard_supplements.io.request_handlers.fake_request_data import (
     FAKE_BUSINESS_DF,
     FAKE_PEOPLE_DF,
 )

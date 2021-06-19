@@ -1,7 +1,6 @@
 from pathlib import Path
 
-from dashboard_supplements.io.mappers import (
-    AddressInputMap,
+from dashboard_supplements.entities.mappers import (
     BusinessAddressInputMap,
     PersonAddressInputMap,
 )

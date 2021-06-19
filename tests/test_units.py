@@ -1,14 +1,14 @@
 from typing import Callable
 
 from dashboard_supplements.entities.services import personal_service_category
-from dashboard_supplements.aesthetics.aesthetics import (
+from dashboard_supplements.aesthetics.formatting import (
     camel_case_to_split_title,
     clean_and_capitalize_string_input,
     denest_dict,
     divide_name,
     formatted_address_string_from_df_row,
 )
-from dashboard_supplements.dashboard_components.dashboard_helper_functions import (
+from dashboard_supplements.dashboard_helper_functions import (
     generate_sidebar_selection,
 )
 from dashboard_supplements.io.input_to_row_matchers import match_name_to_row

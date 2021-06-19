@@ -1,11 +1,11 @@
 from dashboard_supplements.io.input_to_row_matchers import match_person_to_row
 from dashboard_supplements.entities.address import AddressSchema
 from dashboard_supplements.entities.person import Person, PersonSchema
-from dashboard_supplements.io.fake_request_data import (
+from dashboard_supplements.io.request_handlers.fake_request_data import (
     FAKE_PEOPLE_DF,
     FAKE_PERSON_ADDRESS_INPUT_MAP,
 )
-from dashboard_supplements.io.mappers import PersonAddressInputMap
+from dashboard_supplements.entities.mappers import PersonAddressInputMap
 
 import pandas as pd
 

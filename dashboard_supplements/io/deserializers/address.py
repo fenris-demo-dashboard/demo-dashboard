@@ -1,6 +1,6 @@
 """Address deserializer file."""
 from dashboard_supplements.entities.address import Address, AddressSchema
-from dashboard_supplements.io.mappers import AddressInputMap
+from dashboard_supplements.entities.mappers import AddressInputMap
 
 import pandas as pd
 

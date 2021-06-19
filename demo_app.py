@@ -5,7 +5,7 @@ from dasboard_pages import (
     standard_dashboard
 )
 
-from dashboard_supplements.aesthetics.aesthetics import initialize_logo_and_title
+from dashboard_supplements.aesthetics.formatting import initialize_logo_and_title
 from dashboard_supplements.demo_text.demo_dashboard_text import api_descriptions
 from dashboard_supplements.entities.services import service_names
 

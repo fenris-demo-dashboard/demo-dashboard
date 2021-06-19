@@ -3,10 +3,10 @@ from copy import deepcopy
 
 from dasboard_pages.api_request_pages import mock_response_page
 
-from dashboard_supplements.aesthetics.aesthetics import (
+from dashboard_supplements.aesthetics.formatting import (
     initialize_logo_and_title,
 )
-from dashboard_supplements.dashboard_components.dashboard_helper_functions import (
+from dashboard_supplements.dashboard_helper_functions import (
     generate_df_from_life_event,
     generate_sidebar_selection,
 )
