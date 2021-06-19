@@ -19,7 +19,10 @@ import pytest
 
 @pytest.fixture(scope="session")
 def fake_people_df() -> Callable[..., pd.DataFrame]:
-    df = pd.read_csv("tests/assets/personal_requests_data_file.csv")
+    df = pd.read_csv(
+        "./dashboard_supplements/assets/personal_requests_data_file.csv",
+        index_col=0
+    )
 
     def return_df_copy() -> pd.DataFrame:
         return df.copy()
@@ -82,7 +85,10 @@ def fake_address_input_map() -> Callable[..., AddressInputMap]:
 
 @pytest.fixture(scope="function")
 def fake_address_df() -> Callable[..., pd.DataFrame]:
-    df = pd.read_csv("tests/assets/personal_requests_data_file.csv", index_col=0)
+    df = pd.read_csv(
+        "dashboard_supplements/assets/property_requests_data_file.csv",
+        index_col=0
+    )
 
     def return_df_copy() -> pd.DataFrame:
         return df.copy()
@@ -108,8 +114,11 @@ def generate_fake_address(
 
 @pytest.fixture(scope="session")
 def fake_business_df() -> Callable[..., pd.DataFrame]:
-    df = pd.read_csv("tests/assets/smb_data.csv")
-    df["names"] = df["names"].apply(eval)
+    df = pd.read_csv(
+        "dashboard_supplements/assets/smb_requests_data_file.csv",
+        index_col=0
+    )
+    # df["names"] = df["names"].apply(eval)
 
     def return_df_copy() -> pd.DataFrame:
         return df.copy()
