@@ -174,7 +174,7 @@ def format_auto_prefill_response(response: dict) -> None:
         expander.dataframe(info_dataframe)
 
 
-def format_life_prefill_response(response: dict) -> None:
+def generic_json_format(response: dict) -> None:
     clean_json = clean_raw_json(response)
     st.write(clean_json)
 
@@ -191,12 +191,12 @@ def format_response_by_service(service_name: str, response: dict) -> None:
     format_response_dispatch_mapper = {
         service_names.pfr: format_pfr_response,
         service_names.life_events: format_life_events_response,
-        service_names.life_prefill: format_life_prefill_response,
+        service_names.life_prefill: generic_json_format,
         service_names.auto_prefill: format_auto_prefill_response,
         service_names.property_details: format_property_response,
         service_names.property_risks: format_property_response,
         service_names.property_replacement: format_property_response,
-        service_names.smb: format_property_response, #TODO: fix this
+        service_names.smb: generic_json_format,
     }
     """Format response object according to service categorization."""
     response_format_func = format_response_dispatch_mapper.get(service_name)
