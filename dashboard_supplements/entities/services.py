@@ -16,7 +16,8 @@ from dashboard_supplements.io.input_to_row_matchers import (
     match_property_to_row,
 )
 from dashboard_supplements.io.fake_request_data import (
-    FAKE_PEOPLE_DF
+    FAKE_BUSINESS_DF,
+    FAKE_PEOPLE_DF,
 )
 from dashboard_supplements.io.request_handlers.mock_requests import (
     mock_business_query,
@@ -24,6 +25,8 @@ from dashboard_supplements.io.request_handlers.mock_requests import (
     mock_property_query
 )
 from dashboard_supplements.io.deserializers.person import load_person_from_name
+from dashboard_supplements.io.deserializers.business import load_business_from_name
+
 
 class ServiceCategory:
     def __init__(
@@ -34,8 +37,8 @@ class ServiceCategory:
         display_label_mapper: dict,
         select_row_from_user_query_func: callable,
         mock_query_func: callable,
-        sample_information_df: pd.DataFrame = FAKE_PEOPLE_DF,
-        deserialization_process_func: callable = load_person_from_name,
+        sample_information_df: pd.DataFrame,
+        deserialization_process_func: callable,
     ) -> None:
         self.sample_information = sample_information
         self.prompt = select_prompt_specification
@@ -58,7 +61,6 @@ personal_service_category = ServiceCategory(
     deserialization_process_func=load_person_from_name,
 )
 
-# TODO: add sample info df and deserialization process func for property and business
 property_service_category = ServiceCategory(
     sample_information=sample_property_names,
     select_prompt_specification="property",
@@ -66,6 +68,8 @@ property_service_category = ServiceCategory(
     display_label_mapper=property_label_mapper,
     select_row_from_user_query_func=match_property_to_row,
     mock_query_func=mock_property_query,
+    sample_information_df=FAKE_PEOPLE_DF,
+    deserialization_process_func=load_person_from_name
 )
 
 business_service_category = ServiceCategory(
@@ -74,7 +78,9 @@ business_service_category = ServiceCategory(
     image_path="demo_business_photos",
     display_label_mapper=business_label_mapper,
     select_row_from_user_query_func=match_business_to_row,
-    mock_query_func=mock_business_query
+    mock_query_func=mock_business_query,
+    sample_information_df=FAKE_BUSINESS_DF,
+    deserialization_process_func=load_business_from_name,
 )
 
 service_names = SimpleNamespace(

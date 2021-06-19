@@ -13,7 +13,7 @@ import marshmallow_dataclass
 class Business:
     """Dataclass to hold Business field inputs for business APIs."""
 
-    address: Address
+    address: Optional[Address]
     names: List[str] = field(default_factory=list)
     other_addresses: Optional[List[Address]] = None
 

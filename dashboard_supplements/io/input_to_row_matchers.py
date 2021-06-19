@@ -1,6 +1,6 @@
-from typing import Tuple
-
 import pandas as pd
+
+import streamlit as st
 
 
 def match_person_to_row(name: str, sample_personas_df: pd.DataFrame) -> pd.Series:
@@ -27,7 +27,7 @@ def match_business_to_row(business: str, sample_business_df: pd.DataFrame) -> pd
     """Return a series (dataframe row) with business info."""
     business_name = business.strip()
     business_match_condition = (
-            business in [b.strip() for b in sample_business_df["names"]]
+            [business_name in b for b in sample_business_df["names"].apply(eval)]
     )
     business_row_match = sample_business_df.loc[business_match_condition].iloc[0]
     return business_row_match

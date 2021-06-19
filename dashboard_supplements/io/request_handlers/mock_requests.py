@@ -2,8 +2,12 @@ import json
 from typing import Any, Dict
 
 from dashboard_supplements.entities.address import Address
+from dashboard_supplements.entities.business import Business
 from dashboard_supplements.entities.person import Person
 from dashboard_supplements.io.mock_responses import api_to_fake_response_df_mapper
+from dashboard_supplements.io.input_to_row_matchers import match_business_to_row
+
+import streamlit as st
 
 
 def mock_personal_query(
@@ -46,5 +50,14 @@ def mock_property_query(
     return dict(response_json)
 
 
-def mock_business_query():
-    pass
+def mock_business_query(
+    business: Business,
+    service_name: str,
+):
+    """Fetch data from mock responses based on business name."""
+    fake_data_df = api_to_fake_response_df_mapper.get(service_name)
+    business_name = business.names[0]
+    st.write(business_name)
+    business_row_match = fake_data_df.loc[business_name.strip() == fake_data_df["name"].str.strip()].iloc[0]
+    response_json = json.loads(business_row_match.to_json())
+    return dict(response_json)
