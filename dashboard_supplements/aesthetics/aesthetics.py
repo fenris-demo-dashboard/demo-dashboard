@@ -35,7 +35,7 @@ def formatted_address_string_from_df_row(row: pd.Series) -> str:
         f"{row['address.addressLine1'].strip()}, "
         f"{row['address.city'].strip()}, "
         f"{row['address.state'].strip()} "
-        f"{str(row['address.zipCode']).strip()}"
+        f"{str(int(row['address.zipCode'])).strip()}"
     )
 
     return address
@@ -196,6 +196,7 @@ def format_response_by_service(service_name: str, response: dict) -> None:
         service_names.property_details: format_property_response,
         service_names.property_risks: format_property_response,
         service_names.property_replacement: format_property_response,
+        service_names.smb: format_property_response, #TODO: fix this
     }
     """Format response object according to service categorization."""
     response_format_func = format_response_dispatch_mapper.get(service_name)
