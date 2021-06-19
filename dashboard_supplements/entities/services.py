@@ -16,6 +16,7 @@ from dashboard_supplements.io.input_to_row_matchers import (
     match_property_to_row,
 )
 from dashboard_supplements.io.request_handlers.fake_request_data import (
+    FAKE_ADDRESS_DF,
     FAKE_BUSINESS_DF,
     FAKE_PEOPLE_DF,
 )
@@ -24,9 +25,9 @@ from dashboard_supplements.io.request_handlers.mock_requests import (
     mock_personal_query,
     mock_property_query
 )
-from dashboard_supplements.io.deserializers.person import load_person_from_name
+from dashboard_supplements.io.deserializers.address import load_address_from_string
 from dashboard_supplements.io.deserializers.business import load_business_from_name
-
+from dashboard_supplements.io.deserializers.person import load_person_from_name
 
 class ServiceCategory:
     def __init__(
@@ -68,8 +69,8 @@ property_service_category = ServiceCategory(
     display_label_mapper=property_label_mapper,
     select_row_from_user_query_func=match_property_to_row,
     mock_query_func=mock_property_query,
-    sample_information_df=FAKE_PEOPLE_DF,
-    deserialization_process_func=load_person_from_name
+    sample_information_df=FAKE_ADDRESS_DF,
+    deserialization_process_func=load_address_from_string
 )
 
 business_service_category = ServiceCategory(
