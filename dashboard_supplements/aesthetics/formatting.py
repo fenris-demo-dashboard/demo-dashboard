@@ -139,7 +139,7 @@ def format_life_events_response(response: dict) -> None:
         st.table(pd.DataFrame(life_events, index=range(len(life_events))))
 
 
-def format_tabular_response(response: dict, targets) -> None:
+def format_tabular_response(response: dict, targets: list) -> None:
     """Format JSON API response according to target list."""
     clean_response = clean_raw_json(response)
 
@@ -148,7 +148,9 @@ def format_tabular_response(response: dict, targets) -> None:
             k: ast.literal_eval(clean_response.get(k, "Not Found")) for k in targets
         }
     except (SyntaxError, ValueError):
-        client_information_dict = {k: clean_response.get(k, "Not Found") for k in targets}
+        client_information_dict = {
+            k: clean_response.get(k, "Not Found") for k in targets
+        }
 
     for idx, target in enumerate(targets):
 
