@@ -48,16 +48,6 @@ def clean_and_capitalize_string_input(string: str) -> str:
     return input_string
 
 
-def format_life_events_response(response: dict) -> None:
-    """Format life event json objects from mocked response."""
-    life_events = str(response.get("events"))
-    try:
-        life_event_json = json.loads(life_events)
-        st.table(pd.DataFrame(life_event_json, index=range(len(life_event_json))))
-    except TypeError:
-        st.table(pd.DataFrame(life_events, index=range(len(life_events))))
-
-
 def clean_raw_json(response: dict) -> dict:
     """Remove extraneous key value pairs from raw dict before display."""
     # remove dicts and lists from string nesting (for mock data)
@@ -139,17 +129,26 @@ def format_pfr_response(response: dict) -> None:
             expander.markdown(target.caption)
 
 
-def format_auto_prefill_response(response: dict) -> None:
-    """Format JSON API response according to target list"""
-    targets = ["primary", "drivers", "vehicles", "vehiclesEnhanced"]
-    response = clean_raw_json(response)
+def format_life_events_response(response: dict) -> None:
+    """Format life event json objects from mocked response."""
+    life_events = str(response.get("events"))
+    try:
+        life_event_json = json.loads(life_events)
+        st.table(pd.DataFrame(life_event_json, index=range(len(life_event_json))))
+    except TypeError:
+        st.table(pd.DataFrame(life_events, index=range(len(life_events))))
+
+
+def format_tabular_response(response: dict, targets) -> None:
+    """Format JSON API response according to target list."""
+    clean_response = clean_raw_json(response)
 
     try:
         client_information_dict = {
-            k: ast.literal_eval(response.get(k, "Not Found")) for k in targets
+            k: ast.literal_eval(clean_response.get(k, "Not Found")) for k in targets
         }
     except (SyntaxError, ValueError):
-        client_information_dict = {k: response.get(k, "Not Found") for k in targets}
+        client_information_dict = {k: clean_response.get(k, "Not Found") for k in targets}
 
     for idx, target in enumerate(targets):
 
@@ -165,13 +164,25 @@ def format_auto_prefill_response(response: dict) -> None:
         if info_dataframe.shape[0] == 1:
             info_dataframe = info_dataframe.transpose()
             info_dataframe.index = info_dataframe.index.map(camel_case_to_split_title)
-            info_dataframe.rename(columns={0: "Values"}, inplace=True)
+            info_dataframe.rename(columns={0: expander_title}, inplace=True)
         else:
             info_dataframe.columns = info_dataframe.columns.map(
                 camel_case_to_split_title
             )
 
         expander.dataframe(info_dataframe)
+
+
+def format_life_prefill_response(response: dict) -> None:
+    """Format JSON API response according to life prefill target list."""
+    targets = ["primary", "householdInfo", "financialInfo", "householdMembers"]
+    format_tabular_response(response=response, targets=targets)
+
+
+def format_auto_prefill_response(response: dict) -> None:
+    """Format JSON API response according to auto prefilltarget list."""
+    targets = ["primary", "drivers", "vehicles", "vehiclesEnhanced"]
+    format_tabular_response(response=response, targets=targets)
 
 
 def generic_json_format(response: dict) -> None:
@@ -191,19 +202,16 @@ def format_response_by_service(service_name: str, response: dict) -> None:
     format_response_dispatch_mapper = {
         service_names.pfr: format_pfr_response,
         service_names.life_events: format_life_events_response,
-        service_names.life_prefill: generic_json_format,
+        service_names.life_prefill: format_life_prefill_response,
         service_names.auto_prefill: format_auto_prefill_response,
         service_names.property_details: format_property_response,
         service_names.property_risks: format_property_response,
         service_names.property_replacement: format_property_response,
         service_names.smb: generic_json_format,
     }
-    """Format response object according to service categorization."""
-    response_format_func = format_response_dispatch_mapper.get(service_name)
-    if response_format_func:
-        response_format_func(response)
-    else:
-        st.write(response)
+    # Format response object according to service categorization.
+    response_format_func = format_response_dispatch_mapper[service_name]
+    response_format_func(response)
 
 
 def denest_dict(dict1: dict, key: str = "_") -> Dict[str, Any]:
