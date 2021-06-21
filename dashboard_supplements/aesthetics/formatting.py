@@ -158,8 +158,7 @@ def format_tabular_response(response: dict, targets: list) -> None:
         expander = st.beta_expander(f"{expander_title}")
 
         if isinstance(client_information_dict.get(target), dict):
-            info_df = pd.json_normalize(client_information_dict.get(target))
-            info_dataframe = pd.DataFrame(info_df)
+            info_dataframe = pd.json_normalize(client_information_dict.get(target))
         else:
             info_dataframe = pd.DataFrame(client_information_dict.get(target))
 
@@ -182,9 +181,21 @@ def format_life_prefill_response(response: dict) -> None:
 
 
 def format_auto_prefill_response(response: dict) -> None:
-    """Format JSON API response according to auto prefilltarget list."""
+    """Format JSON API response according to auto prefill target list."""
     targets = ["primary", "drivers", "vehicles", "vehiclesEnhanced"]
     format_tabular_response(response=response, targets=targets)
+
+
+def format_smb_data(response: dict) -> None:
+    """Format JSON API response."""
+    clean_response = clean_raw_json(response)
+    info_dataframe = pd.json_normalize(clean_response)
+
+    info_dataframe = info_dataframe.transpose()
+    info_dataframe.index = info_dataframe.index.map(camel_case_to_split_title)
+    info_dataframe.rename(columns={0: "SMB Data"}, inplace=True)
+
+    st.table(info_dataframe)
 
 
 def generic_json_format(response: dict) -> None:
@@ -209,7 +220,7 @@ def format_response_by_service(service_name: str, response: dict) -> None:
         service_names.property_details: format_property_response,
         service_names.property_risks: format_property_response,
         service_names.property_replacement: format_property_response,
-        service_names.smb: generic_json_format,
+        service_names.smb: format_smb_data,
     }
     # Format response object according to service categorization.
     response_format_func = format_response_dispatch_mapper[service_name]
