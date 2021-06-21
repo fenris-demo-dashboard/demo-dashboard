@@ -7,8 +7,8 @@ from dashboard_supplements.demo_text.display_names import (
     life_events_personas,
     life_prefill_personas,
     persona_names_label_mapper,
-    property_label_mapper,
     pfr_personas,
+    property_label_mapper,
     smb_names,
 )
 from dashboard_supplements.io.deserializers.address import load_address_from_string

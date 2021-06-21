@@ -11,9 +11,9 @@ from dashboard_supplements.dashboard_helper_functions import (
     generate_sidebar_selection,
 )
 from dashboard_supplements.entities.services import (
-    service_name_to_display_names_mapper
+    service_category_mapper,
+    service_name_to_display_names_mapper,
 )
-from dashboard_supplements.entities.services import service_category_mapper
 
 import streamlit as st
 
