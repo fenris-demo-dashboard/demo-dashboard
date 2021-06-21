@@ -8,6 +8,9 @@ pfr_personas: List[str] = [
     "Lauren Daniels",
     "Ramon Martinez",
     "Randall Pearson",
+    "James Dursley",
+    "Alia Gabriel",
+    "Wyatt Parmely"
 ]
 
 life_events_personas: List[str] = [
@@ -17,14 +20,17 @@ life_events_personas: List[str] = [
     "Lauren Daniels",
     "Ramon Martinez",
     "Randall Pearson",
+    "Kira Johnson",
+    "Ellen Maddow",
+    "Alia Gabriel"
 ]
 
 auto_prefill_personas: List[str] = [
-    "Amy Nye",
-    "Arvinder Singh",
-    "Allison Hull",
-    "Lauren Daniels",
-    "Ramon Martinez",
+    "Kira Johnson",
+    "Ellen Maddow",
+    "Kyle Murdock",
+    "Alia Gabriel",
+    "Bob Simpson",
     "Randall Pearson",
 ]
 
@@ -53,6 +59,13 @@ persona_names_label_mapper = {
     "Lauren Daniels": "Lauren Daniels",
     "Ramon Martinez": "Martinez Family",
     "Randall Pearson": "Randall Pearson",
+    "Kira Johnson": "Kira Johnson",
+    "Ellen Maddow": "Ellen Maddow",
+    "Kyle Murdock": "Kyle Murdock",
+    "Alia Gabriel": "Alia Gabriel",
+    "Bob Simpson": "Bob Simpson",
+    "James Dursley": "James Dursley",
+    "Wyatt Parmely": "Wyatt Parmely"
 }
 
 business_label_mapper: dict = {
