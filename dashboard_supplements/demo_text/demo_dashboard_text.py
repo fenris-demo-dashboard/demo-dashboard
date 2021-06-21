@@ -1,5 +1,6 @@
 """Homepage text for demo app features."""
 from typing import List
+from dashboard_supplements.entities.services import service_names
 
 api_descriptions = {
     "Recent Life Events API": """
@@ -49,52 +50,6 @@ api_descriptions = {
         applying for, rating, and servicing commercial insurance.
     """,
 }
-
-sample_persona_names: List[str] = [
-    "Amy Nye",
-    "Arvinder Singh",
-    "Allison Hull",
-    "Lauren Daniels",
-    "Ramon Martinez",
-    "Randall Pearson",
-]
-
-sample_pfr_names: List[str] = []
-
-sample_business_names: List[str] = [
-    "Smith Bros Moving Co",
-    "Small Town Gazette",
-    "Little Shop of Flowers",
-    "Wobbly Wheel Tire and Alignment",
-    "Cherry on Top Cupcake",
-    "Uptown Accountants LLC",
-]
-
-sample_property_names: List[str] = []
-
-persona_names_label_mapper = {
-    "Amy Nye": "Amy Nye",
-    "Arvinder Singh": "Arvinder Singh",
-    "Allison Hull": "Hull Family",
-    "Lauren Daniels": "Lauren Daniels",
-    "Ramon Martinez": "Martinez Family",
-    "Randall Pearson": "Randall Pearson",
-}
-
-business_label_mapper: dict = {
-    "Super Smart Software": "Super Smart Software",
-    "Main Street Cafe": "Main Street Cafe",
-    "Smith Bros Moving Co": "Smith Bros Moving Co",
-    "Small Town Gazette": "Small Town Gazette",
-    "NY Deli Bagels": "NY Deli Bagels",
-    "Little Shop of Flowers": "Little Shop of Flowers",
-    "Wobbly Wheel Tire and Alignment": "Wobbly Wheel Tire and Alignment",
-    "Spot and Mittens Veterinary Clinic": "Spot and Mittens Veterinary Clinic",
-    "Cherry on Top Cupcake": "Cherry on Top Cupcake",
-    "Uptown Accountants LLC": "Uptown Accountants, PLLC",
-    "Stratford Inn Bed & Breakfast": "Stratford Inn Bed & Breakfast",
-}
-property_label_mapper: dict = {}
 
 event_names: List[str] = [
     "NEWLY ENGAGED",
