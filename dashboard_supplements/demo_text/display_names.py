@@ -41,6 +41,9 @@ life_prefill_personas: List[str] = [
     "Lauren Daniels",
     "Ramon Martinez",
     "Randall Pearson",
+    "James Dursley",
+    "Alia Gabriel",
+    "Wyatt Parmely",
 ]
 
 smb_names: List[str] = [
