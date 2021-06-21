@@ -61,7 +61,6 @@ def format_life_events_response(response: dict) -> None:
 def clean_raw_json(response: dict) -> dict:
     """Remove extraneous key value pairs from raw dict before display."""
     # remove dicts and lists from string nesting (for mock data)
-    st.write(response)
     response_copy_with_parsed_dicts = {}
     response_copy = deepcopy(response)
     for k, v in response_copy.items():
@@ -90,7 +89,6 @@ def clean_raw_json(response: dict) -> dict:
         if item in denested_response_copy.keys():
             denested_response_copy.pop(item)
 
-    st.write(denested_response_copy)
     return denested_response_copy
 
 
