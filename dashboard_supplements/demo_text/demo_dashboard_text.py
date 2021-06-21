@@ -59,12 +59,11 @@ sample_persona_names: List[str] = [
     "Randall Pearson",
 ]
 
+sample_pfr_names: List[str] = []
+
 sample_business_names: List[str] = [
-    "Super Smart Software",
-    "Main Street Cafe",
     "Smith Bros Moving Co",
     "Small Town Gazette",
-    "NY Deli Bagels",
     "Little Shop of Flowers",
     "Wobbly Wheel Tire and Alignment",
     "Cherry on Top Cupcake",
