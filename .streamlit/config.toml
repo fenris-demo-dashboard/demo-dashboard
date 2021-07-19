@@ -1,0 +1,8 @@
+[logger]
+level='info'
+[theme]
+font = "sans serif"
+primaryColor="#8CC641"
+backgroundColor="#FFFFFF"
+secondaryBackgroundColor="#D3D3D3"
+textColor="#0C2E4F"

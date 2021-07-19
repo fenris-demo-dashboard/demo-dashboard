@@ -15,7 +15,7 @@ DOIT_CONFIG = {
     "verbosity": 0,
 }
 
-python_directories = ["demo_api_pages", "demo_supplements"]
+python_directories = ["dasboard_pages", "dashboard_supplements"]
 python_files = ["demo_app.py"]
 
 

@@ -1,0 +1,12 @@
+,names,address.addressLine1,address.zipCode,address.city,address.state,otherAddresses,standardizeAddress
+0,['Super Smart Software'],2001 Space Odyssey Rd,23058,Glenn Allen,VA,[],False
+1,"['Main Street Cafe', 'Main cafe']",225 W Main St,87743,ROY,NM,[],False
+2,['Smith Bros Moving Co'],54 Lost Oak Highway,01301,Gill,MA,[],False
+3,"['Small Town Gazette']",351 Parker Lane,80517,Estes Park,CO,[],False
+4,['NY Deli Bagels'], 505 W Rosewood Street,27516, Chapel Hill, NC,[],False
+5,['Little Shop of Flowers'],416 W Magnolia St,50613,Cedar Falls,IA,[],False
+6,"['Wobbly Wheel Tire and Alignment']",730 Hillsdale St,27514, Chapel Hill, NC,[],False
+7,['Spot and Mittens Veterinary Clinic'],7392 Maple St E,54893, Webster, WI,[],False
+8,['Cherry on Top Cupcake'],3301 Morris St NW,20007, Washington, DC,[],False
+9,"['Uptown Accountants LLC']",1904 Wall St STE 420,27705, Durham, NC,[],False
+10,['Stratford Inn Bed & Breakfast'], 525 Main St,81427, Ouray, CO,[],False

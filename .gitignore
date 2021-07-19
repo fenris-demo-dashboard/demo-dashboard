@@ -155,7 +155,9 @@ deploy_test/*.out
 
 # secrets file
 .config
-.streamlit
 
 # Pycharm
 .idea
+
+# Streamlit secrets
+secrets.toml

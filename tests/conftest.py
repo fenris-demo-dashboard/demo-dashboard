@@ -1,20 +1,16 @@
 """Pytest configuration file with centralized fixtures."""
 from copy import deepcopy
-from typing import Callable, Dict
+from typing import Callable
 
-from heimdal.client import Client
-from heimdal.client_functions import (
-    load_credentials,
-)
-from heimdal.entities.address import Address
-from heimdal.entities.business import Business
-from heimdal.entities.person import Person
-from heimdal.io.deserializers.address import load_address_from_df_row
-from heimdal.io.deserializers.business import load_business_from_df_row
-from heimdal.io.deserializers.person import load_person_from_df_row
-from heimdal.io.mappers.business_input_maps import BusinessAddressInputMap
-from heimdal.io.mappers.personal_input_maps import PersonAddressInputMap
-from heimdal.io.mappers.property_input_maps import AddressInputMap
+from dashboard_supplements.entities.address import Address
+from dashboard_supplements.entities.business import Business
+from dashboard_supplements.entities.mappers import AddressInputMap
+from dashboard_supplements.entities.mappers import BusinessAddressInputMap
+from dashboard_supplements.entities.mappers import PersonAddressInputMap
+from dashboard_supplements.entities.person import Person
+from dashboard_supplements.io.deserializers.address import load_address_from_df_row
+from dashboard_supplements.io.deserializers.business import load_business_from_df_row
+from dashboard_supplements.io.deserializers.person import load_person_from_df_row
 
 import pandas as pd
 
@@ -23,7 +19,9 @@ import pytest
 
 @pytest.fixture(scope="session")
 def fake_people_df() -> Callable[..., pd.DataFrame]:
-    df = pd.read_csv("tests/assets/postman_requests_data_file.csv")
+    df = pd.read_csv(
+        "./dashboard_supplements/assets/personal_requests_data_file.csv", index_col=0
+    )
 
     def return_df_copy() -> pd.DataFrame:
         return df.copy()
@@ -48,28 +46,6 @@ def fake_people_person_address_input_map() -> Callable[..., PersonAddressInputMa
         return deepcopy(person_address_input_map)
 
     return return_deepcopy
-
-
-@pytest.fixture(scope="session")
-def authentication_credentials() -> Dict[str, str]:
-    try:
-        credentials = load_credentials()
-        return dict(credentials)
-    except RuntimeError as error:
-        raise error
-
-
-@pytest.fixture(scope="function")
-def test_client(authentication_credentials: dict) -> Callable[[str], Client]:
-    client_id = authentication_credentials.get("client_id")
-    client_secret = authentication_credentials.get("client_secret")
-
-    def generate_test_client(service_name: str) -> Client:
-        return Client(
-            client_id=client_id, client_secret=client_secret, service_name=service_name
-        )
-
-    return generate_test_client
 
 
 @pytest.fixture(scope="function")
@@ -108,7 +84,9 @@ def fake_address_input_map() -> Callable[..., AddressInputMap]:
 
 @pytest.fixture(scope="function")
 def fake_address_df() -> Callable[..., pd.DataFrame]:
-    df = pd.read_csv("tests/assets/postman_requests_data_file.csv", index_col=0)
+    df = pd.read_csv(
+        "dashboard_supplements/assets/property_requests_data_file.csv", index_col=0
+    )
 
     def return_df_copy() -> pd.DataFrame:
         return df.copy()
@@ -134,8 +112,10 @@ def generate_fake_address(
 
 @pytest.fixture(scope="session")
 def fake_business_df() -> Callable[..., pd.DataFrame]:
-    df = pd.read_csv("tests/assets/smb_data.csv")
-    df["names"] = df["names"].apply(eval)
+    df = pd.read_csv(
+        "dashboard_supplements/assets/smb_requests_data_file.csv", index_col=0
+    )
+    # df["names"] = df["names"].apply(eval)
 
     def return_df_copy() -> pd.DataFrame:
         return df.copy()
