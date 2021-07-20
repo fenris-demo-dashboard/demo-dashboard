@@ -166,12 +166,12 @@ def format_tabular_response(response: dict, targets: list) -> None:
             info_dataframe = info_dataframe.transpose()
             info_dataframe.index = info_dataframe.index.map(camel_case_to_split_title)
             info_dataframe.rename(columns={0: expander_title}, inplace=True)
+            expander.table(info_dataframe)
         else:
             info_dataframe.columns = info_dataframe.columns.map(
                 camel_case_to_split_title
             )
-
-        expander.dataframe(info_dataframe)
+            expander.dataframe(info_dataframe)
 
 
 def format_life_prefill_response(response: dict) -> None:

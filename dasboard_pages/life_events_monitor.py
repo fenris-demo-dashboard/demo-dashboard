@@ -58,7 +58,7 @@ def app(title: str, service_name: str) -> None:
             "on nine key life events. Explore each one via the panel on the left."
         )
         st.subheader("Sample Book of Business")
-        st.dataframe(cleaned_display_df[columns_to_display])
+        st.table(cleaned_display_df[columns_to_display])
 
     elif life_event != "---":
         event_monitor_df = generate_df_from_life_event(
