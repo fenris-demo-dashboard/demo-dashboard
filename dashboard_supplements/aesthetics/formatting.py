@@ -60,7 +60,7 @@ def clean_raw_json(response: dict) -> dict:
         except (SyntaxError, ValueError):
             response_copy_with_parsed_dicts[k] = v
 
-    denested_response = denest_dict(dict1=response_copy_with_parsed_dicts, key=".")
+    denested_response = nest_dict(dict1=response_copy_with_parsed_dicts, key=".")
     components_to_remove_from_response = [
         "requestId",
         "submissionId",
@@ -134,9 +134,11 @@ def format_life_events_response(response: dict) -> None:
     life_events = str(response.get("events"))
     try:
         life_event_json = json.loads(life_events)
-        st.table(pd.DataFrame(life_event_json, index=range(len(life_event_json))))
+        life_event_df = pd.DataFrame(life_event_json, index=range(len(life_event_json)))
     except TypeError:
-        st.table(pd.DataFrame(life_events, index=range(len(life_events))))
+        life_event_df = pd.DataFrame(life_events, index=range(len(life_events)))
+    life_event_df_without_index = remove_index_from_df(life_event_df)
+    st.table(life_event_df_without_index)
 
 
 def format_tabular_response(response: dict, targets: list) -> None:
@@ -171,7 +173,8 @@ def format_tabular_response(response: dict, targets: list) -> None:
             info_dataframe.columns = info_dataframe.columns.map(
                 camel_case_to_split_title
             )
-            expander.dataframe(info_dataframe)
+            info_df_without_index = remove_index_from_df(info_dataframe)
+            expander.dataframe(info_df_without_index)
 
 
 def format_life_prefill_response(response: dict) -> None:
@@ -204,7 +207,7 @@ def generic_json_format(response: dict) -> None:
 
 
 def format_property_response(response: dict) -> None:
-    nested_response = denest_dict(response)
+    nested_response = nest_dict(response)
     st.json(nested_response)
     # response_table = pd.DataFrame.from_dict(nested_response, orient='index')
     # response_table.rename(columns={0: "Data Values"}, inplace=True)
@@ -227,10 +230,9 @@ def format_response_by_service(service_name: str, response: dict) -> None:
     response_format_func(response)
 
 
-def denest_dict(dict1: dict, key: str = "_") -> Dict[str, Any]:
+def nest_dict(dict1: dict, key: str = "_") -> Dict[str, Any]:
     result: Dict[str, Any] = {}
     for k, v in dict1.items():
-
         # for each key call method split_rec which
         # will split keys to form recursively nested dictionary
         split_rec(k, v, result, key)
@@ -238,7 +240,6 @@ def denest_dict(dict1: dict, key: str = "_") -> Dict[str, Any]:
 
 
 def split_rec(k: str, v: Any, out: dict, key: str = "_") -> None:
-
     # splitting keys in dict
     # calling_recursively to break items on '_'
     k, *rest = k.split(key, 1)
@@ -246,3 +247,12 @@ def split_rec(k: str, v: Any, out: dict, key: str = "_") -> None:
         split_rec(rest[0], v, out.setdefault(k, {}), key)
     else:
         out[k] = v
+
+
+def remove_index_from_df(df: pd.DataFrame) -> pd.DataFrame:
+    cols_list = list(df.columns)
+    for i in cols_list:
+        if "unnamed" in i.lower():
+            cols_list.remove(i)
+    new_df = df.set_index(cols_list[0])
+    return new_df

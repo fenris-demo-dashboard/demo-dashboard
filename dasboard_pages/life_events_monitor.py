@@ -5,6 +5,7 @@ from dasboard_pages.api_request_pages import mock_response_page
 
 from dashboard_supplements.aesthetics.formatting import (
     initialize_logo_and_title,
+    remove_index_from_df,
 )
 from dashboard_supplements.dashboard_helper_functions import (
     generate_df_from_life_event,
@@ -20,6 +21,7 @@ from dashboard_supplements.io.serializers.shared import generate_list_of_names_f
 
 import streamlit as st
 
+import pandas as pd
 
 def app(title: str, service_name: str) -> None:
     """Display sample personas for Life Events API Demo."""
@@ -58,7 +60,10 @@ def app(title: str, service_name: str) -> None:
             "on nine key life events. Explore each one via the panel on the left."
         )
         st.subheader("Sample Book of Business")
-        st.table(cleaned_display_df[columns_to_display])
+
+        display_df_without_index = remove_index_from_df(cleaned_display_df[columns_to_display])
+        display_df_without_index.rename(columns={"Last Name": "Name"}, inplace=True)
+        st.table(display_df_without_index)
 
     elif life_event != "---":
         event_monitor_df = generate_df_from_life_event(
