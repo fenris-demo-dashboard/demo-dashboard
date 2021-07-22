@@ -21,7 +21,6 @@ from dashboard_supplements.io.serializers.shared import generate_list_of_names_f
 
 import streamlit as st
 
-import pandas as pd
 
 def app(title: str, service_name: str) -> None:
     """Display sample personas for Life Events API Demo."""
@@ -61,7 +60,9 @@ def app(title: str, service_name: str) -> None:
         )
         st.subheader("Sample Book of Business")
 
-        display_df_without_index = remove_index_from_df(cleaned_display_df[columns_to_display])
+        display_df_without_index = remove_index_from_df(
+            cleaned_display_df[columns_to_display]
+        )
         display_df_without_index.rename(columns={"Last Name": "Name"}, inplace=True)
         st.table(display_df_without_index)
 
