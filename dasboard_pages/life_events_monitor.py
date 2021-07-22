@@ -56,7 +56,7 @@ def app(title: str, service_name: str) -> None:
         st.write(
             "Every month, approximately 5% of your policy holders will "
             "experience a significant life event. We provide instant insight "
-            "on nine key life events. Explore each one via the panel on the left."
+            "on nine key life events."
         )
         st.subheader("Sample Book of Business")
 
