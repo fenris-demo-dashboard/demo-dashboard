@@ -77,10 +77,10 @@ def load_image_from_title(
 
 
 def generate_df_from_life_event(
-    df: pd.DataFrame, life_event_name: str, show_cols: list
+    input_df: pd.DataFrame, life_event_name: str, show_cols: list
 ) -> pd.DataFrame:
     """Return filtered dataframe of personas with a certain life event."""
-    df_copy = df.copy()
+    df_copy = input_df.copy()
     df_return = df_copy[df_copy[life_event_name]]
     df_return = df_return[show_cols]
     df_return.reset_index(inplace=True, drop=True)

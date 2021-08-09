@@ -4,7 +4,7 @@ from dashboard_supplements.aesthetics.formatting import (
     camel_case_to_split_title,
     clean_and_capitalize_string_input,
     clean_raw_json,
-    denest_dict,
+    nest_dict,
     formatted_address_string_from_df_row,
 )
 from dashboard_supplements.dashboard_helper_functions import generate_sidebar_selection
@@ -62,7 +62,7 @@ def test_denest_dict() -> None:
         "dictB": {"key1": "value_2", "key2": {"key3": "value_3"}},
     }
 
-    result = denest_dict(nested_dict)
+    result = nest_dict(nested_dict)
     assert expected_result == result
 
 

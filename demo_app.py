@@ -1,5 +1,5 @@
 """Fenris API Demo App dashboard home page."""
-from dasboard_pages import life_events_monitor, standard_dashboard
+from dashboard_pages import life_events_monitor, standard_dashboard
 
 from dashboard_supplements.aesthetics.formatting import initialize_logo_and_title
 from dashboard_supplements.demo_text.demo_dashboard_text import api_descriptions
@@ -7,8 +7,8 @@ from dashboard_supplements.entities.services import service_names
 
 import streamlit as st
 
-icon_link = "https://fenrisd.com/wp-content/uploads/2018/03/cropped-site-icon-32x32.png"
-st.set_page_config(page_title="Fenris API Demo App", page_icon=icon_link, layout="wide")
+ICON_LINK = "https://fenrisd.com/wp-content/uploads/2018/03/cropped-site-icon-32x32.png"
+st.set_page_config(page_title="Fenris API Demo App", page_icon=ICON_LINK, layout="wide")
 
 
 def get_demo_pages(pages: dict) -> str:

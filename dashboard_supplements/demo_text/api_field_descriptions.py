@@ -1,8 +1,10 @@
+"""API descriptions for the demo dashboard homepage."""
 from dataclasses import dataclass
 
 
 @dataclass
 class Descriptor:
+    """Descriptor class for describing expanders."""
 
     explanation: str = ""
     caption: str = ""
