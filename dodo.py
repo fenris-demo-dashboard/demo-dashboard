@@ -19,7 +19,7 @@ DOIT_CONFIG = {
 
 doit_process_locations = {
     "python_directories": ["dashboard_pages", "dashboard_supplements"],
-    "python_files": ["demo_app.py"],
+    "python_files": ["demo_dashboard.py"],
 }
 process_locations_list = []
 for sublist in list(doit_process_locations.values()):
