@@ -3,7 +3,7 @@ include:
     file: "python/.python-project-gitlab-ci.yml"
 
 variables:
-  PROJECT_NAME: "demo_dash"
+  PROJECT_NAME: "demo_app.py"
   RUN_MYPY: "false"
 
 mypy:
