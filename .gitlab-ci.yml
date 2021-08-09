@@ -1,63 +1,12 @@
-image: "public.ecr.aws/bitnami/python:3.9"
+include:
+  - project: "fenrisdigital/devops/gitlab-ci-templates"
+    file: "python/.python-project-gitlab-ci.yml"
 
-stages:
-  - quality
-  - test
-  - build
-  - deploy
+variables:
+  PROJECT_NAME: demo_dashboard
+  RUN_MYPY: "false"
 
-.install_requirements: &install_requirements
-  - pip install doit
-
-flake8:
+mypy:
   stage: quality
-  before_script:
-    - *install_requirements
-  script:
-    - doit --verbosity 2 flake8
-
-bandit:
-  stage: quality
-  before_script:
-    - *install_requirements
-  script:
-    - doit --verbosity 2 bandit
-
-pytest:
-  stage: test
-  needs: []
-  before_script:
-    - *install_requirements
-  script:
-    - doit --verbosity 2 pytest_junit_report
-  artifacts:
-    when: always
-    reports:
-      junit: report.xml
-
-package:
-  stage: build
-  needs:
-    - pytest
-  before_script:
-    - *install_requirements
-    - doit python_dependencies
-  script:
-    - pip install wheel
-    - python setup.py sdist bdist_wheel
-  artifacts:
-    untracked: false
-    expire_in: 7 days
-    paths:
-      - dist
-
-publish_registry:
-  stage: deploy
-  needs:
-    - package
-  script:
-    - pip install twine
-    - echo ${CI_PROJECT_ID}
-    - TWINE_PASSWORD=${CI_JOB_TOKEN} TWINE_USERNAME=gitlab-ci-token python -m twine upload --verbose --repository-url https://gitlab.com/api/v4/projects/${CI_PROJECT_ID}/packages/pypi dist/*
-  only:
-    - master
+  rules:
+    - if: $RUN_MYPY == "true"
