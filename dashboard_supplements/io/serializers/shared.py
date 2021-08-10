@@ -1,3 +1,4 @@
+"""Shared serializers."""
 from dashboard_supplements.aesthetics.formatting import (
     clean_and_capitalize_string_input,
 )

@@ -1,3 +1,4 @@
+"""ServiceCategory class and supplementals."""
 from types import SimpleNamespace
 from typing import Callable
 
@@ -34,6 +35,8 @@ import pandas as pd
 
 
 class ServiceCategory:
+    """Service Category class."""
+
     def __init__(
         self,
         select_prompt_specification: str,

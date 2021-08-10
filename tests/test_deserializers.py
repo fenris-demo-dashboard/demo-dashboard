@@ -1,8 +1,6 @@
 from typing import Callable
 
-from dashboard_supplements.entities.address import Address
-from dashboard_supplements.entities.business import Business
-from dashboard_supplements.entities.person import Person
+from dashboard_supplements.entities.request_entities import Address, Business, Person
 from dashboard_supplements.io.deserializers.address import (
     load_address_from_df_row,
     load_address_from_string,

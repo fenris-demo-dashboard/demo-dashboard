@@ -1,7 +1,10 @@
 """Business deserializer file."""
-from dashboard_supplements.entities.address import AddressSchema
-from dashboard_supplements.entities.business import Business, BusinessSchema
 from dashboard_supplements.entities.mappers import BusinessAddressInputMap
+from dashboard_supplements.entities.request_entities import (
+    AddressSchema,
+    Business,
+    BusinessSchema,
+)
 from dashboard_supplements.io.input_to_row_matchers import match_business_to_row
 from dashboard_supplements.io.request_handlers.fake_request_data import (
     FAKE_BUSINESS_ADDRESS_INPUT_MAP,

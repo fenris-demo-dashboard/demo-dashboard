@@ -1,7 +1,7 @@
 """Life Events API page for Life Events Demo."""
 from copy import deepcopy
 
-from dasboard_pages.api_request_pages import mock_response_page
+from dashboard_pages.api_request_pages import mock_response_page
 
 from dashboard_supplements.aesthetics.formatting import (
     initialize_logo_and_title,
@@ -68,7 +68,7 @@ def app(title: str, service_name: str) -> None:
 
     elif life_event != "---":
         event_monitor_df = generate_df_from_life_event(
-            df=cleaned_display_df,
+            input_df=cleaned_display_df,
             life_event_name=life_event,
             show_cols=columns_to_display,
         )

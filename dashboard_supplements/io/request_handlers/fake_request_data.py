@@ -1,5 +1,4 @@
-from pathlib import Path
-
+"""Importing fake request data and constructing input maps."""
 from dashboard_supplements.entities.mappers import (
     AddressInputMap,
     BusinessAddressInputMap,
@@ -25,6 +24,7 @@ def fake_person_address_input_map() -> PersonAddressInputMap:
 
 
 def fake_business_address_input_map() -> BusinessAddressInputMap:
+    """Fake business address input map generator func."""
     business_address_input_map = BusinessAddressInputMap(
         names="names",
         address_line1="address.addressLine1",
@@ -36,6 +36,7 @@ def fake_business_address_input_map() -> BusinessAddressInputMap:
 
 
 def fake_address_input_map() -> AddressInputMap:
+    """Fake address input map generator func."""
     address_input_map = AddressInputMap(
         address_line1="address.addressLine1",
         city="address.city",
@@ -46,8 +47,9 @@ def fake_address_input_map() -> AddressInputMap:
 
 
 def fake_df(sample_csv_path: str) -> pd.DataFrame:
-    df = pd.read_csv(sample_csv_path)
-    return df
+    """Read and return a dataframe from a csv path."""
+    output_df = pd.read_csv(sample_csv_path)
+    return output_df
 
 
 FAKE_BUSINESS_DF = fake_df(
