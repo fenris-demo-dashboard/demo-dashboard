@@ -1,3 +1,4 @@
+"""PFR visualizations."""
 from matplotlib import pyplot as plt, ticker as mtick
 
 import pandas as pd
@@ -44,6 +45,7 @@ def generate_highlight_barplot(
     x_label: str,
     y_label: str = "Proportion of Population",
 ) -> None:
+    """Generate a PFR distribution plot."""
     sns.set_theme(font="sans serif", style="ticks", context="notebook")
     finance_df = pd.DataFrame.from_dict(
         indicator_distribution, orient="index", columns=["count"]

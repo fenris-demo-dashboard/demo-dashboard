@@ -1,7 +1,7 @@
 """Standard API Dashboard page for Streamlit Demo App."""
 from pathlib import Path
 
-from dasboard_pages.api_request_pages import mock_response_page
+from dashboard_pages.api_request_pages import mock_response_page
 
 from dashboard_supplements.aesthetics.formatting import (
     initialize_logo_and_title,

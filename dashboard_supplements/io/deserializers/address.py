@@ -1,6 +1,6 @@
 """Address deserializer file."""
-from dashboard_supplements.entities.address import Address, AddressSchema
 from dashboard_supplements.entities.mappers import AddressInputMap
+from dashboard_supplements.entities.request_entities import Address, AddressSchema
 from dashboard_supplements.io.input_to_row_matchers import match_property_to_row
 from dashboard_supplements.io.request_handlers.fake_request_data import (
     FAKE_ADDRESS_DF,

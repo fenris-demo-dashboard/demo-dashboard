@@ -1,6 +1,5 @@
+"""Match input to df row funcs."""
 import pandas as pd
-
-import streamlit as st
 
 
 def match_person_to_row(name: str, sample_personas_df: pd.DataFrame) -> pd.Series:

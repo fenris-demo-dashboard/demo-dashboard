@@ -1,3 +1,4 @@
+"""Formatting funcs."""
 import ast
 import json
 from copy import deepcopy
@@ -53,14 +54,14 @@ def clean_raw_json(response: dict) -> dict:
     # remove dicts and lists from string nesting (for mock data)
     response_copy_with_parsed_dicts = {}
     response_copy = deepcopy(response)
-    for k, v in response_copy.items():
+    for key, val in response_copy.items():
         try:
-            parsed_literal = ast.literal_eval(v)
-            response_copy_with_parsed_dicts[k] = parsed_literal
+            parsed_literal = ast.literal_eval(val)
+            response_copy_with_parsed_dicts[key] = parsed_literal
         except (SyntaxError, ValueError):
-            response_copy_with_parsed_dicts[k] = v
+            response_copy_with_parsed_dicts[key] = val
 
-    denested_response = denest_dict(dict1=response_copy_with_parsed_dicts, key=".")
+    denested_response = nest_dict(flat_dict=response_copy_with_parsed_dicts, sep=".")
     components_to_remove_from_response = [
         "requestId",
         "submissionId",
@@ -86,16 +87,15 @@ def camel_case_to_split_title(string: str) -> str:
     """Split a camel case string to one with title case."""
     if string.isupper():
         return string
-    else:
-        start_idx = [i for i, e in enumerate(string) if e.isupper()] + [len(string)]
+    start_idx = [i for i, e in enumerate(string) if e.isupper()] + [len(string)]
 
-        start_idx = [0] + start_idx
-        split_string = [string[x:y] for x, y in zip(start_idx, start_idx[1:])]
-        return " ".join(x.title() for x in split_string)
+    start_idx = [0] + start_idx
+    split_string = [string[x:y] for x, y in zip(start_idx, start_idx[1:])]
+    return " ".join(x.title() for x in split_string)
 
 
 def format_pfr_response(response: dict) -> None:
-    """Format PFR JSON API response according to target list"""
+    """Format PFR JSON API response according to target list."""
     targets = [
         "trend",
         "creditLevel",
@@ -152,7 +152,7 @@ def format_tabular_response(response: dict, targets: list) -> None:
             k: clean_response.get(k, "Not Found") for k in targets
         }
 
-    for idx, target in enumerate(targets):
+    for target in targets:
 
         expander_title = camel_case_to_split_title(target)
         expander = st.beta_expander(f"{expander_title}")
@@ -199,12 +199,14 @@ def format_smb_data(response: dict) -> None:
 
 
 def generic_json_format(response: dict) -> None:
+    """Format mock json returned via Fenris APIs."""
     clean_json = clean_raw_json(response)
     st.write(clean_json)
 
 
 def format_property_response(response: dict) -> None:
-    nested_response = denest_dict(response)
+    """Format property response for display."""
+    nested_response = nest_dict(response)
     st.json(nested_response)
     # response_table = pd.DataFrame.from_dict(nested_response, orient='index')
     # response_table.rename(columns={0: "Data Values"}, inplace=True)
@@ -212,6 +214,7 @@ def format_property_response(response: dict) -> None:
 
 
 def format_response_by_service(service_name: str, response: dict) -> None:
+    """Dispatch func for formatting response by service name."""
     format_response_dispatch_mapper = {
         service_names.pfr: format_pfr_response,
         service_names.life_events: format_life_events_response,
@@ -227,22 +230,19 @@ def format_response_by_service(service_name: str, response: dict) -> None:
     response_format_func(response)
 
 
-def denest_dict(dict1: dict, key: str = "_") -> Dict[str, Any]:
+def nest_dict(flat_dict: dict, sep: str = "_") -> Dict[str, Any]:
+    """Nest a flattened dictionary; recursively calls `split_rec`."""
     result: Dict[str, Any] = {}
-    for k, v in dict1.items():
-
-        # for each key call method split_rec which
-        # will split keys to form recursively nested dictionary
-        split_rec(k, v, result, key)
+    for key, value in flat_dict.items():
+        # split keys to form recursively nested dictionary
+        split_rec(key=key, value=value, out=result, sep=sep)
     return result
 
 
-def split_rec(k: str, v: Any, out: dict, key: str = "_") -> None:
-
-    # splitting keys in dict
-    # calling_recursively to break items on '_'
-    k, *rest = k.split(key, 1)
+def split_rec(key: str, value: Any, out: dict, sep: str = "_") -> None:
+    """Split keys in a dictionary, called recursively to split on sep."""
+    key, *rest = key.split(sep, 1)
     if rest:
-        split_rec(rest[0], v, out.setdefault(k, {}), key)
+        split_rec(key=rest[0], value=value, out=out.setdefault(key, {}), sep=sep)
     else:
-        out[k] = v
+        out[key] = value

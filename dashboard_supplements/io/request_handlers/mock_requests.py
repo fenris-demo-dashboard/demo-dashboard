@@ -1,9 +1,8 @@
+"""Mock request funcs."""
 import json
 from typing import Any, Dict
 
-from dashboard_supplements.entities.address import Address
-from dashboard_supplements.entities.business import Business
-from dashboard_supplements.entities.person import Person
+from dashboard_supplements.entities.request_entities import Address, Business, Person
 from dashboard_supplements.io.mock_responses import api_to_fake_response_df_mapper
 
 
@@ -11,9 +10,7 @@ def mock_personal_query(
     person: Person,
     service_name: str,
 ) -> Dict[str, Any]:
-    """
-    Fetch data from mock response based on first, last, and service name.
-    """
+    """Fetch data from mock response based on first, last, and service name."""
     fake_data_df = api_to_fake_response_df_mapper.get(service_name)
 
     first_name = person.first_name.strip()
@@ -31,9 +28,7 @@ def mock_property_query(
     address: Address,
     service_name: str,
 ) -> Dict[str, Any]:
-    """
-    Fetch data from mock response based on first, last, and service name.
-    """
+    """Fetch data from mock response based on first, last, and service name."""
     fake_data_df = api_to_fake_response_df_mapper.get(service_name)
 
     address_line1 = address.address_line1.strip()
