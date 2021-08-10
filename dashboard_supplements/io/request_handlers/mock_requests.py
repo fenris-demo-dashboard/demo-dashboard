@@ -2,9 +2,7 @@
 import json
 from typing import Any, Dict
 
-from dashboard_supplements.entities.address import Address
-from dashboard_supplements.entities.business import Business
-from dashboard_supplements.entities.person import Person
+from dashboard_supplements.entities.request_entities import Address, Business, Person
 from dashboard_supplements.io.mock_responses import api_to_fake_response_df_mapper
 
 
