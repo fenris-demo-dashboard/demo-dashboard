@@ -17,7 +17,7 @@ def get_demo_pages(pages: dict) -> str:
     Returns selected API and list of available pages.
     """
     api_selection_options = list(pages.keys())
-    api_selection_options.insert(0, "---")
+    api_selection_options.insert(0, "Select API")
     st.sidebar.title("Control Panel")
     api_selection = st.sidebar.selectbox("Select Capability", api_selection_options)
     return str(api_selection)
@@ -34,13 +34,13 @@ def sidebar_api_selection(api_selection: str, pages: dict) -> None:
         "Small Business API": service_names.smb,
     }
 
-    if api_selection != "---":
+    if api_selection != "Select API":
         selected_page = pages[api_selection]
         selected_page.app(
             title=api_selection,
             service_name=endpoint_mapper[api_selection],
         )
-    elif api_selection == "---":
+    elif api_selection == "Select API":
         initialize_logo_and_title("Dashboard")
         st.subheader("API Information")
 
