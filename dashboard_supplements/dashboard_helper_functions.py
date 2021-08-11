@@ -15,11 +15,11 @@ import streamlit as st
 
 
 def generate_sidebar_selection(
-    input_list: list, service_category: ServiceCategory
+    default_selection: str, input_list: list, service_category: ServiceCategory
 ) -> st.selectbox:
     """Load st.selectbox for an input list."""
     selections = deepcopy(input_list)
-    selections.insert(0, "---")
+    selections.insert(0, default_selection)
     streamlit_selections = st.sidebar.selectbox(
         f"Which {service_category.prompt} would you like to explore?", selections
     )

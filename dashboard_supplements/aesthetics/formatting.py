@@ -246,3 +246,13 @@ def split_rec(key: str, value: Any, out: dict, sep: str = "_") -> None:
         split_rec(key=rest[0], value=value, out=out.setdefault(key, {}), sep=sep)
     else:
         out[key] = value
+
+
+def remove_index_from_df(input_df: pd.DataFrame) -> pd.DataFrame:
+    """Remove numerical index from dataframe for display purposes."""
+    cols_list = list(input_df.columns)
+    for i in cols_list:
+        if "unnamed" in i.lower():
+            cols_list.remove(i)
+    new_df = input_df.set_index(cols_list[0])
+    return new_df

@@ -5,6 +5,7 @@ from dashboard_pages.api_request_pages import mock_response_page
 
 from dashboard_supplements.aesthetics.formatting import (
     initialize_logo_and_title,
+    remove_index_from_df,
 )
 from dashboard_supplements.dashboard_helper_functions import (
     generate_df_from_life_event,
@@ -26,7 +27,8 @@ def app(title: str, service_name: str) -> None:
     initialize_logo_and_title(title)
 
     event_names_list = deepcopy(event_names)
-    event_names_list.insert(0, "---")
+    default_life_event_selection = "Select a life event"
+    event_names_list.insert(0, default_life_event_selection)
     life_event_df = FAKE_LIFE_EVENT_RESPONSE_DF
     cleaned_display_df = life_event_df.rename(
         columns={
@@ -51,16 +53,21 @@ def app(title: str, service_name: str) -> None:
         event_names_list,
     )
 
-    if life_event == "---":
+    if life_event == default_life_event_selection:
         st.write(
             "Every month, approximately 5% of your policy holders will "
             "experience a significant life event. We provide instant insight "
-            "on nine key life events. Explore each one via the panel on the left."
+            "on nine key life events."
         )
         st.subheader("Sample Book of Business")
-        st.dataframe(cleaned_display_df[columns_to_display])
 
-    elif life_event != "---":
+        display_df_without_index = remove_index_from_df(
+            cleaned_display_df[columns_to_display]
+        )
+        display_df_without_index.rename(columns={"Last Name": "Name"}, inplace=True)
+        st.table(display_df_without_index)
+
+    elif life_event != default_life_event_selection:
         event_monitor_df = generate_df_from_life_event(
             input_df=cleaned_display_df,
             life_event_name=life_event,
@@ -73,15 +80,17 @@ def app(title: str, service_name: str) -> None:
 
         service_category = service_category_mapper[service_name]
 
+        default_selection = "Select policyholder"
         name_selection = generate_sidebar_selection(
+            default_selection=default_selection,
             input_list=life_event_persona_names,
             service_category=service_category,
         )
 
-        if name_selection == "---":
+        if name_selection == default_selection:
             st.subheader("Select a persona on the sidebar to query life events")
             st.table(event_monitor_df)
-        elif name_selection != "---":
+        elif name_selection != default_selection:
             person = load_person_from_name(
                 name=name_selection,
             )

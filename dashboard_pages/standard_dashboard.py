@@ -26,12 +26,16 @@ def app(title: str, service_name: str) -> None:
     sample_information_list = service_name_to_display_names_mapper[service_name]
     label_information = service_category.display_label_mapper
 
+    default_selection = (
+        "Select business" if service_name == "SMB" else "Select policyholder"
+    )
     query_selection = generate_sidebar_selection(
+        default_selection=default_selection,
         input_list=sample_information_list,
         service_category=service_category,
     )
 
-    if query_selection == "---":
+    if query_selection == default_selection:
         st.subheader(f"Select a {service_category.prompt}: ")
         image_base_path = Path("./dashboard_supplements/assets/")
 
@@ -43,7 +47,7 @@ def app(title: str, service_name: str) -> None:
             service_category=service_category,
         )
 
-    elif query_selection != "---":
+    elif query_selection != default_selection:
         query_input = service_category.deserialization_process_func(query_selection)
         mock_response_page.app(
             query_entity=query_input,

@@ -16,7 +16,9 @@ def test_generate_sidebar_selection() -> None:
     expected_response = "---"
 
     persona_selection = generate_sidebar_selection(
-        input_list=persona_name_list, service_category=personal_service_category
+        default_selection="---",
+        input_list=persona_name_list,
+        service_category=personal_service_category,
     )
     assert persona_selection == expected_response
 

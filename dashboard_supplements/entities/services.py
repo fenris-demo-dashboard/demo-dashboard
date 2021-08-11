@@ -57,7 +57,7 @@ class ServiceCategory:
 
 
 personal_service_category = ServiceCategory(
-    select_prompt_specification="policy holder",
+    select_prompt_specification="policyholder",
     image_path="demo_persona_photos",
     display_label_mapper=persona_names_label_mapper,
     select_row_from_user_query_func=match_person_to_row,
