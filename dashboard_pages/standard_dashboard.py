@@ -26,7 +26,9 @@ def app(title: str, service_name: str) -> None:
     sample_information_list = service_name_to_display_names_mapper[service_name]
     label_information = service_category.display_label_mapper
 
-    default_selection = "Select business" if service_name == "SMB" else "Select policyholder"
+    default_selection = (
+        "Select business" if service_name == "SMB" else "Select policyholder"
+    )
     query_selection = generate_sidebar_selection(
         default_selection=default_selection,
         input_list=sample_information_list,
